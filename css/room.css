@@ -1,0 +1,194 @@
+/* ============================================================
+   room.css — Shared styles for all Room pages (room-XX.html)
+   Maps old CSS variable names to the v9 design system.
+   ============================================================ */
+
+/* ── Variable compatibility aliases ── */
+:root {
+    --font-serif   : var(--f-serif);
+    --font-sans    : var(--f-sans);
+    --font-script  : var(--f-script);
+    --font-nav     : var(--f-sans);
+    --font-serif2  : var(--f-serif);
+    --gutter       : var(--gap);
+    --clr-sand     : var(--fg);
+    --clr-gold     : var(--accent);
+    --clr-gold-light   : var(--accent2);
+    --clr-bg       : var(--bg);
+    --clr-bg-dark  : var(--bg2);
+    --clr-border-soft  : var(--border-soft);
+}
+
+/* ── Room page wrapper ── */
+.pillar-page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Fix padding — use correct variable */
+.pillar-content {
+    flex: 1;
+    padding: 120px clamp(1.5rem, 5vw, 4rem) 6rem;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+/* Title: clamp so it never overflows on small screens */
+.pillar-title {
+    font-family: var(--f-serif) !important;
+    font-size: clamp(2.2rem, 6vw, 5.5rem) !important;
+    font-weight: 300;
+    color: var(--fg) !important;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    word-break: break-word;
+}
+
+/* Body text */
+.pillar-body {
+    font-family: var(--f-sans) !important;
+    font-size: clamp(.9rem, 1.8vw, 1.1rem);
+    line-height: 1.8;
+    color: var(--fg) !important;
+}
+
+.pillar-body p   { margin-bottom: 1.5rem; }
+
+.pillar-body h4 {
+    font-family: var(--f-serif) !important;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 400;
+    color: var(--accent2, var(--accent)) !important;
+    margin: 3rem 0 1rem;
+}
+
+.pillar-body ul  { list-style: none; padding-left: 0; margin-bottom: 2rem; }
+
+.pillar-body li {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+    position: relative;
+    font-size: clamp(.88rem, 1.5vw, 1rem);
+}
+
+.pillar-body li::before {
+    content: '✦';
+    position: absolute;
+    left: 0; top: 2px;
+    color: var(--accent);
+    font-size: .9rem;
+}
+
+/* Quote */
+.modal__quote {
+    font-family: var(--f-serif) !important;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    color: var(--accent) !important;
+    border-left: 2px solid var(--accent);
+    padding-left: 1.5rem;
+    margin: 3rem 0;
+    line-height: 1.5;
+}
+
+/* Pillar badge */
+.pillar-badge {
+    font-size: .6rem;
+    letter-spacing: .35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    display: block;
+    opacity: .7;
+}
+
+/* Back link */
+.back-home-btn {
+    position: absolute;
+    top: -3.5rem; left: 0;
+    font-family: var(--f-sans);
+    font-size: .72rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--fg-sub);
+    text-decoration: none;
+    display: flex; align-items: center; gap: .75rem;
+    transition: color .3s;
+}
+.back-home-btn:hover { color: var(--accent); }
+
+/* Nav bottom */
+.pillar-nav-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 5rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border-soft);
+}
+
+.pillar-nav-btn {
+    font-family: var(--f-sans);
+    font-size: .75rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--fg-sub);
+    text-decoration: none;
+    transition: color .3s;
+    display: flex; align-items: center; gap: 1rem;
+}
+.pillar-nav-btn:hover { color: var(--accent); }
+
+/* Background image */
+.pillar-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+    opacity: 0.3;
+}
+
+html[data-theme="light"] .pillar-bg { opacity: 0.15; mix-blend-mode: multiply; }
+
+/* Overlay */
+.pillar-overlay {
+    position: fixed; inset: 0;
+    background: linear-gradient(to bottom, rgba(13,11,9,.4) 0%, rgba(13,11,9,.65) 100%);
+    z-index: 1;
+}
+html[data-theme="light"] .pillar-overlay {
+    background: linear-gradient(to bottom, rgba(242,236,224,.6) 0%, rgba(242,236,224,.8) 100%);
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+    .pillar-content {
+        padding: 100px 1.2rem 4rem;
+    }
+    .pillar-nav-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.2rem;
+    }
+    .back-home-btn {
+        top: -2.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .pillar-title {
+        font-size: clamp(1.8rem, 9vw, 2.8rem) !important;
+    }
+    .pillar-body {
+        font-size: .9rem;
+    }
+}

@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="theme-color" content="#800020">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time as a Living Art Form | Domiinique</title>
+<meta name="description" content="Time is not a resource to be spent, measured, or chased. It is a medium through which life unfolds.">
+<link rel="stylesheet" href="css/main.css?v=9">
+<style>
+.time-hero{position:relative;min-height:80dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:140px var(--gap) 4rem;overflow:hidden;}
+.time-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(128,0,32,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 80%,rgba(201,168,76,.06) 0%,transparent 50%);pointer-events:none;}
+.time-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;max-width:900px;margin:4rem auto;padding:0 var(--gap);}
+.time-metric{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:12px;padding:2.2rem 1.5rem;text-align:center;position:relative;overflow:hidden;}
+.time-metric::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(128,0,32,.1) 0%,transparent 70%);pointer-events:none;}
+.time-metric__num{font-family:var(--f-serif);font-size:2.8rem;line-height:1;color:var(--accent2);margin-bottom:.5rem;}
+.time-metric__word{font-size:.56rem;letter-spacing:.35em;text-transform:uppercase;color:var(--fg-sub);margin-bottom:.4rem;}
+.time-metric__meaning{font-size:.78rem;color:var(--fg);opacity:.7;font-style:italic;}
+.essay-wrap{max-width:720px;margin:0 auto;padding:0 var(--gap) 8rem;}
+.essay-wrap p{font-size:1.03rem;line-height:1.95;color:var(--fg);margin-bottom:1.8rem;opacity:.88;}
+.essay-wrap p.pull{font-size:1.06rem;font-style:italic;color:var(--accent2);border-left:2px solid var(--accent);padding-left:1.5rem;margin:2.5rem 0;}
+@media(max-width:600px){.time-metrics{grid-template-columns:1fr 1fr;}.time-metric__num{font-size:2.2rem;}}
+</style>
+
+    <link rel="icon" href="assets/domiinique_logo.png" type="image/png">
+</head>
+<body>
+<nav id="nav" role="navigation" aria-label="Main Navigation">
+<a class="nav__logo" href="index.html"><span class="nav__logo-text">Domiinique</span><span class="nav__logo-motto">Living Signature</span></a>
+<ul class="nav__links">
+<li><a href="blueprint.html">Blueprint</a></li>
+<li><a href="integrated.html">Integrated</a></li>
+<li><a href="time.html" class="active">Time</a></li>
+<li><a href="inspiration.html">Inspiration</a></li>
+<li><a href="creative.html">Creative</a></li>
+<li><a href="canvas.html">Canvas</a></li>
+<li><a href="portraits.html">Portraits</a></li>
+<li><a href="journal.html">Journal</a></li>
+<li><a href="you.html">YOU</a></li>
+<li><a href="cocreation.html">Co-Creation</a></li>
+</ul>
+<div class="nav__utilities">
+
+<a href="books.html" class="nav-icon-btn" title="Books"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h14a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg></a>
+<a href="checkout.html" class="nav-icon-btn" title="Cart" style="position:relative;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 1.95-1.57l1.65-8.42H6"/></svg><span class="nav-cart-badge">0</span></a>
+            <a href="shop.html" class="nav-icon-btn" title="Shop" aria-label="Shop"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></a>
+            <a href="login.html" id="nav-auth-btn" class="nav-icon-btn" title="Archive Access" aria-label="Login">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            </a>
+            <a href="search.html" class="nav-icon-btn dom-search-btn" title="Search" aria-label="Search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+            <button id="music-btn" class="music-btn" aria-label="Play music"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72 264c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V456c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg></button>
+<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">&#x1F319;</button>
+<div class="nav__hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0" aria-expanded="false"><span></span><span></span><span></span></div>
+</div>
+</nav>
+
+<!-- Hero -->
+<section class="time-hero">
+<span class="t-eyebrow reveal">The Fourth Pillar</span>
+<h1 class="t-h1 reveal" style="max-width:650px;">Time as a<br><span class="t-serif">Living Art Form</span></h1>
+<p class="reveal" style="max-width:560px;margin-top:1.5rem;font-size:1rem;line-height:1.8;opacity:.75;">Time is not a resource to be spent, measured, or chased. It is a medium through which life unfolds, a dimension that carries energy, resonance, and possibility.</p>
+</section>
+
+<!-- Metrics -->
+<div class="time-metrics">
+<div class="time-metric reveal">
+<div class="time-metric__num">365</div>
+<div class="time-metric__word">Presence</div>
+<div class="time-metric__meaning">Days of conscious inhabitation</div>
+</div>
+<div class="time-metric reveal">
+<div class="time-metric__num">24</div>
+<div class="time-metric__word">Flow</div>
+<div class="time-metric__meaning">Hours of living architecture</div>
+</div>
+<div class="time-metric reveal">
+<div class="time-metric__num">7</div>
+<div class="time-metric__word">Pulse</div>
+<div class="time-metric__meaning">Rhythms shaping identity</div>
+</div>
+<div class="time-metric reveal">
+<div class="time-metric__num">&#8734;</div>
+<div class="time-metric__word">Signature</div>
+<div class="time-metric__meaning">The resonance you leave behind</div>
+</div>
+</div>
+
+<!-- Essay -->
+<section>
+<div class="essay-wrap">
+<p class="reveal">Time is not a resource to be spent, measured, or chased. It is a medium through which life unfolds, a dimension that carries energy, resonance, and possibility. Every hour, every minute, every fleeting second is infused with the subtle currents of existence. When observed, these currents reveal patterns, rhythms, and flows that shape not only the way we live but the signature we leave on the world.</p>
+<p class="pull reveal">The Time pillar is an invitation to see your hours as more than markers of productivity. It is an invitation to map, honour, and orchestrate your life’s moments, not through rigid schedules or external pressures, but through alignment, presence, and conscious design.</p>
+<p class="reveal">Each moment is a space, a canvas, a structure in which your life takes form.</p>
+<p class="reveal">In this perspective, time is living architecture. Its walls are the rituals we repeat, the spaces we inhabit, the choices we make, and the attention we bring to our days. Its floors are the patterns that carry us forward, sometimes imperceptibly, shaping our habits, our energy, and the invisible resonance we project into the world. Its ceilings are the aspirations and visions that hold our life above the mundane, giving direction and meaning to each rhythm and interval.</p>
+<p class="reveal">When approached unconsciously, time becomes a force that drifts through life like water slipping through fingers, chaotic, fragmented, and shaped by inherited routines and external demands. But when approached consciously, time becomes a deliberate system, a structure we inhabit with awareness, intention, and care.</p>
+<p class="pull reveal">Through the Time pillar, one begins to see how every rhythm, ritual, and choice matters. Morning moments of stillness, midday flows of focus, evening reflections, the pauses between action, all form a network of subtle energies that accumulate over days, weeks, and years.</p>
+<p class="reveal">These networks shape our clarity of thought, our sense of presence, our ability to respond rather than react. They shape the very architecture of our inner life, which in turn shapes the outer life we manifest.</p>
+<p class="reveal">The living art of time is about observing, curating, and refining these patterns. It is about understanding that a single intentional hour can carry more resonance than a lifetime of distracted movement. It is about recognizing that life does not exist in isolation of moments; it exists in the coherence and alignment of those moments, each flowing into the next like notes in a symphony, creating a melody that is uniquely yours.</p>
+<p class="reveal">By engaging consciously with time, one cultivates a life that is coherent, expressive, and deeply resonant. Every decision, every pause, every ritual contributes to a signature that is both subtle and powerful, one that moves beyond the superficial markers of achievement to the essence of how existence is lived.</p>
+<p class="pull reveal">This pillar is not a set of instructions. It is a perspective, a lens, and a practice, a way of seeing life as deliberate, dynamic, and living.</p>
+<p class="reveal">It reminds us that time is not something we passively experience; it is something we inhabit, sculpt, and harmonize with, shaping the form and quality of our existence.</p>
+<p class="pull reveal">Ultimately, the Time pillar teaches that to honor time is to honor life itself. To engage with its currents consciously is to step into a life that is architected, intentional, and luminous, a life where every hour resonates with purpose, presence, and the signature of who you truly are.</p>
+</div>
+</section>
+
+<footer>
+<div class="footer__inner" style="flex-direction:column;gap:.6rem;text-align:center;max-width:800px;margin:0 auto;">
+<a class="nav__logo" href="index.html" style="justify-content:center;"><span class="nav__logo-text">Domiinique</span></a>
+<p class="footer__copy" style="letter-spacing:.3em;font-size:.52rem;">LIVING SIGNATURE</p>
+<div class="social-links" style="display:flex;gap:1.5rem;justify-content:center;margin:0.5rem 0;">
+    <a href="https://www.instagram.com/domiinique_3589?igsh=MXRsd3JuM3BjZTdjMQ%3D%3D&utm_source=qr" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">Instagram</a>
+    <a href="https://www.tiktok.com/@dominique_3589" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">TikTok</a>
+    <a href="https://wa.me/251992013589" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">WhatsApp</a>
+</div>
+<p class="footer__copy" style="font-style:italic;opacity:.6;line-height:1.7;margin-top:1rem;">DOMIINIQUE: A SOVEREIGN SYSTEM OF DISCIPLINE, RESTRAINT, AND ARCHITECTURAL INTENT. UNFOLDING ACROSS EIGHT STRATEGIC DEPARTMENTS, THIS IS THE CALIBRATION OF THE LIVING SIGNATURE. EACH SECTOR IS A VORTEX OF ORDER, RHYTHM, AND SYSTEMIC EXCELLENCE.. AN OPERATIONAL BLUEPRINT FOR THE RESPONSIBILITY OF THE HORIZON.THINK. OBSERVE. ALIGN.</p>
+<p class="footer__copy">&copy; 2026 DOMIINIQUE. ALL RIGHTS RESERVED.</p>
+</div>
+</footer>
+
+<audio id="bg-audio" loop preload="none" src="assets/bg_music.mp3"></audio>
+<script src="js/cart.js"></script>
+<script src="js/main.js" defer></script>
+<script type="module" src="js/auth.js"></script>
+</body>
+</html>
+
