@@ -1,0 +1,12 @@
+id,title,author,category,price_etb,cover_url,description,status,rare_collection
+r1,The Book on the Taboo Against Knowing Who You Are,Alan Wilson Watts,Philosophy,2200,https://m.media-amazon.com/images/I/71OqGSEWDOL._AC_UF1000,1000_QL80_.jpg,Alan Watts dismantles the illusion of the separate self.,active,yes
+r2,The Prophet,Kahlil Gibran,Poetry,1400,https://m.media-amazon.com/images/I/61Lj5wbkw4L._AC_UF1000,1000_QL80_.jpg,Kahlil Gibran's masterpiece on love freedom and sorrow.,active,yes
+r3,The Red Book,C.G. Jung,Psychology,8500,https://m.media-amazon.com/images/I/71pOqXeJT3L._AC_UF1000,1000_QL80_.jpg,Carl Jung's most personal and visionary work.,active,yes
+r4,The Way of the Superior Man,David Deida,Spirituality,2600,https://m.media-amazon.com/images/I/71Kw5TZbRtL._AC_UF1000,1000_QL80_.jpg,A guide to cultivating masculine depth purpose and presence.,active,yes
+r5,The Secret Doctrine,Helena Blavatsky,Esoteric,5200,https://m.media-amazon.com/images/I/81oU7skkD2L._AC_UF1000,1000_QL80_.jpg,Helena Blavatsky's monumental synthesis of science religion and philosophy.,active,yes
+r6,Women Who Run with the Wolves,Clarissa Pinkola Estes,Psychology,3100,https://m.media-amazon.com/images/I/71H2KXjZH9L._AC_UF1000,1000_QL80_.jpg,Myths and stories of the Wild Woman archetype.,active,yes
+1,The Power of Now,Eckhart Tolle,Spirituality,2200,https://m.media-amazon.com/images/I/61Ij8nLooNL._AC_UF1000,1000_QL80_.jpg,A guide to spiritual enlightenment through presence.,active,no
+2,Atomic Habits,James Clear,Self-Help,2000,https://m.media-amazon.com/images/I/81kg51XRc1L._AC_UF1000,1000_QL80_.jpg,An easy and proven way to build good habits.,active,no
+3,The Creative Act,Rick Rubin,Creativity,2600,https://m.media-amazon.com/images/I/71H5fCvwLZL._AC_UF1000,1000_QL80_.jpg,A Way of Being by Rick Rubin.,active,no
+4,Man's Search for Meaning,Viktor E. Frankl,Philosophy,1800,https://m.media-amazon.com/images/I/61157LApbuL._AC_UF1000,1000_QL80_.jpg,How to find purpose in extreme circumstances.,active,no
+5,The Untethered Soul,Michael A. Singer,Spirituality,2500,https://m.media-amazon.com/images/I/61HtJhW6adL._AC_UF1000,1000_QL80_.jpg,The journey beyond yourself.,active,no

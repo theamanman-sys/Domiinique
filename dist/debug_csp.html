@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSP Debug</title>
+</head>
+<body>
+    <h1>CSP Debug</h1>
+    <pre id="csp-info"></pre>
+    <script>
+        fetch(window.location.href).then(res => {
+            const csp = res.headers.get('Content-Security-Policy');
+            document.getElementById('csp-info').innerText = "Header CSP: " + (csp || "None found in response headers");
+            
+            const meta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
+            document.getElementById('csp-info').innerText += "\nMeta CSP: " + (meta ? meta.content : "None found in <meta>");
+        });
+    </script>
+</body>
+</html>

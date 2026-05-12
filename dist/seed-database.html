@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domiinique - Database Seeder</title>
+    <style>
+        body { font-family: monospace; background: #1a1a2e; color: #fff; padding: 20px; }
+        .log { background: #0f0f1a; padding: 10px; margin: 10px 0; border-radius: 4px; max-height: 500px; overflow-y: auto; }
+        .success { color: #4CAF50; }
+        .error { color: #f44336; }
+        .info { color: #2196F3; }
+        .warning { color: #ff9800; }
+        button { background: #800020; color: white; border: none; padding: 15px 30px; cursor: pointer; font-size: 16px; border-radius: 4px; }
+        button:disabled { background: #555; cursor: not-allowed; }
+        .progress { background: #333; height: 20px; border-radius: 4px; margin: 10px 0; overflow: hidden; }
+        .progress-bar { background: #800020; height: 100%; transition: width 0.3s; }
+        .stats { display: flex; gap: 20px; margin: 10px 0; }
+        .stat { background: #0f0f1a; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Domiinique Database Seeder</h1>
+    <p>This will seed the database ONCE with users, settings, and books with covers.</p>
+    
+    <div class="stats">
+        <div class="stat">Users: <span id="users-count">0</span></div>
+        <div class="stat">Products: <span id="products-count">0</span></div>
+        <div class="stat">Books: <span id="books-count">0</span></div>
+        <div class="stat">Covers: <span id="covers-count">0</span></div>
+    </div>
+    
+    <div class="progress">
+        <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+    </div>
+    
+    <button id="seedBtn" onclick="startSeeding()">🌱 Start Seeding</button>
+    <div id="log" class="log"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, where, deleteDoc, doc, setDoc, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+
+        const { FIREBASE_CONFIG: firebaseConfig } = await import('./js/env-config.js');
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        const logEl = document.getElementById('log');
+        const seedBtn = document.getElementById('seedBtn');
+        const progressBar = document.getElementById('progress-bar');
+        const usersCount = document.getElementById('users-count');
+        const productsCount = document.getElementById('products-count');
+        const booksCount = document.getElementById('books-count');
+        const coversCount = document.getElementById('covers-count');
+
+        let coversLoaded = 0;
+        let totalBooks = 0;
+
+        function writeLog(msg, type = 'info') {
+            const p = document.createElement('p');
+            p.className = type;
+            p.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            logEl.appendChild(p);
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+
+        function updateProgress(current, total) {
+            const percent = Math.round((current / total) * 100);
+            progressBar.style.width = percent + '%';
+        }
+
+        // Users data
+        const USERS = [
+            { email: "admin@domiinique.com", password: "Dominique2026!", role: "admin", displayName: "Admin" },
+            { email: "user@domiinique.com", password: "User2026!", role: "user", displayName: "User" }
+        ];
+
+        // Products data
+        const PRODUCTS = [
+            { id: '1', name: 'Sacred Aroma Oils', category: 'Ritual', price: 2400, img: 'assets/Shop/aroma oils.jpg', status: 'active', desc: 'Spiritually infused botanical oils crafted for introspection and spiritual awakening.' },
+            { id: '2', name: 'Black Mahakala Tibetan Incense', category: 'Ritual', price: 980, img: 'assets/Shop/black_mahakala_tibetan_incense.jpg', status: 'active', desc: 'Handcrafted according to ancient Himalayan recipes to purify any space.' },
+            { id: '3', name: 'Ceremonial Candle Set', category: 'Sensory', price: 1650, img: 'assets/Shop/candles.jpg', status: 'active', desc: 'A collection of candles for purification, renewal, and clarity.' },
+            { id: '4', name: 'Corinthian Wind Chime Bells', category: 'Sensory', price: 3200, img: 'assets/Shop/corinthian_bells.jpg', status: 'active', desc: 'Precisely hand-tuned chimes producing deep resonant sound.' },
+            { id: '5', name: 'Artisan Mist Diffuser', category: 'Wellness', price: 4500, img: 'assets/Shop/diffuser.jpg', status: 'active', desc: 'Ultrasonic technology with handcrafted blown glass covers.' },
+            { id: '6', name: 'Conscious Living Journal', category: 'Stationery', price: 1200, img: 'assets/Shop/notebook.jpg', status: 'active', desc: 'A space for intentional reflection and stream-of-consciousness writing.' },
+            { id: '7', name: 'Sacred Tea Ceremony Set', category: 'Wellness', price: 5800, img: 'assets/Shop/tea_set.jpg', status: 'active', desc: 'Transforms tea drinking into a spiritual ritual of presence.' },
+            { id: '8', name: 'Presence Practice Mat', category: 'Wellness', price: 3800, img: 'assets/Shop/yoga_mat.jpg', status: 'active', desc: 'A stable foundation for the mind-body connection.' }
+        ];
+
+        // Settings data
+        const SETTINGS = {
+            siteName: "Domiinique",
+            tagline: "Living Signature",
+            email: "contact@domiinique.com",
+            phone: "+251 992 013 589",
+            instagram: "domiinique_3589",
+            tiktok: "dominique_3589",
+            whatsapp: "251992013589",
+            address: "Ethiopia"
+        };
+
+        // Books data
+        const BOOKS = [
+            // PHASE I: HUMAN NATURE (15 books)
+            { title: "The Laws of Human Nature", author: "Robert Greene", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 350, searchKey: "laws of human nature robert greene" },
+            { title: "Man and His Symbols", author: "Carl Jung", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 280, searchKey: "man and his symbols carl jung" },
+            { title: "Thinking Fast and Slow", author: "Daniel Kahneman", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 320, searchKey: "thinking fast and slow daniel kahneman" },
+            { title: "The Denial of Death", author: "Ernest Becker", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 250, searchKey: "denial of death ernest becker" },
+            { title: "The Crowd: A Study of the Popular Mind", author: "Gustave Le Bon", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 220, searchKey: "crowd gustave le bon popular mind" },
+            { title: "The Art of Worldly Wisdom", author: "Baltasar Gracián", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 200, searchKey: "art of worldly wisdom baltasar gracian" },
+            { title: "Influence: The Psychology of Persuasion", author: "Robert Cialdini", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 300, searchKey: "influence psychology persuasion robert cialdini" },
+            { title: "The Moral Animal", author: "Robert Wright", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 270, searchKey: "moral animal robert wright" },
+            { title: "Beyond Good and Evil", author: "Friedrich Nietzsche", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 180, searchKey: "beyond good and evil friedrich nietzsche" },
+            { title: "The Hero with a Thousand Faces", author: "Joseph Campbell", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 290, searchKey: "hero with a thousand faces joseph campbell" },
+            { title: "Flow", author: "Mihaly Csikszentmihalyi", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 260, searchKey: "flow mihaly csikszentmihalyi" },
+            { title: "The Selfish Gene", author: "Richard Dawkins", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 310, searchKey: "selfish gene richard dawkins" },
+            { title: "Metaphors We Live By", author: "George Lakoff", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 240, searchKey: "metaphors we live by george lakoff" },
+            { title: "The Archetypes and the Collective Unconscious", author: "Carl Jung", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 230, searchKey: "archetypes collective unconscious carl jung" },
+            { title: "Status Anxiety", author: "Alain de Botton", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 210, searchKey: "status anxiety alain de botton" },
+            
+            // PHASE II: STATECRAFT (15 books)
+            { title: "The Prince", author: "Niccolò Machiavelli", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 190, searchKey: "prince niccolo machiavelli" },
+            { title: "The Art of War", author: "Sun Tzu", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 170, searchKey: "art of war sun tzu" },
+            { title: "Diplomacy", author: "Henry Kissinger", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 330, searchKey: "diplomacy henry kissinger" },
+            { title: "The Republic", author: "Plato", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 210, searchKey: "republic plato" },
+            { title: "Meditations", author: "Marcus Aurelius", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 160, searchKey: "meditations marcus aurelius" },
+            { title: "The 48 Laws of Power", author: "Robert Greene", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 350, searchKey: "48 laws of power robert greene" },
+            { title: "The Dictator's Handbook", author: "Bruce Bueno de Mesquita", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 280, searchKey: "dictator's handbook bueno de mesquita" },
+            { title: "The Lessons of History", author: "Will & Ariel Durant", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 250, searchKey: "lessons of history will ariel durant" },
+            { title: "On War", author: "Carl von Clausewitz", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 300, searchKey: "on war carl von clausewitz" },
+            { title: "The Sovereign Individual", author: "James Dale Davidson", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 290, searchKey: "sovereign individual davidson" },
+            { title: "Team of Rivals", author: "Doris Kearns Goodwin", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 320, searchKey: "team of rivals doris kearns goodwin" },
+            { title: "The Social Contract", author: "Jean-Jacques Rousseau", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 200, searchKey: "social contract jean-jacques rousseau" },
+            { title: "Principles for Dealing with the Changing World Order", author: "Ray Dalio", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 340, searchKey: "principles changing world order ray dalio" },
+            { title: "The Wealth of Nations", author: "Adam Smith", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 270, searchKey: "wealth of nations adam smith" },
+            { title: "Politics", author: "Aristotle", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 220, searchKey: "politics aristotle" },
+            
+            // PHASE III: SYSTEMS THINKING (15 books)
+            { title: "Thinking in Systems", author: "Donella Meadows", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 280, searchKey: "thinking in systems donella meadows" },
+            { title: "The Fifth Discipline", author: "Peter Senge", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 310, searchKey: "fifth discipline peter senge" },
+            { title: "Gödel, Escher, Bach", author: "Douglas Hofstadter", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 350, searchKey: "godel escher bach douglas hofstadter" },
+            { title: "The Master and His Emissary", author: "Iain McGilchrist", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 290, searchKey: "master and his emissary iain mcgilchrist" },
+            { title: "The Age of AI", author: "Henry Kissinger", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 320, searchKey: "age of artificial intelligence henry kissinger" },
+            { title: "Zero to One", author: "Peter Thiel", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 270, searchKey: "zero to one peter thiel" },
+            { title: "Algorithms to Live By", author: "Brian Christian", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 260, searchKey: "algorithms to live by brian christian" },
+            { title: "The Information", author: "James Gleick", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 300, searchKey: "information james gleick" },
+            { title: "Antifragile", author: "Nassim Nicholas Taleb", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 330, searchKey: "antifragile nassim taleb" },
+            { title: "The Black Swan", author: "Nassim Nicholas Taleb", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 310, searchKey: "black swan nassim taleb" },
+            { title: "Complexity: A Guided Tour", author: "Melanie Mitchell", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 250, searchKey: "complexity guided tour melanie mitchell" },
+            { title: "Simulacra and Simulation", author: "Jean Baudrillard", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 240, searchKey: "simulacra and simulation jean baudrillard" },
+            { title: "Life 3.0", author: "Max Tegmark", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 280, searchKey: "life 3.0 max tegmark artificial intelligence" },
+            { title: "The Structure of Scientific Revolutions", author: "Thomas Kuhn", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 230, searchKey: "structure of scientific revolutions thomas kuhn" },
+            { title: "Code: And Other Laws of Cyberspace", author: "Lawrence Lessig", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 220, searchKey: "code and other laws of cyberspace lawrence lessig" },
+            
+            // PHASE IV: AESTHETIC INTEGRITY (15 books)
+            { title: "The Design of Everyday Things", author: "Don Norman", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 250, searchKey: "design of everyday things don norman" },
+            { title: "The Poetics of Space", author: "Gaston Bachelard", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 240, searchKey: "poetics of space gaston bachelard" },
+            { title: "The Architecture of Happiness", author: "Alain de Botton", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 230, searchKey: "architecture of happiness alain de botton" },
+            { title: "A Pattern Language", author: "Christopher Alexander", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 320, searchKey: "pattern language christopher alexander" },
+            { title: "Bauhaus", author: "Magdalena Droste", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 280, searchKey: "bauhaus magdalena droste" },
+            { title: "In Praise of Shadows", author: "Jun'ichirō Tanizaki", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 200, searchKey: "in praise of shadows junichiro tanizaki" },
+            { title: "Wabi-Sabi for Artists", author: "Leonard Koren", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 210, searchKey: "wabi sabi for artists leonard koren" },
+            { title: "Minimalism", author: "Tartan & White", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 190, searchKey: "minimalism design tartan white" },
+            { title: "The Elements of Style", author: "William Strunk Jr.", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 150, searchKey: "elements of style william strunk" },
+            { title: "The Aesthetics of Architecture", author: "Roger Scruton", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 260, searchKey: "aesthetics of architecture roger scrutton" },
+            { title: "Adolf Loos: Ornament and Crime", author: "Adolf Loos", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 220, searchKey: "adolf loos ornament crime" },
+            { title: "Dieter Rams: Ten Principles", author: "Various", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 270, searchKey: "dieter rams ten principles good design" },
+            { title: "Parisian Interiors", author: "Herbert Ypma", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 290, searchKey: "parisian interiors herbert ypma" },
+            { title: "Ralph Lauren (50th Anniversary)", author: "Ralph Lauren", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 380, searchKey: "ralph lauren 50th anniversary book" },
+            
+            // PHASE V: UNBOUND LOGIC (15 books)
+            { title: "Thus Spoke Zarathustra", author: "Friedrich Nietzsche", phase: "PHASE V: UNBOUND LOGIC", phaseOrder: 5, category: "Philosophy", price: 180, searchKey: "thus spoke zarathustra friedrich nietzsche" },
+            { title: "The Book of Five Rings", author: "Miyamoto Musashi", phase: "PHASE V: UNBOUND LOGIC", phaseOrder: 5, category: "Philosophy", price: 160, searchKey: "book of five rings miyamoto musashi" },
+            { title: "The Alchemist", author: "Paulo Coelho", phase: "PHASE V: UNBOUND LOGIC", phaseOrder: 5, category: "Philosophy", price: 200, searchKey: "alchemist paulo coelho" },
+            { title: "Siddhartha", author: "Hermann Hesse", phase: "PHASE V: UNBOUND LOGIC", phaseOrder: 5, category: "Philosophy", price: 190, searchKey: "siddhartha hermann hesse" },
+            { title: "The Prophet", author: "Kahlil Gibran", phase: "PHASE V: UNBOUND LOGIC", phaseOrder: 5, category: "Philosophy", price: 170, searchKey: "prophet kahlil gibran" },
+            { title: "The War of Art", author: "Steven Pressfield", phase: "PHASE V: UNBOUND LOGIC", phaseOrder: 5, category: "Philosophy", price: 220, searchKey: "war of art steven pressfield" },
+            { title: "Man's Search for Meaning", author: "Viktor Frankl", phase: "PHASE V: UNBOUND LOGIC", phaseOrder: 5, category: "Philosophy", price: 210, searchKey: "man's search for meaning viktor frankl" },
+            { title: "The Bhagavad Gita", author: "Various", phase: "PHASE V: UNBOUND LOGIC", phaseOrder: 5, category: "Philosophy", price: 140, searchKey: "bhagavad gita" },
+            { title: "The Tao Te Ching", author: "Lao Tzu", phase: "PHASE V: UNBOUND LOGIC", phaseOrder: 5, category: "Philosophy", price: 130, searchKey: "tao te ching lao tzu" },
+            { title: "The Daily Stoic", author: "Ryan Holiday", phase: "PHASE V: UNBOUND LOGIC", phaseOrder: 5, category: "Philosophy", price: 230, searchKey: "daily stoic ryan holiday" },
+            { title: "Letters to a Young Poet", author: "Rainer Maria Rilke", phase: "PHASE V: UNBOUND LOGIC", phaseOrder: 5, category: "Philosophy", price: 150, searchKey: "letters to a young poet rainer maria rilke" },
+            { title: "Zen and the Art of Motorcycle Maintenance", author: "Robert Pirsig", phase: "PHASE V: UNBOUND LOGIC", phaseOrder: 5, category: "Philosophy", price: 240, searchKey: "zen and the art of motorcycle maintenance robert pirsig" },
+            { title: "Creative Confidence", author: "Tom & David Kelley", phase: "PHASE V: UNBOUND LOGIC", phaseOrder: 5, category: "Philosophy", price: 260, searchKey: "creative confidence tom david kelley" },
+            { title: "The Marriage of Heaven and Hell", author: "William Blake", phase: "PHASE V: UNBOUND LOGIC", phaseOrder: 5, category: "Philosophy", price: 160, searchKey: "marriage of heaven and hell william blake" },
+            { title: "Stasis", author: "Various", phase: "PHASE V: UNBOUND LOGIC", phaseOrder: 5, category: "Philosophy", price: 180, searchKey: "stasis philosophical essays" },
+            
+            // PHASE VI: THE IMPERIAL ROOT (10 books)
+            { title: "The Kebra Nagast", author: "Various", phase: "PHASE VI: THE IMPERIAL ROOT", phaseOrder: 6, category: "Ethiopian", price: 250, searchKey: "kebra nagast ethiopia" },
+            { title: "The Fetha Nagast", author: "Various", phase: "PHASE VI: THE IMPERIAL ROOT", phaseOrder: 6, category: "Ethiopian", price: 230, searchKey: "fetha nagast ethiopia" },
+            { title: "The Life and Progress of Emperor Haile Selassie I", author: "Haile Selassie I", phase: "PHASE VI: THE IMPERIAL ROOT", phaseOrder: 6, category: "Ethiopian", price: 350, searchKey: "haile selassie life progress ethiopia" },
+            { title: "The Chronicles of Emperor Menelik II", author: "Various", phase: "PHASE VI: THE IMPERIAL ROOT", phaseOrder: 6, category: "Ethiopian", price: 280, searchKey: "menelik II ethiopia emperor" },
+            { title: "Empress Taytu Betul: Lioness of Ethiopia", author: "Various", phase: "PHASE VI: THE IMPERIAL ROOT", phaseOrder: 6, category: "Ethiopian", price: 270, searchKey: "empress taytu betul lioness ethiopia" },
+            { title: "The Ethiopian Tewahedo Church Architecture & Art", author: "Various", phase: "PHASE VI: THE IMPERIAL ROOT", phaseOrder: 6, category: "Ethiopian", price: 320, searchKey: "ethiopian tewahedo church architecture art" },
+            { title: "Works by Afewerk Tekle", author: "Afewerk Tekle", phase: "PHASE VI: THE IMPERIAL ROOT", phaseOrder: 6, category: "Ethiopian", price: 300, searchKey: "afewerk tekle ethiopian artist" },
+            { title: "The Oromo Gadaa System", author: "Various", phase: "PHASE VI: THE IMPERIAL ROOT", phaseOrder: 6, category: "Ethiopian", price: 260, searchKey: "oromo gadaa system ethiopia" },
+            { title: "Tsegaye Gabre-Medhin's Poetry and Plays", author: "Tsegaye Gabre-Medhin", phase: "PHASE VI: THE IMPERIAL ROOT", phaseOrder: 6, category: "Ethiopian", price: 290, searchKey: "tsegaye gabre-medhin poetry plays ethiopia" },
+            { title: "Pillars of Ethiopian History", author: "Taddesse Tamrat", phase: "PHASE VI: THE IMPERIAL ROOT", phaseOrder: 6, category: "Ethiopian", price: 310, searchKey: "pillars of ethiopian history taddesse tamrat" },
+            
+            // PHASE VII: MACRO-ECONOMICS (8 books)
+            { title: "The Ascent of Money", author: "Niall Ferguson", phase: "PHASE VII: MACRO-ECONOMICS", phaseOrder: 7, category: "Economics", price: 310, searchKey: "ascent of money niall ferguson" },
+            { title: "Debt: The First 5,000 Years", author: "David Graeber", phase: "PHASE VII: MACRO-ECONOMICS", phaseOrder: 7, category: "Economics", price: 290, searchKey: "debt first 5000 years david graeber" },
+            { title: "The Creature from Jekyll Island", author: "G. Edward Griffin", phase: "PHASE VII: MACRO-ECONOMICS", phaseOrder: 7, category: "Economics", price: 280, searchKey: "creature from jekyll island edward griffin" },
+            { title: "Capital in the Twenty-First Century", author: "Thomas Piketty", phase: "PHASE VII: MACRO-ECONOMICS", phaseOrder: 7, category: "Economics", price: 350, searchKey: "capital twenty-first century thomas piketty" },
+            { title: "The Bitcoin Standard", author: "Saifedean Ammous", phase: "PHASE VII: MACRO-ECONOMICS", phaseOrder: 7, category: "Economics", price: 270, searchKey: "bitcoin standard saifedean ammous" },
+            { title: "Economics in One Lesson", author: "Henry Hazlitt", phase: "PHASE VII: MACRO-ECONOMICS", phaseOrder: 7, category: "Economics", price: 200, searchKey: "economics in one lesson henry hazlitt" },
+            { title: "The Alchemy of Finance", author: "George Soros", phase: "PHASE VII: MACRO-ECONOMICS", phaseOrder: 7, category: "Economics", price: 320, searchKey: "alchemy of finance george soros" },
+            { title: "Basic Economics", author: "Thomas Sowell", phase: "PHASE VII: MACRO-ECONOMICS", phaseOrder: 7, category: "Economics", price: 250, searchKey: "basic economics thomas sowell" },
+            
+            // PHASE VIII: BIOLOGICAL SOVEREIGNTY (7 books)
+            { title: "The Emperor of All Maladies", author: "Siddhartha Mukherjee", phase: "PHASE VIII: BIOLOGICAL SOVEREIGNTY", phaseOrder: 8, category: "Biology", price: 330, searchKey: "emperor of all maladies siddhartha mukherjee cancer" },
+            { title: "The Body Electric", author: "Robert O. Becker", phase: "PHASE VIII: BIOLOGICAL SOVEREIGNTY", phaseOrder: 8, category: "Biology", price: 260, searchKey: "body electric robert becker" },
+            { title: "The Botany of Desire", author: "Michael Pollan", phase: "PHASE VIII: BIOLOGICAL SOVEREIGNTY", phaseOrder: 8, category: "Biology", price: 240, searchKey: "botany of desire michael pollan" },
+            { title: "Medical Nemesis", author: "Ivan Illich", phase: "PHASE VIII: BIOLOGICAL SOVEREIGNTY", phaseOrder: 8, category: "Biology", price: 220, searchKey: "medical nemesis ivan illich" },
+            { title: "Being Mortal", author: "Atul Gawande", phase: "PHASE VIII: BIOLOGICAL SOVEREIGNTY", phaseOrder: 8, category: "Biology", price: 290, searchKey: "being mortal atul gawande medicine" },
+            { title: "The Hidden Life of Trees", author: "Peter Wohlleben", phase: "PHASE VIII: BIOLOGICAL SOVEREIGNTY", phaseOrder: 8, category: "Biology", price: 250, searchKey: "hidden life of trees peter wohlleben" },
+            { title: "African Herbal Pharmacopoeia", author: "Various", phase: "PHASE VIII: BIOLOGICAL SOVEREIGNTY", phaseOrder: 8, category: "Biology", price: 380, searchKey: "african herbal pharmacopoeia" },
+            
+            // PHASE IX: INFRASTRUCTURE (4 books)
+            { title: "The Works: Anatomy of a City", author: "Kate Ascher", phase: "PHASE IX: INFRASTRUCTURE", phaseOrder: 9, category: "Architecture", price: 280, searchKey: "works anatomy of a city kate ascher" },
+            { title: "The Power Broker", author: "Robert Caro", phase: "PHASE IX: INFRASTRUCTURE", phaseOrder: 9, category: "Architecture", price: 350, searchKey: "power broker robert caro new york" },
+            { title: "Sustainable Infrastructure", author: "Various", phase: "PHASE IX: INFRASTRUCTURE", phaseOrder: 9, category: "Architecture", price: 260, searchKey: "sustainable infrastructure" },
+            { title: "Smart Cities", author: "Anthony Townsend", phase: "PHASE IX: INFRASTRUCTURE", phaseOrder: 9, category: "Architecture", price: 240, searchKey: "smart cities anthony townsend" },
+            
+            // PHASE X: PREDATORY LOGIC (5 books)
+            { title: "The 48 Laws of Power", author: "Robert Greene", phase: "PHASE X: PREDATORY LOGIC", phaseOrder: 10, category: "Defense", price: 350, searchKey: "48 laws of power robert greene" },
+            { title: "The Art of Seduction", author: "Robert Greene", phase: "PHASE X: PREDATORY LOGIC", phaseOrder: 10, category: "Defense", price: 320, searchKey: "art of seduction robert greene" },
+            { title: "Propaganda", author: "Edward Bernays", phase: "PHASE X: PREDATORY LOGIC", phaseOrder: 10, category: "Defense", price: 220, searchKey: "propaganda edward bernays" },
+            { title: "Snakes in Suits", author: "Paul Babiak", phase: "PHASE X: PREDATORY LOGIC", phaseOrder: 10, category: "Defense", price: 280, searchKey: "snakes in suits paul babiak" },
+            { title: "Games People Play", author: "Eric Berne", phase: "PHASE X: PREDATORY LOGIC", phaseOrder: 10, category: "Defense", price: 200, searchKey: "games people play eric berne" },
+            
+            // PHASE XI: ETHIOPIAN IMPERIAL EXCELLENCE (5 books)
+            { title: "The Autobiography of Emperor Haile Selassie I", author: "Haile Selassie I", phase: "PHASE XI: ETHIOPIAN IMPERIAL EXCELLENCE", phaseOrder: 11, category: "Ethiopian", price: 400, searchKey: "autobiography haile selassie emperor" },
+            { title: "Pioneers of Change in Ethiopia", author: "Bahru Zewde", phase: "PHASE XI: ETHIOPIAN IMPERIAL EXCELLENCE", phaseOrder: 11, category: "Ethiopian", price: 320, searchKey: "pioneers of change ethiopia bahru zewde" },
+            { title: "The Ethiopian Orthodox Church: A History", author: "John Binns", phase: "PHASE XI: ETHIOPIAN IMPERIAL EXCELLENCE", phaseOrder: 11, category: "Ethiopian", price: 280, searchKey: "ethiopian orthodox church history john binns" },
+            { title: "The Battle of Adwa", author: "Various", phase: "PHASE XI: ETHIOPIAN IMPERIAL EXCELLENCE", phaseOrder: 11, category: "Ethiopian", price: 350, searchKey: "battle of adwa ethiopia 1896" },
+            { title: "Haile Selassie's Government", author: "Christopher Clapham", phase: "PHASE XI: ETHIOPIAN IMPERIAL EXCELLENCE", phaseOrder: 11, category: "Ethiopian", price: 300, searchKey: "haile selassie government christopher clapham" }
+        ];
+
+        // Fetch cover from OpenLibrary
+        async function fetchCover(searchKey, title) {
+            try {
+                const resp = await fetch('https://openlibrary.org/search.json?q=' + encodeURIComponent(searchKey) + '&limit=1');
+                const data = await resp.json();
+                if (data.docs && data.docs.length > 0 && data.docs[0].cover_i) {
+                    coversLoaded++;
+                    coversCount.textContent = coversLoaded;
+                    return 'https://covers.openlibrary.org/b/id/' + data.docs[0].cover_i + '-L.jpg';
+                }
+            } catch(e) {
+                console.warn('Cover fetch failed for:', title);
+            }
+            return 'assets/books/book-placeholder.png';
+        }
+
+        async function startSeeding() {
+            seedBtn.disabled = true;
+            seedBtn.textContent = 'Seeding...';
+            
+            try {
+                writeLog('Checking database collections...', 'info');
+
+                // ── 1. Users (Firebase Auth + Firestore profile) ──
+                writeLog('Seeding users...', 'info');
+                let userCount = 0;
+                for (const user of USERS) {
+                    try {
+                        const cred = await createUserWithEmailAndPassword(auth, user.email, user.password);
+                        await setDoc(doc(db, 'users', cred.user.uid), {
+                            email: user.email,
+                            displayName: user.displayName,
+                            role: user.role,
+                            createdAt: serverTimestamp()
+                        });
+                        writeLog(`✓ Created ${user.role}: ${user.email}`, 'success');
+                        userCount++;
+                    } catch(e) {
+                        if (e.code === 'auth/email-already-exists') {
+                            writeLog(`User exists: ${user.email}`, 'info');
+                        } else {
+                            writeLog(`User error: ${e.message}`, 'error');
+                        }
+                    }
+                }
+                usersCount.textContent = userCount || 'already exists';
+
+                // ── 2. Settings ──
+                writeLog('Seeding settings...', 'info');
+                await setDoc(doc(db, 'settings', 'site'), SETTINGS);
+                writeLog('✓ Settings seeded!', 'success');
+
+                // ── 3. Products ──
+                writeLog('Checking products collection...', 'info');
+                const productsCheck = await getDocs(collection(db, 'products'));
+                if (productsCheck.empty) {
+                    writeLog(`Seeding ${PRODUCTS.length} products...`, 'info');
+                    for (const p of PRODUCTS) {
+                        await setDoc(doc(db, 'products', p.id), p);
+                        writeLog(`✓ Product: ${p.name}`, 'success');
+                    }
+                    productsCount.textContent = PRODUCTS.length;
+                    writeLog(`✅ ${PRODUCTS.length} products seeded.`, 'success');
+                } else {
+                    writeLog(`Products already seeded (${productsCheck.size} found). Skipping...`, 'info');
+                    productsCount.textContent = productsCheck.size;
+                }
+
+                // ── 4. Books with Covers ──
+                writeLog('Checking books collection...', 'info');
+                const booksCheck = await getDocs(collection(db, 'books'));
+                if (!booksCheck.empty) {
+                    writeLog(`Books already seeded (${booksCheck.size} found). Skipping...`, 'info');
+                    booksCount.textContent = booksCheck.size;
+                } else {
+                    totalBooks = BOOKS.length;
+                    writeLog(`Fetching covers and seeding ${totalBooks} books...`, 'info');
+                    
+                    for (let i = 0; i < BOOKS.length; i++) {
+                        const book = BOOKS[i];
+                        const coverUrl = await fetchCover(book.searchKey, book.title);
+                        
+                        await addDoc(collection(db, 'books'), {
+                            title: book.title,
+                            author: book.author,
+                            phase: book.phase,
+                            phaseOrder: book.phaseOrder,
+                            category: book.category,
+                            price: book.price,
+                            searchKey: book.searchKey,
+                            img: coverUrl,
+                            description: book.title + ' by ' + book.author + '. Part of ' + book.phase + '.',
+                            status: 'active',
+                            createdAt: serverTimestamp()
+                        });
+                        
+                        updateProgress(i + 1, totalBooks);
+                        booksCount.textContent = i + 1;
+                        
+                        const icon = coverUrl.includes('openlibrary') ? '✓' : '○';
+                        writeLog(icon + ' ' + book.title, coverUrl.includes('openlibrary') ? 'success' : 'warning');
+                        
+                        await new Promise(r => setTimeout(r, 200));
+                    }
+                    writeLog(`✅ ${totalBooks} books with ${coversLoaded} covers loaded.`, 'success');
+                }
+
+                writeLog('✅ Seeding complete!', 'success');
+                seedBtn.textContent = 'Seeding Complete ✓';
+
+            } catch(e) {
+                writeLog('Error: ' + e.message, 'error');
+                seedBtn.disabled = false;
+                seedBtn.textContent = 'Retry Seeding';
+            }
+        }
+
+        window.startSeeding = startSeeding;
+    </script>
+</body>
+</html>

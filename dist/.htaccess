@@ -1,0 +1,164 @@
+# ======================================================================
+# DOMIINIQUE SERVER CONFIGURATION (cPanel/Apache) — SECURE v2
+# ======================================================================
+
+# ----------------------------------------------------------------------
+# 1. FORCE SSL (HTTPS)
+# ----------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 2. SECURITY HEADERS (WAF + CSP)
+# ----------------------------------------------------------------------
+<IfModule mod_headers.c>
+    # Prevent clickjacking
+    Header always set X-Frame-Options "SAMEORIGIN"
+
+    # Prevent MIME-based attacks
+    Header always set X-Content-Type-Options "nosniff"
+
+    # XSS protection (legacy browsers)
+    Header always set X-XSS-Protection "1; mode=block"
+
+    # Enforce HTTPS strictly (HSTS)
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+    # Referrer policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Permissions policy (disable unused powerful features)
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()"
+
+    # Content Security Policy (Apache/Production Layer)
+    # 1. Unset existing CSPs to prevent "Double Header" conflicts that block thumbnails
+    Header unset Content-Security-Policy
+    Header always unset Content-Security-Policy
+
+    # 2. Set the single source of truth for security
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://www.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com https://ga.jspm.io https://js.puter.com https://js.chapa.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://i.ytimg.com https://img.youtube.com https://*.ytimg.com https://*.youtube.com https://*.unsplash.com https://images.unsplash.com https://*.googleapis.com https://*.gstatic.com https://books.google.com https://covers.openlibrary.org https://openlibrary.org https://*.openlibrary.org https://archive.org https://*.archive.org https://i.imgflip.com https://image.tmdb.org https://assets.chapa.co https://*.chapa.co https://api.qrserver.com https://*.spoonacular.com https://spoonacular.com https://api.dicebear.com https://m.media-amazon.com; connect-src 'self' blob: https://*.firebaseio.com https://*.googleapis.com https://*.firebasestorage.app https://generativelanguage.googleapis.com https://api.themoviedb.org https://js.puter.com https://js.chapa.co https://inline.chapaservices.net https://*.chapaservices.net wss://*.firebaseio.com wss://api.puter.com https://www.gstatic.com https://api.spoonacular.com https://cdn.jsdelivr.net https://ga.jspm.io; frame-src https://www.youtube.com https://youtube.com; media-src 'self' blob: https://actions.google.com; worker-src blob:; object-src 'none'; upgrade-insecure-requests;"
+
+    # Remove server signature from responses
+    Header always unset X-Powered-By
+    Header always unset Server
+</IfModule>
+
+# Prevent directory browsing
+Options -Indexes
+
+# Protect hidden files and config files (Default Deny)
+<FilesMatch "(^\\.|\\.env$|\\.log$|\\.lock$)">
+    Require all denied
+</FilesMatch>
+
+# Explicit Exemptions for Production Data (Highest Priority)
+<Files "firebase-config.js">
+    Require all granted
+</Files>
+<Files "music_library.json">
+    Require all granted
+</Files>
+<Files "music_resolved.json">
+    Require all granted
+</Files>
+<Files "movies.json">
+    Require all granted
+</Files>
+<Files "books.json">
+    Require all granted
+</Files>
+<Files "books.csv">
+    Require all granted
+</Files>
+<Files "products.csv">
+    Require all granted
+</Files>
+<Files "users.json">
+    Require all granted
+</Files>
+<Files "book_data.json">
+    Require all granted
+</Files>
+<Files "focus_tracks.json">
+    Require all granted
+</Files>
+
+# Deny general JSON access (placed AFTER explicit exemptions)
+<IfModule mod_authz_core.c>
+    <FilesMatch "\.json$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 3. BLOCK SENSITIVE DEV/ADMIN FILES
+# ----------------------------------------------------------------------
+# Block direct access to server-side seeding & build scripts
+<FilesMatch "\.(ps1|py|sh|bat|cmd)$">
+    Require all denied
+</FilesMatch>
+
+# Block seed and dev JS files
+<FilesMatch "^(seed|apply_consistency|audit_links|cache_bust|check_dist|cleanup_database|count_books|fetch_books|fill_seeding|fix_|generate_|inject_|patch_|restrict_|test_|update_|verify_)">
+    Require all denied
+</FilesMatch>
+
+# ----------------------------------------------------------------------
+# 4. CDN & BROWSER CACHING OPTIMIZATION
+# ----------------------------------------------------------------------
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # 3D Models
+    ExpiresByType model/gltf-binary "access plus 1 year"
+    ExpiresByType application/octet-stream "access plus 1 year"
+
+    # Images
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+
+    # Audio
+    ExpiresByType audio/mpeg "access plus 1 year"
+    ExpiresByType audio/ogg "access plus 1 year"
+
+    # CSS, JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+
+    ExpiresDefault "access plus 2 days"
+</IfModule>
+
+# Enable GZIP Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 5. MIME TYPES FOR 3D ASSETS & DATA
+# ----------------------------------------------------------------------
+<IfModule mod_mime.c>
+    AddType model/gltf-binary .glb
+    AddType model/gltf+json .gltf
+    AddType application/json .json
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 6. PROTECT RECEIPTS DIRECTORY
+# ----------------------------------------------------------------------
+# Block direct access to uploaded receipt images
+<IfModule mod_rewrite.c>
+    RewriteRule ^receipts/ - [F,L]
+</IfModule>
+
+# Prevent directory listing in receipts folder
+<Directory "receipts">
+    Options -Indexes
+</Directory>

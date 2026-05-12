@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="theme-color" content="#800020">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sovereign Collection — Domiinique Living</title>
+<meta name="description" content="Curated tools for conscious living. Each piece chosen to elevate your sensory environment.">
+<link rel="stylesheet" href="css/main.css?v=9">
+    <link rel="icon" type="image/png" href="assets/domiinique_logo.png">
+    <link rel="apple-touch-icon" href="assets/domiinique_logo.png">
+    <style>
+.shop-hero{min-height:52vh;display:flex;align-items:flex-end;padding:120px var(--gap) 4rem;position:relative;overflow:hidden;background:radial-gradient(ellipse at 65% 30%,rgba(128,0,32,.2) 0%,transparent 60%),var(--bg2);}
+.shop-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to bottom,transparent,var(--bg));pointer-events:none;}
+.shop-hero__content{position:relative;z-index:2;}
+.shop-filters{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;padding:2rem var(--gap) 1rem;border-bottom:1px solid var(--border-soft);}
+.filter-btn{padding:.55rem 1.3rem;border:1px solid var(--border-soft);background:var(--glass);color:var(--fg-sub);border-radius:100px;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:all .3s var(--ease);}
+.filter-btn:hover,.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--glass-hi);}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2rem;padding:3rem var(--gap) 6rem;max-width:1500px;margin:0 auto;}
+.product-card{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .45s var(--ease);position:relative;}
+.product-card:hover{transform:translateY(-8px);box-shadow:0 30px 80px rgba(0,0,0,.45);border-color:var(--accent-soft);}
+.product-card__img{aspect-ratio:1/1;overflow:hidden;position:relative;background:var(--bg2);}
+.product-card__img img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease);}
+.product-card:hover .product-card__img img{transform:scale(1.07);}
+.product-card__badge{position:absolute;top:1rem;left:1rem;background:var(--accent);color:#fff;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;padding:.3rem .7rem;border-radius:3px;}
+.product-card__info{padding:1.5rem;}
+.product-card__cat{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);opacity:.7;margin-bottom:.5rem;display:block;}
+.product-card__name{font-family:var(--f-serif);font-size:1.15rem;font-weight:400;color:var(--fg);margin-bottom:.5rem;line-height:1.25;}
+.product-card__desc{font-size:.82rem;color:var(--fg-sub);line-height:1.6;margin-bottom:1.2rem;font-weight:300;}
+.product-card__footer{display:flex;justify-content:space-between;align-items:center;gap:.5rem;}
+.product-card__price{font-family:var(--f-serif);font-size:1.1rem;color:var(--accent);white-space:nowrap;}
+.product-card__actions{display:flex;gap:.5rem;}
+.btn-detail{padding:.45rem .9rem;border:1px solid var(--border);background:var(--glass);color:var(--fg-sub);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;border-radius:4px;cursor:pointer;transition:all .3s;}
+.btn-detail:hover{border-color:var(--accent);color:var(--accent);}
+.btn-cart{padding:.45rem .9rem;background:var(--accent);color:#fff;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;border-radius:4px;border:none;cursor:pointer;transition:all .3s;}
+.btn-cart:hover{background:#9a0025;}
+.btn-cart.added{background:#2d7a3a;}
+.modal-overlay{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.78);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .35s var(--ease);}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.product-modal{background:var(--bg2);border:1px solid var(--border-soft);border-radius:14px;overflow:hidden;max-width:860px;width:100%;max-height:90vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;transform:scale(.95) translateY(20px);transition:transform .4s var(--ease);position:relative;}
+.modal-overlay.open .product-modal{transform:scale(1) translateY(0);}
+.modal__img{position:relative;aspect-ratio:1/1;overflow:hidden;}
+.modal__img img{width:100%;height:100%;object-fit:cover;}
+.modal__img-overlay{position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,var(--bg2));}
+.modal__body{padding:2.5rem;display:flex;flex-direction:column;gap:1rem;justify-content:center;}
+.modal__close{position:absolute;top:1rem;right:1rem;width:36px;height:36px;border-radius:50%;background:var(--glass);border:1px solid var(--border-soft);color:var(--fg);font-size:1.1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;transition:all .3s;}
+.modal__close:hover{background:var(--glass-hi);border-color:var(--accent);color:var(--accent);}
+.modal__cat{font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;color:var(--accent);opacity:.7;}
+.modal__name{font-family:var(--f-serif);font-size:clamp(1.3rem,3vw,1.9rem);font-weight:400;color:var(--fg);line-height:1.15;}
+.modal__divider{width:40px;height:1px;background:var(--accent);}
+.modal__desc{font-size:.88rem;color:var(--fg-sub);line-height:1.75;font-weight:300;}
+.modal__benefits{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.modal__benefits li{font-size:.82rem;color:var(--fg-sub);padding-left:1.4rem;position:relative;}
+.modal__benefits li::before{content:'✦';position:absolute;left:0;color:var(--accent);font-size:.7rem;top:.05em;}
+.modal__price-row{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:.5rem;}
+.modal__price{font-family:var(--f-serif);font-size:1.8rem;color:var(--accent);}
+.modal__add-btn{flex:1;padding:.8rem 1.5rem;background:var(--accent);color:#fff;border:none;border-radius:5px;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:all .3s;}
+.modal__add-btn:hover{background:#9a0025;}
+.modal__add-btn.added{background:#2d7a3a;}
+@media(max-width:680px){.product-modal{grid-template-columns:1fr;}.modal__img{aspect-ratio:16/9;}.modal__img-overlay{display:none;}}
+@media(max-width:540px){.shop-grid{grid-template-columns:1fr 1fr;gap:1rem;padding:2rem 1rem 4rem;}.product-card__info{padding:1rem;}}
+@media(max-width:380px){.shop-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav id="nav" role="navigation" aria-label="Main Navigation">
+<a class="nav__logo" href="index.html"><span class="nav__logo-text">Domiinique</span><span class="nav__logo-motto">Living Signature</span></a>
+<ul class="nav__links">
+<li><a href="blueprint.html">Blueprint</a></li><li><a href="integrated.html">Integrated</a></li><li><a href="time.html">Time</a></li><li><a href="inspiration.html">Inspiration</a></li><li><a href="creative.html">Creative</a></li><li><a href="canvas.html">Canvas</a></li><li><a href="portraits.html">Portraits</a></li><li><a href="journal.html">Journal</a></li><li><a href="you.html">YOU</a></li><li><a href="cocreation.html">Co-Creation</a></li>
+</ul>
+<div class="nav__utilities">
+
+<a href="books.html" class="nav-icon-btn" title="Books" aria-label="Books"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2h14a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg></a>
+<a href="checkout.html" class="nav-icon-btn" title="Cart" aria-label="Cart" style="position:relative;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 1.95-1.57l1.65-8.42H6"/></svg><span class="nav-cart-badge" aria-hidden="true">0</span></a>
+<a href="shop.html" class="nav-icon-btn" title="Shop" aria-label="Shop" style="border-color:var(--accent);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></a>
+<a href="login.html" id="nav-auth-btn" class="nav-icon-btn" title="Archive Access" aria-label="Login">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+</a>
+<a href="search.html" class="nav-icon-btn dom-search-btn" title="Search" aria-label="Search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+            <button id="music-btn" class="music-btn" aria-label="Play music"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72 264c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V456c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg></button>
+<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">&#x1F319;</button>
+<div class="nav__hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0" aria-expanded="false"><span></span><span></span><span></span></div>
+</div>
+</nav>
+
+<header class="shop-hero">
+<div class="shop-hero__content container">
+<span class="t-eyebrow">Domiinique &middot; Curated Living</span>
+<h1 class="t-h1" style="margin-bottom:1rem;">Sovereign Collection</h1>
+<p style="font-size:1rem;color:var(--fg-sub);max-width:500px;font-weight:300;line-height:1.7;">Each piece chosen with intention &mdash; tools, rituals and objects that support a conscious, sensory life.</p>
+</div>
+</header>
+
+<div class="shop-filters">
+<span style="font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--fg-sub);margin-right:.5rem;">Filter:</span>
+<button class="filter-btn active" data-filter="all">All</button>
+<button class="filter-btn" data-filter="Ritual">Ritual</button>
+<button class="filter-btn" data-filter="Sensory">Sensory</button>
+<button class="filter-btn" data-filter="Wellness">Wellness</button>
+<button class="filter-btn" data-filter="Stationery">Stationery</button>
+</div>
+
+<main>
+<div class="shop-grid" id="shop-grid">
+  <!-- Products will be loaded dynamically from Firestore -->
+  <p id="loading-msg" class="t-body" style="text-align:center;width:100%;grid-column:1/-1;opacity:.5;">Synchronizing Shop…</p>
+</div>
+</main>
+
+<!-- BOOK/PRODUCT MODAL -->
+<div class="modal-overlay" id="book-modal">
+<div class="product-modal" role="dialog" aria-modal="true">
+<button class="modal__close" onclick="window.closeBookModal()" aria-label="Close">&times;</button>
+<div class="modal__img"><img id="modal-img" src="" alt=""><div class="modal__img-overlay"></div></div>
+<div class="modal__body">
+<span class="modal__cat" id="modal-cat"></span>
+<h2 class="modal__name" id="modal-name"></h2>
+<div class="modal__divider"></div>
+<p class="modal__desc" id="modal-desc"></p>
+<ul class="modal__benefits" id="modal-benefits"></ul>
+<div class="modal__price-row">
+<span class="modal__price" id="modal-price"></span>
+<button class="modal__add-btn" id="modal-add-btn" onclick="window.addToCartFromModal()">Add to Cart</button>
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+<div class="footer__inner" style="flex-direction:column;gap:.6rem;text-align:center;max-width:800px;margin:0 auto;">
+<a class="nav__logo" href="index.html" style="justify-content:center;"><span class="nav__logo-text">Domiinique</span></a>
+<p class="footer__copy" style="letter-spacing:.3em;font-size:.52rem;">LIVING SIGNATURE</p>
+<div class="social-links" style="display:flex;gap:1.5rem;justify-content:center;margin:0.5rem 0;">
+    <a href="https://www.instagram.com/domiinique_3589?igsh=MXRsd3JuM3BjZTdjMQ%3D%3D&utm_source=qr" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">Instagram</a>
+    <a href="https://www.tiktok.com/@dominique_3589" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">TikTok</a>
+    <a href="https://wa.me/251992013589" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">WhatsApp</a>
+</div>
+<p class="footer__copy" style="font-style:italic;opacity:.6;line-height:1.7;margin-top:1rem;">DOMIINIQUE: A SOVEREIGN SYSTEM OF DISCIPLINE, RESTRAINT, AND ARCHITECTURAL INTENT. UNFOLDING ACROSS EIGHT STRATEGIC DEPARTMENTS, THIS IS THE CALIBRATION OF THE LIVING SIGNATURE. EACH SECTOR IS A VORTEX OF ORDER, RHYTHM, AND SYSTEMIC EXCELLENCE.. AN OPERATIONAL BLUEPRINT FOR THE RESPONSIBILITY OF THE HORIZON.THINK. OBSERVE. ALIGN.</p>
+<p class="footer__copy">&copy; 2026 DOMIINIQUE. ALL RIGHTS RESERVED.</p>
+</div>
+</footer>
+<div class="footer-legal-bar">&copy; 2026 Domiinique &nbsp;&middot;&nbsp; <a href="terms.html">Terms</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacy</a></div>
+
+<audio id="bg-audio" loop preload="none" src="assets/bg_music.mp3"></audio>
+<script type="module" src="js/auth.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js" defer></script>
+<script type="module" src="js/search.js" defer></script>
+<script type="module">
+import { db } from './js/firebase-config.js';
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+
+async function loadProducts() {
+    const grid = document.getElementById('shop-grid');
+    const msg = document.getElementById('loading-msg');
+
+    try {
+        const querySnapshot = await getDocs(collection(db, "products"));
+        let html = '';
+        
+        querySnapshot.forEach((doc) => {
+            let p = doc.data();
+            if (p.status !== 'active') return;
+
+            // Generate HTML for each product
+            let benefitsHTML = p.benefits ? p.benefits : ''; 
+            
+            html += `
+            <div class="product-card" data-id="${p.id}" data-cat="${p.category}" data-name="${p.name}" data-price="${p.price}" data-img="${p.img||'assets/books/book-placeholder.png'}" data-desc="${(p.desc||'').replace(/"/g, '&quot;')}" data-benefits="${benefitsHTML}" onclick="window.openBookModal(this)">
+            <div class="product-card__img"><img src="${p.img||'assets/books/book-placeholder.png'}" alt="${p.name}" loading="lazy"><span class="product-card__badge">${p.category}</span></div>
+            <div class="product-card__info"><span class="product-card__cat">${p.category}</span><h3 class="product-card__name">${p.name}</h3><p class="product-card__desc">${(p.desc||'').substring(0,80)}...</p>
+            <div class="product-card__footer"><span class="product-card__price">${(p.price||0).toLocaleString()} Birr</span><div class="product-card__actions"><button class="btn-detail" onclick="event.stopPropagation();window.openBookModal(this.closest('.product-card'))">Details</button><button class="btn-cart" onclick="event.stopPropagation();window.domCart.addItem(this.closest('.product-card'))">Add</button></div></div></div>
+            </div>`;
+        });
+        
+        if (html === '') {
+            html = '<p style="text-align:center;width:100%;grid-column:1/-1;opacity:.5;">No active products currently available.</p>';
+        }
+
+        grid.innerHTML = html;
+        
+        // Re-apply filter logic if needed
+        const activeFilterBtn = document.querySelector('.filter-btn.active');
+        if (activeFilterBtn) {
+            applyFilter(activeFilterBtn.dataset.filter);
+        }
+
+    } catch (err) {
+        console.error("Error loading products:", err);
+        if (msg) msg.innerHTML = 'Unable to load shop items. Please try again.';
+    }
+}
+
+function applyFilter(f) {
+    document.querySelectorAll('.product-card').forEach(c => { 
+        c.style.display = (f === 'all' || c.dataset.cat === f) ? 'block' : 'none'; 
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadProducts();
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            applyFilter(btn.dataset.filter);
+        });
+    });
+});
+
+// Product filtering and loading Logic
+</script>
+</body>
+</html>
+

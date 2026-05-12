@@ -1,0 +1,3 @@
+# Environment variables
+.env
+js/env-config.js
