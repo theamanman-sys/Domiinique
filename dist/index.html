@@ -548,12 +548,10 @@
         track.addEventListener('scroll', updateDots);
 
         if (prevBtn) prevBtn.addEventListener('click', () => {
-            const w = stages[0].offsetWidth + 24;
-            track.scrollBy({ left: -w, behavior: 'smooth' });
+            track.scrollBy({ left: -track.offsetWidth, behavior: 'smooth' });
         });
         if (nextBtn) nextBtn.addEventListener('click', () => {
-            const w = stages[0].offsetWidth + 24;
-            track.scrollBy({ left: w, behavior: 'smooth' });
+            track.scrollBy({ left: track.offsetWidth, behavior: 'smooth' });
         });
 
         let isDown = false, startX, scrollLeft;
