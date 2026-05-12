@@ -1,0 +1,202 @@
+/* ============================================================
+   sensory.css — Shared Sensory Page Styles
+   ============================================================ */
+
+/* ── Hero ── */
+.sensory-hero {
+    position: relative;
+    min-height: 70vh;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 100px var(--gap) 4rem;
+}
+
+/* Gradient backgrounds per page */
+.sensory-hero--visual      { background: radial-gradient(ellipse at 60% 30%, rgba(180,60,120,0.3) 0%, rgba(100,20,60,0.15) 40%, transparent 70%), var(--bg2); }
+.sensory-hero--auditory    { background: radial-gradient(ellipse at 40% 40%, rgba(60,100,180,0.28) 0%, rgba(20,50,120,0.14) 40%, transparent 70%), var(--bg2); }
+.sensory-hero--spatial     { background: radial-gradient(ellipse at 55% 35%, rgba(120,80,200,0.28) 0%, rgba(60,30,120,0.14) 40%, transparent 70%), var(--bg2); }
+.sensory-hero--kinesthetic { background: radial-gradient(ellipse at 45% 40%, rgba(40,140,90,0.28) 0%, rgba(20,80,50,0.14) 40%, transparent 70%), var(--bg2); }
+.sensory-hero--olfactory   { background: radial-gradient(ellipse at 50% 45%, rgba(160,120,60,0.28) 0%, rgba(80,60,20,0.14) 40%, transparent 70%), var(--bg2); }
+
+html[data-theme="light"] .sensory-hero--visual      { background: radial-gradient(ellipse at 60% 30%, rgba(220,120,160,0.2) 0%, transparent 65%), var(--bg2); }
+html[data-theme="light"] .sensory-hero--auditory    { background: radial-gradient(ellipse at 40% 40%, rgba(100,140,220,0.2) 0%, transparent 65%), var(--bg2); }
+html[data-theme="light"] .sensory-hero--spatial     { background: radial-gradient(ellipse at 55% 35%, rgba(150,100,220,0.2) 0%, transparent 65%), var(--bg2); }
+html[data-theme="light"] .sensory-hero--kinesthetic { background: radial-gradient(ellipse at 45% 40%, rgba(60,170,100,0.2) 0%, transparent 65%), var(--bg2); }
+html[data-theme="light"] .sensory-hero--olfactory   { background: radial-gradient(ellipse at 50% 45%, rgba(190,150,80,0.2) 0%, transparent 65%), var(--bg2); }
+
+/* Animated radial shimmer */
+.sensory-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 50%, var(--accent-soft) 0%, transparent 55%);
+    opacity: 0.3;
+    animation: sensoryPulse 6s ease-in-out infinite;
+    pointer-events: none;
+}
+@keyframes sensoryPulse {
+    0%, 100% { transform: scale(1);   opacity: 0.25; }
+    50%       { transform: scale(1.08); opacity: 0.5; }
+}
+
+.sensory-hero__overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, var(--bg) 100%);
+    pointer-events: none; z-index: 1;
+}
+
+.sensory-hero__content {
+    position: relative; z-index: 2;
+    max-width: 700px;
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+}
+
+.sensory-back {
+    font-size: .58rem; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--accent); text-decoration: none; opacity: .7;
+    transition: opacity .25s;
+}
+.sensory-back:hover { opacity: 1; }
+
+.sensory-hero__icon {
+    font-size: clamp(3.5rem, 8vw, 5.5rem);
+    line-height: 1;
+    filter: drop-shadow(0 0 30px var(--accent-soft));
+    animation: sensoryFloat 4s ease-in-out infinite;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+}
+@keyframes sensoryFloat {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-12px); }
+}
+
+.sensory-hero__title {
+    font-family: var(--f-serif);
+    font-size: clamp(2.8rem, 9vw, 6.5rem);
+    font-weight: 400; line-height: 1.04;
+    color: var(--fg);
+}
+
+.sensory-hero__sub {
+    font-size: clamp(.85rem, 2vw, 1.05rem);
+    color: var(--fg-sub); font-weight: 300;
+    max-width: 520px; line-height: 1.65;
+}
+
+.sensory-hero__scroll {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    z-index: 3; display: flex; flex-direction: column; align-items: center; gap: .5rem;
+    opacity: .45;
+}
+.sensory-hero__scroll span  { font-size: .55rem; letter-spacing: .36em; text-transform: uppercase; color: var(--accent); }
+.sensory-hero__scroll-line  { width: 1px; height: 36px; background: linear-gradient(to bottom, var(--accent), transparent); animation: scrollPulse 1.8s ease-in-out infinite; }
+@keyframes scrollPulse { 0%,100%{opacity:.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.12)} }
+
+/* ── Intro text ── */
+.sensory-intro__text {
+    font-family: var(--f-serif);
+    font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+    font-weight: 400; font-style: italic;
+    color: var(--fg); line-height: 1.75;
+    text-align: center;
+    border-left: 2px solid var(--accent);
+    padding-left: 2rem;
+    text-align: left;
+}
+
+/* ── 10 Steps grid ── */
+.sensory-grid-steps {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.sensory-step {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    padding: 2rem 1.8rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto auto;
+    column-gap: 1.2rem;
+    row-gap: .4rem;
+    align-items: start;
+    transition: all .4s var(--ease);
+    position: relative;
+    overflow: hidden;
+}
+.sensory-step::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 0% 0%, var(--accent-soft) 0%, transparent 60%);
+    opacity: 0; transition: opacity .4s;
+}
+.sensory-step:hover { border-color: var(--accent-soft); transform: translateY(-4px); box-shadow: var(--shadow); }
+.sensory-step:hover::before { opacity: .35; }
+
+.sensory-step__num {
+    grid-column: 1; grid-row: 1;
+    font-size: .52rem; letter-spacing: .35em; color: var(--accent);
+    text-transform: uppercase; font-weight: 600; padding-top: .1rem;
+    white-space: nowrap;
+}
+.sensory-step__icon {
+    grid-column: 2; grid-row: 1;
+    font-size: 1.6rem; line-height: 1;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+}
+.sensory-step__perspective {
+    font-style: italic; opacity: 0.7; line-height: 1.7; margin-top: 1rem; font-size: 0.9rem; color: var(--fg-sub);
+}
+.sensory-step__title {
+    grid-column: 2; grid-row: 2;
+    font-family: var(--f-serif); font-size: 1.1rem;
+    color: var(--fg); font-weight: 400; line-height: 1.2;
+}
+.sensory-step__desc {
+    grid-column: 1 / -1; grid-row: 3;
+    font-size: .88rem; color: var(--fg-sub); line-height: 1.7;
+    font-weight: 300; margin-top: .6rem;
+}
+
+/* Step 10 spans full width */
+.sensory-step--focus {
+    grid-column: 1 / -1;
+    border-color: var(--accent-soft);
+    background: linear-gradient(135deg, var(--bg-card), var(--glass-hi));
+}
+.sensory-step--focus .sensory-step__icon { font-size: 2rem; }
+.sensory-step--focus .sensory-step__title { font-size: 1.3rem; }
+
+/* ── Sensory nav strip ── */
+.sensory-nav-row {
+    display: flex; justify-content: center; gap: 1.2rem;
+    flex-wrap: wrap; margin-top: 2rem;
+}
+.sensory-nav-card {
+    display: flex; flex-direction: column; align-items: center; gap: .55rem;
+    padding: 1.2rem 1.8rem;
+    border: 1px solid var(--border-soft); border-radius: 8px;
+    background: var(--bg-card); text-decoration: none;
+    font-size: .6rem; letter-spacing: .25em; text-transform: uppercase;
+    color: var(--fg-sub);
+    transition: all .35s var(--ease); min-width: 100px;
+}
+.sensory-nav-card span:first-child { font-size: 1.8rem; }
+.sensory-nav-card:hover { border-color: var(--accent-soft); color: var(--accent); background: var(--glass-hi); transform: translateY(-4px); }
+.sensory-nav-card--active { border-color: var(--accent-soft); color: var(--accent); background: var(--glass-hi); }
+
+/* ── Responsive ── */
+@media (max-width: 960px) {
+    .sensory-grid-steps { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+    .sensory-grid-steps { grid-template-columns: 1fr; }
+    .sensory-hero        { min-height: 55vh; padding-top: 88px; }
+    .sensory-hero__title { font-size: clamp(2.2rem, 11vw, 3.5rem); }
+    .sensory-step        { padding: 1.5rem 1.2rem; }
+    .sensory-nav-row     { gap: .8rem; }
+    .sensory-nav-card    { padding: 1rem 1.1rem; min-width: 80px; }
+}

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#800020">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domiinique — Thought Archive | The Living Signature Archive</title>
+    <link rel="icon" type="image/png" href="assets/domiinique_logo.png">
+    <link rel="apple-touch-icon" href="assets/domiinique_logo.png">
+    <link rel="stylesheet" href="css/main.css?v=10">
+    <style>
+        .phase-option {
+            padding: 0.7rem 1.2rem;
+            cursor: pointer;
+            font-size: 0.82rem;
+            color: var(--fg);
+            transition: background 0.2s;
+            border-bottom: 1px solid var(--border-soft);
+        }
+        .phase-option:last-child { border-bottom: none; }
+        .phase-option:hover { background: rgba(128,0,32,0.15); }
+        .phase-divider {
+            padding: 0.6rem 1.2rem 0.3rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--accent, #800020);
+            text-transform: uppercase;
+            cursor: default;
+            pointer-events: none;
+            border-bottom: 1px solid var(--border-soft);
+            opacity: 0.8;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+</head>
+<body class="bg--void">
+    <canvas id="hero-canvas"></canvas>
+
+    <nav id="nav" role="navigation" aria-label="Main Navigation">
+        <a class="nav__logo" href="index.html">
+            <span class="nav__logo-text">Domiinique</span>
+            <span class="nav__logo-motto">Living Signature</span>
+        </a>
+        <ul class="nav__links">
+            <li><a href="blueprint.html">Blueprint</a></li>
+            <li><a href="integrated.html">Integrated</a></li>
+            <li><a href="time.html">Time</a></li>
+            <li><a href="inspiration.html">Inspiration</a></li>
+            <li><a href="creative.html">Creative</a></li>
+            <li><a href="canvas.html">Canvas</a></li>
+            <li><a href="portraits.html">Portraits</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="you.html">YOU</a></li>
+            <li><a href="cocreation.html">Co-Creation</a></li>
+        </ul>
+        <div class="nav__utilities">
+            <a href="books.html" class="nav-icon-btn active" title="Book Archive" aria-label="Books">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 2h14a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+            </a>
+            <a href="checkout.html" class="nav-icon-btn" title="Cart" aria-label="Cart" style="position:relative;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 1.95-1.57l1.65-8.42H6"/></svg>
+                <span class="nav-cart-badge" aria-hidden="true">0</span>
+            </a>
+            <a href="shop.html" class="nav-icon-btn" title="Shop">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </a>
+            <a href="login.html" id="nav-auth-btn" class="nav-icon-btn" title="Archive Access" aria-label="Login">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            </a>
+            <a href="search.html" class="nav-icon-btn dom-search-btn" title="Search" aria-label="Search">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </a>
+            <button id="music-btn" class="music-btn" aria-label="Play music" title="Toggle Music">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72 264c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V456c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg>
+            </button>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle Light/Dark">&#x1F319;</button>
+            <div class="nav__hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section" style="padding-top: 150px;">
+        <div class="container">
+            <div class="t-eyebrow t-center reveal">DOMIINIQUE</div>
+            <h1 class="t-h1 t-center reveal">The Living<br><span class="t-serif">Signature Archive</span></h1>
+
+            <div style="margin-top:3rem;display:flex;flex-direction:column;align-items:center;gap:1.2rem;">
+                <div style="position:relative;width:100%;max-width:460px;">
+                    <input type="text" id="book-search" placeholder="Search books, authors, phases..." oninput="doBookSearch(this.value)"
+                        style="width:100%;background:var(--bg-card);border:1.5px solid var(--border-soft);border-radius:50px;padding:.7rem 1.2rem .7rem 3rem;color:var(--fg);font-family:inherit;font-size:.9rem;outline:none;transition:border-color .3s;box-sizing:border-box;">
+                    <svg style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);opacity:.4;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </div>
+                <div id="book-filter-container" style="width:100%; max-width:280px; position:relative;">
+                    <div id="book-category-trigger" onclick="togglePhaseDropdown()"
+                        style="width:100%; background:var(--bg-card); border:1.5px solid var(--border-soft); border-radius:8px; padding:0.8rem 1.2rem; color:var(--fg); font-family:inherit; font-size:0.85rem; outline:none; cursor:pointer; transition:all 0.3s; box-shadow: 0 4px 20px rgba(0,0,0,0.1); display:flex; align-items:center; justify-content:space-between; box-sizing:border-box;">
+                        <span id="book-category-label">All Phases</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.6;flex-shrink:0;"><path d="M6 9l6 6 6-6"/></svg>
+                    </div>
+                    <div id="book-category-dropdown" style="display:none; position:absolute; top:100%; left:0; right:0; z-index:100; background:rgba(20,20,35,0.95); border:1.5px solid var(--border-soft); border-radius:8px; margin-top:4px; box-shadow: 0 8px 30px rgba(0,0,0,0.4); overflow-y:auto; max-height:280px;">
+                    </div>
+                </div>
+            </div>
+
+            <div id="books-grid" class="books-grid" style="margin-top:3rem; min-height: 400px;">
+                <p id="loading-msg" class="t-body" style="text-align:center;width:100%;grid-column:1/-1;opacity:.5;">Loading Library...</p>
+            </div>
+        </div>
+    </section>
+
+    <div id="book-modal" class="book-modal">
+        <div class="book-modal__content">
+            <button class="book-modal__close" onclick="closeBookModal()">&times;</button>
+            <div class="book-modal__grid">
+                <div class="book-modal__img-wrap"><img id="modal-img" src="" alt=""></div>
+                <div class="book-modal__info">
+                    <h2 id="modal-title" class="t-h2"></h2>
+                    <p id="modal-author" class="t-eyebrow"></p>
+                    <p id="modal-phase" class="t-eyebrow" style="opacity:.7; margin-top:.3rem;"></p>
+                    <div id="modal-desc" class="t-body" style="margin:1.5rem 0; max-height: 200px; overflow-y: auto;"></div>
+                    <div class="book-modal__footer">
+                        <span id="modal-price" class="t-h3">180 ETB</span>
+                        <button class="btn-primary" onclick="window.addToCartFromModal()" style="cursor:pointer;">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer__inner" style="flex-direction:column;gap:.6rem;text-align:center;max-width:800px;margin:0 auto;">
+            <a class="nav__logo" href="index.html" style="justify-content:center;"><span class="nav__logo-text">Domiinique</span></a>
+            <div class="social-links" style="display:flex;gap:1.5rem;justify-content:center;margin:0.5rem 0;">
+                <a href="https://www.instagram.com/domiinique_3589" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">Instagram</a>
+                <a href="https://www.tiktok.com/@dominique_3589" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">TikTok</a>
+                <a href="https://wa.me/251992013589" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">WhatsApp</a>
+            </div>
+            <p class="footer__copy" style="letter-spacing:.3em;font-size:.52rem;">LIVING SIGNATURE</p>
+            <p class="footer__copy">&copy; 2026 DOMIINIQUE. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+    <div class="footer-legal-bar">&copy; 2026 Domiinique &nbsp;&middot;&nbsp; <a href="terms.html">Terms</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacy</a></div>
+
+    <audio id="bg-audio" loop preload="none" src="assets/bg_music.mp3"></audio>
+
+    <script type="module" src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        // Cart functions using domCart (unified toast + badge system)
+        function addBookToCart(title, author, price, image) {
+            window.addToCart({ title: title, author: author, price: parseInt(price) || 0, image: image });
+        }
+        
+        function setFilterValue(val) {
+            window.activeFilter = val;
+            if (window.renderGrid) window.renderGrid();
+        }
+        
+        function doBookSearch(val) {
+            window.searchQuery = (val || '').toLowerCase();
+            if (window.renderGrid) window.renderGrid();
+        }
+        
+        function togglePhaseDropdown() {
+            var dd = document.getElementById('book-category-dropdown');
+            dd.style.display = dd.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        function selectPhase(val) {
+            document.getElementById('book-category-dropdown').style.display = 'none';
+            document.getElementById('book-category-label').textContent = val === 'All' ? 'All Phases' : val;
+            setFilterValue(val);
+        }
+        
+        document.addEventListener('click', function(e) {
+            var container = document.getElementById('book-filter-container');
+            if (container && !container.contains(e.target)) {
+                var dd = document.getElementById('book-category-dropdown');
+                if (dd) dd.style.display = 'none';
+            }
+        });
+
+        // Badge is handled by cart.js on DOMContentLoaded
+    </script>
+    <script type="module">
+        import { db } from './js/firebase-config.js';
+        import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+
+        window.ALL_BOOKS = [];
+        window.activeFilter = 'All';
+        window.searchQuery = '';
+
+        async function loadBooks() {
+            var grid = document.getElementById('books-grid');
+            var statusMsg = document.getElementById('loading-msg');
+            
+            try {
+                var booksCollection = collection(db, "books");
+                var snapshot = await getDocs(booksCollection);
+                var books = [];
+                
+                snapshot.forEach(function(doc) {
+                    var data = doc.data();
+                    if (data.status === 'active') {
+                        var book = { id: doc.id };
+                        Object.keys(data).forEach(function(key) { 
+                            book[key] = data[key]; 
+                        });
+                        // Ensure image has fallback
+                        book.image = book.img || book.image || '';
+                        if (!book.image) {
+                            book.image = 'assets/books/book-placeholder.png';
+                        }
+                        books.push(book);
+                    }
+                });
+                
+                // Sort by phaseOrder ascending (Phase I first)
+                window.ALL_BOOKS = books.sort(function(a, b) { 
+                    // Sort by phaseOrder, then by title
+                    if (a.phaseOrder !== b.phaseOrder) {
+                        return a.phaseOrder - b.phaseOrder;
+                    }
+                    return a.title.localeCompare(b.title);
+                });
+                console.log('Loaded ' + books.length + ' books from Firebase');
+                
+            } catch(e) {
+                console.error('Failed to load books:', e);
+                if (statusMsg) statusMsg.textContent = 'Failed to load books. Please refresh.';
+                return;
+            }
+            
+            if (statusMsg) statusMsg.remove();
+            buildFilterBar();
+            window.renderGrid();
+        }
+
+        function buildFilterBar() {
+            var dropdown = document.getElementById('book-category-dropdown');
+            if (!dropdown) return;
+            
+            var phaseMap = {};
+            var logicPhases = [];
+            window.ALL_BOOKS.forEach(function(b) {
+                if (!phaseMap[b.phase]) {
+                    phaseMap[b.phase] = b.phaseOrder;
+                    // Track LOGICS categories (orders 12-18)
+                    if (b.phaseOrder >= 12 && b.phaseOrder <= 18) {
+                        logicPhases.push(b.phase);
+                    }
+                }
+            });
+            
+            // Sort phases by phaseOrder (ascending)
+            var phases = Object.keys(phaseMap).sort(function(a, b) {
+                return phaseMap[a] - phaseMap[b];
+            });
+            
+            dropdown.innerHTML = '';
+            var allOpt = document.createElement('div');
+            allOpt.className = 'phase-option';
+            allOpt.textContent = 'All Phases';
+            allOpt.dataset.value = 'All';
+            allOpt.onclick = function() { selectPhase('All'); };
+            dropdown.appendChild(allOpt);
+            
+            // Sort logic phases by their order number
+            logicPhases.sort(function(a, b) {
+                var numA = parseInt(a) || 0;
+                var numB = parseInt(b) || 0;
+                return numA - numB;
+            });
+            
+            phases.forEach(function(p) {
+                // Skip LOGICS phases from normal iteration
+                if (logicPhases.indexOf(p) !== -1) return;
+                
+                // Insert THE SYSTEMIC ARCHIVES divider before PHASE VII
+                if (phaseMap[p] === 7) {
+                    var div1 = document.createElement('div');
+                    div1.className = 'phase-divider';
+                    div1.textContent = 'THE SYSTEMIC ARCHIVES';
+                    dropdown.appendChild(div1);
+                }
+                
+                var opt = document.createElement('div');
+                opt.className = 'phase-option';
+                opt.textContent = p;
+                opt.dataset.value = p;
+                opt.onclick = function() { selectPhase(p); };
+                dropdown.appendChild(opt);
+                
+                // Insert LOGICS divider and categories after PHASE XI
+                if (phaseMap[p] === 11) {
+                    var div2 = document.createElement('div');
+                    div2.className = 'phase-divider';
+                    div2.textContent = 'LOGICS';
+                    dropdown.appendChild(div2);
+                    
+                    logicPhases.forEach(function(lp) {
+                        var opt2 = document.createElement('div');
+                        opt2.className = 'phase-option';
+                        opt2.textContent = lp;
+                        opt2.dataset.value = lp;
+                        opt2.onclick = function() { selectPhase(lp); };
+                        dropdown.appendChild(opt2);
+                    });
+                }
+            });
+        }
+        
+        window.renderGrid = function() {
+            var grid = document.getElementById('books-grid');
+            if (!grid) return;
+            
+            var filtered = window.ALL_BOOKS.filter(function(b) {
+                var isLogic = window.activeFilter !== 'All' && /^\d+\./.test(window.activeFilter);
+                var matchPhase;
+                if (isLogic) {
+                    matchPhase = b.logic === window.activeFilter;
+                } else {
+                    matchPhase = window.activeFilter === 'All' || b.phase === window.activeFilter;
+                }
+                var searchText = (b.title + ' ' + b.author + ' ' + b.phase + ' ' + (b.logic || '')).toLowerCase();
+                var matchSearch = !window.searchQuery || searchText.includes(window.searchQuery);
+                return matchPhase && matchSearch;
+            });
+            
+            if (!filtered.length) {
+                grid.innerHTML = '<p style="text-align:center;opacity:.4;padding:3rem;grid-column:1/-1;">No books found.</p>';
+                return;
+            }
+            
+            grid.innerHTML = '';
+            
+            filtered.forEach(function(book) {
+                var card = document.createElement('div');
+                card.className = 'book-card';
+                card.dataset.title = book.title;
+                card.dataset.author = book.author;
+                card.dataset.price = book.price;
+                card.dataset.img = book.image || '';
+                card.style.cssText = 'background:#1a1a2e;border:1px solid #333;border-radius:8px;padding:1rem;transition:transform .3s;color:#e0e0e0;position:relative;cursor:pointer;';
+                
+                card.innerHTML = '<div style="position:relative;aspect-ratio:2/3;overflow:hidden;border-radius:4px;margin-bottom:.8rem;background:#0f0f1a;">' +
+                    '<img src="' + book.image + '" alt="' + book.title + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.src=\'assets/books/book-placeholder.png\'; this.onerror=null;">' +
+                    '<button class="add-to-cart-btn" onclick="event.stopPropagation();addBookToCart(\'' + book.title.replace(/'/g, "\\'") + '\', \'' + book.author.replace(/'/g, "\\'") + '\', ' + book.price + ', \'' + book.image + '\')" ' +
+                        'style="position:absolute;bottom:10px;right:10px;background:#800020;color:white;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-size:0.8rem;font-weight:600;z-index:10;">' +
+                        'Add to Cart (' + book.price + ' ETB)' +
+                    '</button>' +
+                '</div>' +
+                '<h3 style="font-size:.9rem;margin:.5rem 0 .3rem;color:#fff;font-weight:600;">' + book.title + '</h3>' +
+                '<p style="font-size:.75rem;margin:0;opacity:.7;color:#b0b0b0;">' + book.author + '</p>' +
+                '<p style="opacity:.6;font-size:.65rem;margin-top:.3rem;color:#888;">' + book.phase + '</p>';
+                
+                card.onmouseenter = function() { this.style.transform = 'translateY(-8px)'; };
+                card.onmouseleave = function() { this.style.transform = 'translateY(0)'; };
+                
+                card.onclick = function(e) {
+                    if (e.target.classList.contains('add-to-cart-btn')) return;
+                    document.getElementById('modal-title').textContent = book.title;
+                    document.getElementById('modal-author').textContent = book.author;
+                    document.getElementById('modal-phase').textContent = book.phase;
+                    document.getElementById('modal-desc').textContent = book.description || '';
+                    document.getElementById('modal-price').textContent = book.price + ' ETB';
+                    document.getElementById('modal-img').src = book.image;
+                    document.getElementById('book-modal').classList.add('open');
+                };
+                
+                grid.appendChild(card);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadBooks);
+    </script>
+    <script src="js/main.js" defer></script>
+</body>
+</html>

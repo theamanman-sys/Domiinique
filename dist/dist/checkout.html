@@ -1,0 +1,869 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout â€” Domiinique</title>
+    <link rel="stylesheet" href="css/main.css?v=9">
+    <link rel="stylesheet" href="css/home.css?v=1">
+    <script type="module" src="js/auth.js"></script>
+    <!-- Chapa Inline JS SDK -->
+    <script src="https://js.chapa.co/v1/inline.js"></script>
+    <style>
+        .checkout-main { max-width: 1200px; margin: 140px auto 80px; padding: 0 5%; }
+        .checkout-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: start; }
+        @media (max-width: 992px) { .checkout-grid { grid-template-columns: 1fr; gap: 3rem; } }
+
+        /* Order Summary Card */
+        .summary-card { background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: 12px; padding: 2.5rem; position: sticky; top: 120px; }
+        .summary-title { font-family: 'BickhamPro', serif; font-size: 1.8rem; color: var(--accent); margin-bottom: 2rem; border-bottom: 1px solid var(--border-soft); padding-bottom: 1rem; }
+        
+        .checkout-item { display: grid; grid-template-columns: 60px 1fr auto; gap: 1.2rem; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .item-img { width: 60px; height: 80px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-soft); }
+        .item-info h4 { font-size: 0.85rem; margin: 0 0 0.3rem; letter-spacing: 0.05em; color: var(--fg); }
+        .item-info p { font-size: 0.7rem; color: var(--fg-sub); margin: 0; }
+        .item-price { font-family: monospace; font-size: 0.85rem; color: var(--accent); }
+
+        .total-row { margin-top: 2rem; padding-top: 1.5rem; border-top: 1.5px solid var(--accent); display: flex; justify-content: space-between; align-items: center; }
+        .total-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--fg-sub); }
+        .total-amount { font-family: var(--font-display); font-size: 1.8rem; color: var(--accent); }
+
+        /* Form Details */
+        .form-section { margin-bottom: 3rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 0.6rem; opacity: 0.8; }
+        .form-group input, .form-group textarea { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border-soft); border-radius: 8px; padding: 1rem; color: #fff; font-size: 0.9rem; transition: border-color 0.3s; }
+        .form-group input:focus { border-color: var(--accent); outline: none; }
+
+        /* Payment Method Tabs */
+        .payment-tabs { display: flex; gap: 0; margin-bottom: 2rem; border-radius: 12px; overflow: hidden; border: 1.5px solid var(--border-soft); }
+        .payment-tab { flex: 1; padding: 1rem 0.5rem; text-align: center; cursor: pointer; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--fg-sub); background: rgba(255,255,255,0.02); transition: all 0.3s ease; border: none; font-weight: 600; position: relative; }
+        .payment-tab:not(:last-child) { border-right: 1px solid var(--border-soft); }
+        .payment-tab.active { background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05)); color: var(--accent); }
+        .payment-tab.active::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); }
+        .payment-tab:hover:not(.active) { background: rgba(255,255,255,0.04); color: var(--fg); }
+        .payment-tab-icon { font-size: 1.2rem; display: block; margin-bottom: 0.3rem; }
+
+        .payment-panel { display: none; animation: fadeInPanel 0.4s ease; }
+        .payment-panel.active { display: block; }
+        @keyframes fadeInPanel {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Chapa Panel */
+        .chapa-payment-card { background: linear-gradient(135deg, rgba(76,175,80,0.08), rgba(76,175,80,0.02)); border: 1.5px solid rgba(76,175,80,0.3); border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; }
+        .chapa-badge { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; margin-bottom: 0.8rem; display: inline-flex; align-items: center; gap: 0.4rem; letter-spacing: 0.1em; }
+        .chapa-badge svg { width: 14px; height: 14px; }
+        .chapa-info { font-size: 0.75rem; color: var(--fg-sub); line-height: 1.6; margin: 1rem 0 0; }
+        .chapa-methods { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem; }
+        .chapa-method-pill { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 0.4rem 0.9rem; font-size: 0.65rem; color: var(--fg-sub); letter-spacing: 0.05em; }
+
+        #chapa-inline-form { margin-top: 1.5rem; min-height: 200px; border-radius: 12px; overflow: hidden; }
+
+        .chapa-pay-btn { background: linear-gradient(135deg, #4CAF50, #388E3C); color: #fff; border: none; padding: 1.3rem; border-radius: 10px; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; width: 100%; box-shadow: 0 8px 25px rgba(76,175,80,0.3); transition: all 0.3s ease; font-weight: 700; margin-top: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.8rem; }
+        .chapa-pay-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(76,175,80,0.4); }
+        .chapa-pay-btn:disabled { background: var(--border-soft); cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* Manual Payment Panel */
+        .payment-method-card { background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02)); border: 1.5px solid rgba(201,168,76,0.3); border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; }
+        .telebirr-badge { background: #0096ff; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 0.6rem; font-weight: bold; margin-bottom: 0.5rem; display: inline-block; }
+        .wa-btn { background: #25d366; color: #fff; border: none; padding: 1.1rem; border-radius: 8px; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.8rem; font-weight: 600; margin-top: 1rem; transition: background 0.3s; }
+        .wa-btn:hover { background: #1ebd5b; }
+
+        .upload-receipt { border: 1.5px dashed var(--border-soft); border-radius: 12px; padding: 2.5rem; text-align: center; cursor: pointer; transition: background 0.3s; margin: 2rem 0; }
+        .upload-receipt:hover { background: rgba(201,168,76,0.05); border-color: var(--accent); }
+        #receipt-preview { max-width: 100%; border-radius: 8px; display: none; margin-top: 1.5rem; border: 1px solid var(--border-soft); }
+
+        .submit-btn { background: var(--accent); color: #fff; border: none; padding: 1.4rem; border-radius: 8px; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; width: 100%; box-shadow: 0 10px 30px rgba(201, 168, 76, 0.25); transition: transform 0.3s, background 0.3s; }
+        .submit-btn:hover { background: #d4b86a; transform: translateY(-2px); }
+        .submit-btn:disabled { background: var(--border-soft); cursor: not-allowed; transform: none; box-shadow: none; }
+
+        #upload-progress-container { margin-top: 1.5rem; display: none; }
+        .progress-bar { height: 6px; width: 100%; background: var(--border-soft); border-radius: 3px; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; background: var(--accent); transition: width 0.3s; }
+        .progress-txt { font-size: 0.65rem; color: var(--fg-sub); margin-top: 0.6rem; text-align: center; letter-spacing: 0.1em; }
+        
+        .empty-cart-view { text-align: center; padding: 6rem 1rem; }
+
+        /* Chapa Payment Status Messages */
+        .payment-status { margin-top: 1.5rem; padding: 1.2rem; border-radius: 10px; text-align: center; font-size: 0.8rem; letter-spacing: 0.05em; animation: fadeInPanel 0.4s ease; }
+        .payment-status.success { background: rgba(76,175,80,0.1); border: 1px solid rgba(76,175,80,0.3); color: #66BB6A; }
+        .payment-status.error { background: rgba(244,67,54,0.1); border: 1px solid rgba(244,67,54,0.3); color: #EF5350; }
+        .payment-status.processing { background: rgba(255,193,7,0.1); border: 1px solid rgba(255,193,7,0.3); color: #FFD54F; }
+
+        /* Divider */
+        .payment-divider { display: flex; align-items: center; gap: 1rem; margin: 2rem 0; }
+        .payment-divider .line { flex: 1; height: 1px; background: var(--border-soft); }
+        .payment-divider .text { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--fg-dim); }
+
+        /* Security badges */
+        .security-badges { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        .security-badge { display: flex; align-items: center; gap: 0.4rem; font-size: 0.55rem; color: var(--fg-dim); letter-spacing: 0.1em; text-transform: uppercase; }
+        .security-badge svg { width: 12px; height: 12px; opacity: 0.5; }
+
+        /* Cart controls */
+        .qty-controls { display: flex; align-items: center; gap: 0.8rem; margin-top: 0.8rem; }
+        .qty-btn { 
+            width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05); color: var(--fg); cursor: pointer;
+            display: flex; align-items: center; justify-content: center; font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .qty-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--accent); }
+        .qty-val { font-size: 0.75rem; font-family: monospace; color: var(--accent); }
+        
+        .item-row-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
+        .remove-item-btn {
+            background: none; border: none; color: #ff4d4d; opacity: 0.4; cursor: pointer;
+            padding: 4px; font-size: 1rem; transition: all 0.2s;
+        }
+        .remove-item-btn:hover { opacity: 1; transform: scale(1.1); }
+    </style>
+</head>
+<body>
+
+    <!-- â•â•â• NAV â•â•â• -->
+    <nav id="nav">
+        <a class="nav__logo" href="index.html">
+            <span class="nav__logo-text">Domiinique</span>
+            <span class="nav__logo-motto">Living Signature</span>
+        </a>
+        <ul class="nav__links">
+            <li><a href="blueprint.html">Blueprint</a></li>
+            <li><a href="integrated.html">Integrated</a></li>
+            <li><a href="time.html">Time</a></li>
+            <li><a href="inspiration.html">Inspiration</a></li>
+            <li><a href="creative.html">Creative</a></li>
+            <li><a href="canvas.html">Canvas</a></li>
+            <li><a href="portraits.html">Portraits</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="you.html">YOU</a></li>
+            <li><a href="cocreation.html">Co-Creation</a></li>
+            <li><a href="checkout.html" class="active">Checkout</a></li>
+        </ul>
+        <div class="nav__utilities">
+            <a href="books.html" class="nav-icon-btn" title="Book Archive" aria-label="Books">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2h14a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+            </a>
+            <a href="checkout.html" class="nav-icon-btn" title="Cart" aria-label="Cart" style="position:relative;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 1.95-1.57l1.65-8.42H6"/></svg>
+                <span class="nav-cart-badge" aria-hidden="true">0</span>
+            </a>
+            <a href="shop.html" class="nav-icon-btn" title="Shop" aria-label="Shop"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a 4 4 0 0 1 -8 0"/></svg></a>
+            <a href="login.html" id="nav-auth-btn" class="nav-icon-btn" title="Archive Access" aria-label="Login">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            </a>
+            <a href="search.html" class="nav-icon-btn dom-search-btn" title="Search" aria-label="Search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+            <button id="music-btn" class="music-btn" aria-label="Play music" title="Toggle Music">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72 264c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V456c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg>
+            </button>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle Light/Dark">&#x1F319;</button>
+            <div class="nav__hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="checkout-main">
+        <div id="cart-active-view" class="checkout-grid">
+            
+            <!-- Left: Checkout Details -->
+            <div class="checkout-details">
+                <div class="form-section">
+                    <span class="t-eyebrow">Checkout</span>
+                    <h1 class="t-h2" style="margin-top:0.5rem; margin-bottom:2.5rem;">Secure Transmission</h1>
+                    
+                    <div class="form-group">
+                        <label for="cust-name">Identity / Full Name</label>
+                        <input type="text" id="cust-name" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cust-email">Email Address</label>
+                        <input type="email" id="cust-email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cust-address">Shipping / Transmission Location</label>
+                        <textarea id="cust-address" placeholder="Physical Address" style="min-height:100px;" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="cust-phone">Contact Number (WhatsApp Preferred)</label>
+                        <input type="tel" id="cust-phone" placeholder="+251 ..." required>
+                    </div>
+                </div>
+
+                <!-- Payment Methods -->
+                <div class="form-section">
+                    <span class="t-eyebrow">Payment Integration</span>
+                    <h3 class="t-h3" style="margin-top:0.5rem; margin-bottom:1.5rem; font-size:1.1rem;">Choose Your Protocol</h3>
+                    
+                    <!-- Payment Method Tabs -->
+                    <div class="payment-tabs">
+                        <button class="payment-tab active" onclick="switchPaymentTab('chapa')" id="tab-chapa">
+                            <span class="payment-tab-icon">ðŸ’³</span>
+                            Chapa Pay
+                        </button>
+                        <button class="payment-tab" onclick="switchPaymentTab('manual')" id="tab-manual">
+                            <span class="payment-tab-icon">ðŸ“±</span>
+                            Manual Transfer
+                        </button>
+                    </div>
+
+                    <!-- â•â•â• CHAPA PAYMENT PANEL â•â•â• -->
+                    <div class="payment-panel active" id="panel-chapa">
+                        <div class="chapa-payment-card">
+                            <div class="chapa-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                                Chapa Secure Payment
+                            </div>
+                            <p class="chapa-info">Pay securely using Telebirr, CBE Birr, eBirr, M-Pesa, or Chapa wallet. Your payment is encrypted and processed through Chapa's secure gateway.</p>
+                            <div class="chapa-methods">
+                                <span class="chapa-method-pill">Telebirr</span>
+                                <span class="chapa-method-pill">CBE Birr</span>
+                                <span class="chapa-method-pill">eBirr</span>
+                                <span class="chapa-method-pill">M-Pesa</span>
+                                <span class="chapa-method-pill">Chapa</span>
+                            </div>
+                        </div>
+
+                        <!-- Chapa Inline Form Container -->
+                        <div id="chapa-inline-form"></div>
+
+                        <button class="chapa-pay-btn" id="chapa-pay-btn" onclick="initiateChapaPayment()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            Pay with Chapa â€” <span id="chapa-total-display">0 ETB</span>
+                        </button>
+
+                        <div id="chapa-status"></div>
+
+                        <div class="security-badges">
+                            <span class="security-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                                SSL Encrypted
+                            </span>
+                            <span class="security-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                Chapa Protected
+                            </span>
+                            <span class="security-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                Verified Gateway
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- â•â•â• MANUAL PAYMENT PANEL â•â•â• -->
+                    <div class="payment-panel" id="panel-manual">
+                        <!-- Telebirr Instruction -->
+                        <div class="payment-method-card">
+                            <div class="telebirr-badge">Telebirr Direct</div>
+                            <div style="font-family:monospace; font-size:1.4rem; color:#4db8ff; margin:0.8rem 0; letter-spacing:0.1em;">+251 99 201 3589</div>
+                            <p style="font-size:0.75rem; color:var(--fg-sub); line-height:1.6; margin:0;">Send the total ETB amount to the account above via Telebirr. Capture a screenshot of the confirmation to finalize.</p>
+                        </div>
+
+                        <!-- WhatsApp Helper -->
+                        <button class="wa-btn" onclick="sendWhatsAppOrder()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+                            Send Order via WhatsApp
+                        </button>
+
+                        <div class="upload-receipt" onclick="document.getElementById('receipt-file').click()">
+                            <span style="font-size:0.8rem; color:var(--accent); letter-spacing:0.1em; text-transform:uppercase;">Click to Upload Screenshot</span>
+                            <input type="file" id="receipt-file" accept="image/*" style="display:none;" onchange="handleFile(this)">
+                            <img id="receipt-preview">
+                        </div>
+
+                        <div id="upload-progress-container">
+                            <div class="progress-bar"><div class="progress-fill" id="progress-bar"></div></div>
+                            <p class="progress-txt" id="progress-status">Transmitting to Archive...</p>
+                        </div>
+
+                        <button class="submit-btn" id="submit-btn" onclick="submitOrder()">Finalize Transmission â†’</button>
+                        <div id="order-msg" style="margin-top:1.5rem; text-align:center; font-size:0.8rem;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Order Summary -->
+            <div class="summary-card">
+                <h3 class="summary-title">Archive Details</h3>
+                <div id="cart-list">
+                    <!-- Dynamic Cart Items -->
+                </div>
+                
+                <div class="total-row">
+                    <span class="total-label">Subtotal</span>
+                    <span class="total-amount" id="total-price">0 ETB</span>
+                </div>
+                
+                <p style="font-size:0.6rem; color:var(--fg-dim); margin-top:1.5rem; line-height:1.8; text-align:center;">
+                    Each item is part of the Domiinique Living Signature â€” a conscious addition to your environment.
+                </p>
+            </div>
+        </div>
+
+        <!-- Empty Cart View -->
+        <div id="cart-empty-view" class="empty-cart-view" style="display:none;">
+            <span class="t-eyebrow" style="opacity:0.6;">Transmission Halted</span>
+            <h2 class="t-h2" style="margin-top:1rem;">Your cart is currently void.</h2>
+            <p class="t-body" style="margin:2rem auto 3rem; max-width:400px; opacity:0.8;">Return to the Archive to curate your intentional living system.</p>
+            <a href="shop.html" class="btn-primary">Return to Shop</a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/cart.js?v=3"></script>
+    <script src="js/main.js?v=3" defer></script>
+    <script>
+    (function() {
+        var CART_KEY = 'domiinique-cart';
+
+        function getCartItems() {
+            try {
+                var raw = localStorage.getItem(CART_KEY);
+                console.log('Checkout cart raw data:', raw);
+                if (!raw || raw === '[]') return [];
+                var items = JSON.parse(raw);
+                return Array.isArray(items) ? items : [];
+            } catch(e) {
+                console.error('Cart parse error:', e);
+                return [];
+            }
+        }
+
+        window.updateQty = function(id, delta) {
+            var items = getCartItems();
+            var idx = items.findIndex(function(i) { return i.id === id || i.title === id; });
+            if (idx > -1) {
+                items[idx].qty = Math.max(1, (items[idx].qty || 1) + delta);
+                localStorage.setItem(CART_KEY, JSON.stringify(items));
+            }
+            if (window.domCart) window.domCart.adjustQuantity(id, delta);
+            renderCart();
+        };
+
+        window.removeFromCart = function(id) {
+            if (confirm('Remove this item?')) {
+                var items = getCartItems().filter(function(i) { return i.id !== id && i.title !== id; });
+                localStorage.setItem(CART_KEY, JSON.stringify(items));
+                if (window.domCart) window.domCart.removeItem(id);
+                renderCart();
+            }
+        };
+
+        function renderCart() {
+            console.log('renderCart called');
+            var list = document.getElementById('cart-list');
+            var totalEl = document.getElementById('total-price');
+            var activeView = document.getElementById('cart-active-view');
+            var emptyView = document.getElementById('cart-empty-view');
+            if (!list || !totalEl) return;
+
+            var cartItems = getCartItems();
+            console.log('Cart items to render:', cartItems.length, cartItems);
+
+            if (!cartItems.length) {
+                if (activeView) activeView.style.display = 'none';
+                if (emptyView) emptyView.style.display = 'block';
+                return;
+            }
+
+            if (activeView) activeView.style.display = 'grid';
+            if (emptyView) emptyView.style.display = 'none';
+            list.innerHTML = '';
+            var total = 0;
+
+            cartItems.forEach(function(item) {
+                var qty = item.qty || 1;
+                var price = typeof item.price === 'string' ? parseFloat(item.price.replace(/,/g, '')) : (item.price || 0);
+                total += price * qty;
+
+                var itemId = item.id || item.title || item.name || 'unknown';
+                var titleEsc = ((item.title || item.name || 'Untitled') + '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                var imgSrc = ((item.image || item.img || 'assets/books/book-placeholder.png') + '').replace(/"/g, '&quot;');
+
+                var div = document.createElement('div');
+                div.className = 'checkout-item';
+                div.innerHTML =
+                    '<div class="item-img-wrap">' +
+                        '<img src="' + imgSrc + '" class="item-img" onerror="this.src=\'assets/books/book-placeholder.png\'">' +
+                    '</div>' +
+                    '<div class="item-info">' +
+                        '<h4>' + titleEsc + '</h4>' +
+                        '<div class="qty-controls">' +
+                            '<button class="qty-btn qty-decrease">\u2212</button>' +
+                            '<span class="qty-val">' + qty + '</span>' +
+                            '<button class="qty-btn qty-increase">+</button>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="item-row-actions">' +
+                        '<div class="item-price">' + (price * qty).toLocaleString() + ' ETB</div>' +
+                        '<button class="remove-item-btn">' +
+                            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>' +
+                        '</button>' +
+                    '</div>';
+
+                div.querySelector('.qty-decrease').addEventListener('click', function() { window.updateQty(itemId, -1); });
+                div.querySelector('.qty-increase').addEventListener('click', function() { window.updateQty(itemId, 1); });
+                div.querySelector('.remove-item-btn').addEventListener('click', function() { window.removeFromCart(itemId); });
+
+                list.appendChild(div);
+            });
+
+            totalEl.innerText = total.toLocaleString() + ' ETB';
+            window._finalTotal = total;
+
+            var chapaTotalDisplay = document.getElementById('chapa-total-display');
+            if (chapaTotalDisplay) chapaTotalDisplay.textContent = total.toLocaleString() + ' ETB';
+
+            if (window.initChapaForm) window.initChapaForm(total);
+        }
+
+        window.renderCart = renderCart;
+
+        // Run immediately
+        renderCart();
+        setTimeout(renderCart, 200);
+        setTimeout(renderCart, 500);
+    })();
+    </script>
+    <script type="module">
+        import { db, storage } from './js/firebase-config.js';
+        import { collection, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
+
+        const CHAPA_PUBLIC_KEY = 'CHAPUBK_TEST-hOxqYOV8GQr1BqwfoggfFtd4ngDvA74t';
+        const CART_KEY = 'domiinique-cart';
+        let selectedFile = null;
+        let currentOrderId = 'DOM-' + Date.now() + '-' + Math.floor(Math.random() * 999);
+        let chapaInstance = null;
+
+        window.initChapaForm = function(amount) {
+            if (!amount || amount <= 0) return;
+            var formContainer = document.getElementById('chapa-inline-form');
+            if (!formContainer) return;
+            formContainer.innerHTML = '';
+
+            try {
+                if (typeof window.ChapaCheckout !== 'undefined') {
+                    chapaInstance = new window.ChapaCheckout({
+                        publicKey: CHAPA_PUBLIC_KEY,
+                        amount: String(amount),
+                        currency: 'ETB',
+                        email: 'customer@domiinique.com',
+                        first_name: 'Domiinique',
+                        last_name: 'User',
+                        availablePaymentMethods: ['telebirr', 'cbebirr', 'ebirr', 'mpesa'],
+                        showPaymentMethodsNames: true,
+                        showFlag: true,
+                        tx_ref: currentOrderId,
+                        customizations: {
+                            buttonText: 'Complete Payment',
+                            styles: '.chapa-pay-button{background:linear-gradient(135deg,#4CAF50,#388E3C)!important;border-radius:10px!important;font-weight:700!important;letter-spacing:0.1em!important;padding:1rem!important;font-size:0.8rem!important;text-transform:uppercase!important;}.chapa-inline-form-container{background:transparent!important;border:none!important;}'
+                        },
+                        onSuccessfulPayment: function(data) { handleChapaSuccess(data); },
+                        onPaymentFailure: function(error) { handleChapaFailure(error); },
+                        onClose: function() { console.log('Chapa popup closed'); }
+                    });
+                    chapaInstance.initialize('chapa-inline-form');
+                }
+            } catch(e) {
+                console.warn('Chapa inline form init skipped:', e.message);
+            }
+        };
+
+        // Chapa payment â€” uses PHP proxy to avoid CORS, fallback to inline SDK
+        window.initiateChapaPayment = function() {
+            const name = document.getElementById('cust-name').value.trim();
+            const email = document.getElementById('cust-email').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+            const addr = document.getElementById('cust-address').value.trim();
+            const statusEl = document.getElementById('chapa-status');
+            const btn = document.getElementById('chapa-pay-btn');
+
+            if (!name || !email || !phone) {
+                statusEl.innerHTML = '<div class="payment-status error">Please fill in your name, email, and phone number before proceeding.</div>';
+                return;
+            }
+
+            if (!window._finalTotal || window._finalTotal <= 0) {
+                statusEl.innerHTML = '<div class="payment-status error">Your cart appears to be empty.</div>';
+                return;
+            }
+
+            // Clean phone number
+            let cleanPhone = phone.replace(/[\s\-\+]/g, '');
+            if (cleanPhone.startsWith('251')) cleanPhone = '0' + cleanPhone.slice(3);
+            if (!cleanPhone.startsWith('0')) cleanPhone = '0' + cleanPhone;
+
+            const nameParts = name.split(' ');
+            const firstName = nameParts[0] || name;
+            const lastName = nameParts.slice(1).join(' ') || '-';
+            const txRef = currentOrderId + '-' + Date.now();
+
+            btn.disabled = true;
+            btn.innerHTML = `
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg>
+                Connecting to Chapa...
+            `;
+            statusEl.innerHTML = '<div class="payment-status processing">Initializing secure payment gateway...</div>';
+
+            // Save order to Firebase as pending
+            (async () => {
+                try {
+                    await setDoc(doc(db, 'orders', currentOrderId), {
+                        orderId: currentOrderId,
+                        txRef: txRef,
+                        customer: { name, email, address: addr, phone, uid: window.domAuth?.getUser()?.uid || 'guest' },
+                        items: window.domCart ? window.domCart.getItems() : [],
+                        totalValue: window._finalTotal,
+                        paymentMethod: 'chapa',
+                        status: 'pending_payment',
+                        createdAt: serverTimestamp()
+                    });
+
+                    // Store items for the receipt page BEFORE redirecting to hosted checkout
+                    if (window.domCart) {
+                        sessionStorage.setItem('lastOrderItems', JSON.stringify(window.domCart.getItems()));
+                    }
+                } catch(e) { console.warn('Pre-save or session save error:', e); }
+            })();
+
+            // Build payload
+            const payload = {
+                amount: String(window._finalTotal),
+                currency: 'ETB',
+                email: email,
+                first_name: firstName,
+                last_name: lastName,
+                phone_number: cleanPhone,
+                tx_ref: txRef,
+                return_url: window.location.href.split('/').slice(0, -1).join('/') + '/order-success.html?orderId=' + currentOrderId + '&total=' + window._finalTotal,
+                customization: {
+                    title: 'Domiinique Store',
+                    description: 'Order ' + currentOrderId
+                }
+            };
+
+            // Call PHP proxy (same-origin, no CORS issues)
+            fetch('chapa-init.php', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => {
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                return res.text();
+            })
+            .then(text => {
+                try {
+                    return JSON.parse(text);
+                } catch(e) {
+                    throw new Error('Invalid JSON from server: ' + text.substring(0, 100));
+                }
+            })
+            .then(data => {
+                if (data.status === 'success' && data.data && data.data.checkout_url) {
+                    statusEl.innerHTML = '<div class="payment-status success">Redirecting to Chapa secure checkout...</div>';
+                    setTimeout(() => { window.location.href = data.data.checkout_url; }, 800);
+                } else {
+                    const errorMsg = data.message || 'Payment system sync issue.';
+                    statusEl.innerHTML = '<div class="payment-status error">Gateway: ' + errorMsg + '. Using inline payment...</div>';
+                    setTimeout(() => { fallbackToInlineSDK(cleanPhone, txRef, statusEl, btn); }, 1500);
+                }
+            })
+            .catch(err => {
+                console.warn('Chapa proxy unavailable (local dev?), using inline SDK:', err.message);
+                statusEl.innerHTML = '<div class="payment-status processing">Loading inline payment form...</div>';
+                setTimeout(() => { fallbackToInlineSDK(cleanPhone, txRef, statusEl, btn); }, 800);
+            });
+        };
+
+        // Fallback: use inline SDK if hosted checkout fails
+        function fallbackToInlineSDK(cleanPhone, txRef, statusEl, btn) {
+            const formContainer = document.getElementById('chapa-inline-form');
+            formContainer.innerHTML = '';
+
+            if (typeof window.ChapaCheckout !== 'undefined') {
+                try {
+                    const name = document.getElementById('cust-name').value.trim();
+                    const email = document.getElementById('cust-email').value.trim();
+                    const nameParts = name.split(' ');
+                    const firstName = nameParts[0] || 'Customer';
+                    const lastName = nameParts.slice(1).join(' ') || 'User';
+
+                    chapaInstance = new window.ChapaCheckout({
+                        publicKey: CHAPA_PUBLIC_KEY,
+                        amount: String(window._finalTotal),
+                        currency: 'ETB',
+                        email: email,
+                        first_name: firstName,
+                        last_name: lastName,
+                        availablePaymentMethods: ['telebirr', 'cbebirr', 'ebirr', 'mpesa'],
+                        showPaymentMethodsNames: true,
+                        showFlag: true,
+                        phoneNumber: cleanPhone,
+                        tx_ref: txRef,
+                        customizations: {
+                            buttonText: 'Pay ' + window._finalTotal.toLocaleString() + ' ETB',
+                            successMessage: 'Payment successful! Your Domiinique order has been confirmed.',
+                            styles: `
+                                .chapa-pay-button {
+                                    background: linear-gradient(135deg, #4CAF50, #388E3C) !important;
+                                    border-radius: 10px !important;
+                                    font-weight: 700 !important;
+                                    padding: 1.2rem !important;
+                                    font-size: 0.85rem !important;
+                                    text-transform: uppercase !important;
+                                    box-shadow: 0 8px 25px rgba(76,175,80,0.3) !important;
+                                    width: 100% !important;
+                                }
+                            `
+                        },
+                        onSuccessfulPayment: function(d) { handleChapaSuccess(d); },
+                        onPaymentFailure: function(e) { handleChapaFailure(e); },
+                        onClose: function() {
+                            btn.disabled = false;
+                            resetBtnText(btn);
+                        }
+                    });
+                    chapaInstance.initialize('chapa-inline-form');
+                    statusEl.innerHTML = '<div class="payment-status success">Payment form loaded! Use the form above to complete payment.</div>';
+                    formContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    btn.disabled = false;
+                    resetBtnText(btn);
+                    return;
+                } catch(e) {
+                    console.warn('Inline SDK fallback error:', e);
+                }
+            }
+
+            // Both methods failed â€” show helpful message
+            statusEl.innerHTML = '<div class="payment-status error">Payment gateway temporarily unavailable. Please use the <strong>Manual Transfer</strong> tab to complete your order via Telebirr or WhatsApp.</div>';
+            btn.disabled = false;
+            resetBtnText(btn);
+            // Auto-switch to manual tab
+            window.switchPaymentTab('manual');
+        }
+
+        function resetBtnText(btn) {
+            btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Pay with Chapa â€” <span id="chapa-total-display">' + (window._finalTotal || 0).toLocaleString() + ' ETB</span>';
+        }
+
+        async function handleChapaSuccess(data) {
+            const statusEl = document.getElementById('chapa-status');
+            statusEl.innerHTML = '<div class="payment-status success">âœ“ Payment successful! Synchronizing your order...</div>';
+
+            try {
+                const name = document.getElementById('cust-name').value;
+                const email = document.getElementById('cust-email').value;
+                const addr = document.getElementById('cust-address').value;
+                const phone = document.getElementById('cust-phone').value;
+
+                const orderData = {
+                    orderId: currentOrderId,
+                    customer: { 
+                        name, 
+                        email,
+                        address: addr, 
+                        phone, 
+                        uid: window.domAuth?.getUser()?.uid || 'guest' 
+                    },
+                    items: window.domCart ? window.domCart.getItems() : [],
+                    totalValue: window._finalTotal,
+                    paymentMethod: 'chapa',
+                    chapaRef: data?.tx_ref || data?.reference || currentOrderId,
+                    status: 'paid',
+                    createdAt: serverTimestamp()
+                };
+
+                await setDoc(doc(db, 'orders', currentOrderId), orderData);
+                
+                // Store items for the receipt page
+                localStorage.removeItem(CART_KEY);
+                statusEl.innerHTML = '<div class="payment-status success">âœ“ Payment confirmed! Order synced. Redirecting to receipt...</div>';
+                
+                // Ensure items are in session before final catch-all redirect
+                if (!sessionStorage.getItem('lastOrderItems') && window.domCart) {
+                    sessionStorage.setItem('lastOrderItems', JSON.stringify(window.domCart.getItems()));
+                }
+
+                setTimeout(() => window.location.href = `order-success.html?orderId=${currentOrderId}&total=${window._finalTotal}`, 2000);
+            } catch(err) {
+                console.error('Order save error:', err);
+                statusEl.innerHTML = '<div class="payment-status success">âœ“ Payment received! Your order #' + currentOrderId + ' is being processed.</div>';
+                localStorage.removeItem(CART_KEY);
+            }
+        }
+
+        function handleChapaFailure(error) {
+            const statusEl = document.getElementById('chapa-status');
+            statusEl.innerHTML = '<div class="payment-status error">Payment was not completed. Please try again or use manual payment.</div>';
+            
+            const btn = document.getElementById('chapa-pay-btn');
+            btn.disabled = false;
+            btn.innerHTML = `
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Retry Payment â€” <span id="chapa-total-display">${(window._finalTotal || 0).toLocaleString()} ETB</span>
+            `;
+        }
+
+        // Payment tab switching
+        window.switchPaymentTab = function(tab) {
+            document.querySelectorAll('.payment-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.payment-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            document.getElementById('panel-' + tab).classList.add('active');
+        };
+
+        // Initial render with retry mechanism to ensure domCart is loaded
+        function tryInitialRender() {
+            if (window.domCart && typeof window.renderCart === 'function') {
+                window.renderCart();
+            } else {
+                setTimeout(tryInitialRender, 50);
+            }
+        }
+        tryInitialRender();
+
+        // Check for payment return
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('payment') === 'success') {
+            const statusEl = document.getElementById('chapa-status');
+            if (statusEl) {
+                statusEl.innerHTML = '<div class="payment-status success">âœ“ Payment verified successfully!</div>';
+            }
+        }
+
+        window.handleFile = function(input) {
+            const file = input.files[0];
+            if (file) {
+                selectedFile = file;
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const preview = document.getElementById('receipt-preview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        window.sendWhatsAppOrder = function() {
+            const num = '251992013589';
+            let msg = `ðŸ’Ž *NEW TRANSMISSION REQUEST* ðŸ’Ž\n`;
+            msg += `ðŸ†” *Order Code: ${currentOrderId}*\n\n`;
+            
+            const cartItems = window.domCart ? window.domCart.getItems() : [];
+            cartItems.forEach(item => {
+                msg += `ðŸ”¹ ${item.title} x${item.qty || 1}\n`;
+            });
+            msg += `\nðŸ’° *Total: ${window._finalTotal || 0} ETB*`;
+            msg += `\n\nðŸ‘¤ *Tracking for:* ${document.getElementById('cust-name').value || 'New Member'}`;
+            msg += `\n\nðŸ“Œ *IMPORTANT:* Please attach your payment screenshot to this message before sending.`;
+            
+            window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
+        };
+
+        window.submitOrder = async function() {
+            const name = document.getElementById('cust-name').value;
+            const addr = document.getElementById('cust-address').value;
+            const phone = document.getElementById('cust-phone').value;
+            const btn = document.getElementById('submit-btn');
+            const msgEl = document.getElementById('order-msg');
+
+            if (!name || !addr || !phone) {
+                msgEl.innerHTML = '<span style="color:var(--accent);">Identity information required for transmission.</span>';
+                return;
+            }
+
+            if (!selectedFile) {
+                msgEl.innerHTML = '<span style="color:var(--accent);">Proof of payment (screenshot) is necessary.</span>';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = 'Synchronizing...';
+            document.getElementById('upload-progress-container').style.display = 'block';
+
+            try {
+                // Local PHP Upload (Bypasses CORS/Permission issues)
+                const formData = new FormData();
+                formData.append('receipt', selectedFile);
+                formData.append('orderId', currentOrderId);
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'upload-receipt.php', true);
+                
+                xhr.upload.onprogress = (e) => {
+                    if (e.lengthComputable) {
+                        const pct = Math.round((e.loaded / e.total) * 100);
+                        document.getElementById('progress-bar').style.width = pct + '%';
+                        document.getElementById('progress-status').innerText = `Transmitting Archive: ${pct}%`;
+                    }
+                };
+
+                const screenshotUrl = await new Promise((resolve, reject) => {
+                    xhr.onload = () => {
+                        try {
+                            const res = JSON.parse(xhr.responseText);
+                            if (xhr.status === 200 && res.status === 'success') {
+                                resolve(res.url);
+                            } else {
+                                reject(res.message || 'Upload failed');
+                            }
+                        } catch (e) { reject('Malformed server response'); }
+                    };
+                    xhr.onerror = () => reject('Archive network error');
+                    xhr.send(formData);
+                });
+
+                const orderData = {
+                    orderId: currentOrderId,
+                    customer: { name, address: addr, phone, uid: window.domAuth?.getUser()?.uid || 'guest' },
+                    items: window.domCart ? window.domCart.getItems() : [],
+                    totalValue: window._finalTotal,
+                    paymentMethod: 'manual_telebirr',
+                    screenshotUrl: screenshotUrl,
+                    status: 'pending',
+                    createdAt: serverTimestamp()
+                };
+
+                await setDoc(doc(db, 'orders', currentOrderId), orderData);
+                
+                // Store items for the receipt page
+                if (window.domCart) {
+                    sessionStorage.setItem('lastOrderItems', JSON.stringify(window.domCart.getItems()));
+                }
+
+                localStorage.removeItem(CART_KEY);
+                msgEl.innerHTML = '<span style="color:#4CAF50;">Archive synchronized. Redirecting to your receipt...</span>';
+                setTimeout(() => window.location.href = `order-success.html?orderId=${currentOrderId}&total=${window._finalTotal}`, 2500);
+
+            } catch (err) {
+                console.error(err);
+                msgEl.innerHTML = '<span style="color:var(--accent);">Interference detected. Please retry or contact via WhatsApp.</span>';
+                btn.disabled = false;
+                btn.innerText = 'Finalize Transmission â†’';
+            }
+        };
+
+        // Theme Toggle Control
+        if (!window.__mainMenuInitialized) {
+            window.__mainMenuInitialized = true;
+        }
+
+        // Theme handled by main.js â€” no duplicate handler needed here
+    </script>
+
+    <!-- Spin animation for loading state -->
+    <style>
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,13 @@
+# Block direct access to receipt images
+# Only server-side scripts (upload-receipt.php) should read/write here
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+
+# Prevent directory listing
+Options -Indexes
+
+# Block all file types in this directory
+<FilesMatch ".*">
+    Require all denied
+</FilesMatch>

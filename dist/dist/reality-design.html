@@ -1,0 +1,780 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Reality Design â€” Domiinique Living Signature</title>
+    <meta name="description" content="Architect your physical and metaphysical experience through Reality Design.">
+    <meta name="theme-color" content="#0a0103">
+    <link rel="icon" type="image/png" href="assets/domiinique_logo.png">
+    
+    <link rel="stylesheet" href="css/main.css?v=11">
+    <link rel="stylesheet" href="css/reality-design.css?v=5">
+    
+    <!-- Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script type="module" src="js/auth.js"></script>
+
+    <script>
+        function checkAuth() {
+            if (window.domAuth && window.domAuth.isReady()) {
+                const user = window.domAuth.getUser();
+                if (!user) {
+                    console.warn("Reality Design â€” Debug Mode: No active session (Redirect Disabled).");
+                    return;
+                }
+                console.log("Reality Design â€” Session verified for:", user.name);
+            } else { 
+                setTimeout(checkAuth, 100); 
+            }
+        }
+        checkAuth();
+    </script>
+</head>
+<body class="reality-design-page">
+    <!-- Navbar (Standardized v9) -->
+    <nav id="nav" role="navigation" aria-label="Main Navigation">
+        <a class="nav__logo" href="index.html">
+            <span class="nav__logo-text">Domiinique</span>
+            <span class="nav__logo-motto">Living Signature</span>
+        </a>
+        <ul class="nav__links">
+            <li><a href="blueprint.html">Blueprint</a></li>
+            <li><a href="integrated.html">Integrated</a></li>
+            <li><a href="time.html">Time</a></li>
+            <li><a href="inspiration.html">Inspiration</a></li>
+            <li><a href="creative.html">Creative</a></li>
+            <li><a href="canvas.html">Canvas</a></li>
+            <li><a href="portraits.html">Portraits</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="you.html">YOU</a></li>
+            <li><a href="cocreation.html">Co-Creation</a></li>
+        </ul>
+        <div class="nav__utilities">
+            <a href="books.html" class="nav-icon-btn" title="Book Archive" aria-label="Books">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2h14a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+            </a>
+            <a href="checkout.html" class="nav-icon-btn" title="Cart" aria-label="Cart">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 1.95-1.57l1.65-8.42H6"/></svg>
+                <span class="nav-cart-badge">0</span>
+            </a>
+            <a href="shop.html" class="nav-icon-btn" title="Shop" aria-label="Shop">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </a>
+            <a href="integrated.html" class="nav-icon-btn" title="Exit to Integrated" style="border:1.5px solid #c9a84c; border-radius:50%; padding:0.3rem;"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></a>
+            <button id="music-btn" class="music-btn" title="Toggle Music">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72 264c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V456c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg>
+            </button>
+            <div class="nav__hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="rd-app-container">
+        <!-- Persistent Status Bar -->
+        <div id="rd-status-bar" class="rd-status-bar animate-in">
+            <div class="rd-status-left">
+                <span class="rd-pulse"></span>
+                <span id="rd-system-status">System: Resonance Optimal</span>
+            </div>
+            <div class="rd-status-right">
+                <span id="rd-current-date">-- --, ----</span>
+                <span class="rd-status-divider">|</span>
+                <span id="rd-current-time" class="rd-font-mono">00:00:00</span>
+            </div>
+        </div>
+
+        <!-- VIEW: ONBOARDING -->
+        <section id="view-onboarding" class="rd-view">
+            <div class="rd-onboard-wrap">
+                <div class="rd-onboard-step active" data-step="1">
+                    <span class="rd-tag">Calibration 01 â€” Intent</span>
+                    <h2 class="rd-onboard-title rd-font-serif">Define your focus.</h2>
+                    <p class="rd-text-muted">What is your primary energetic objective for this session?</p>
+                    <div class="rd-option-cloud rd-mt-2">
+                        <div class="rd-option-chip" onclick="window.rdApp.selectOption('focus', 'focus', this)">Focus</div>
+                        <div class="rd-option-chip" onclick="window.rdApp.selectOption('focus', 'energy', this)">Energy</div>
+                        <div class="rd-option-chip" onclick="window.rdApp.selectOption('focus', 'calm', this)">Calm</div>
+                        <div class="rd-option-chip" onclick="window.rdApp.selectOption('focus', 'create', this)">Create</div>
+                    </div>
+                </div>
+
+                <div class="rd-onboard-step" data-step="2">
+                    <span class="rd-tag">Calibration 02 â€” Alignment</span>
+                    <h2 class="rd-onboard-title rd-font-serif">Choose your frequency.</h2>
+                    <p class="rd-text-muted">High-fidelity baseline for your reality architecture.</p>
+                    <div class="rd-option-cloud rd-mt-2">
+                        <div class="rd-option-chip" onclick="window.rdApp.selectOption('frequency', 'alpha', this)">Alpha (8-13Hz)</div>
+                        <div class="rd-option-chip" onclick="window.rdApp.selectOption('frequency', 'theta', this)">Theta (4-8Hz)</div>
+                        <div class="rd-option-chip" onclick="window.rdApp.selectOption('frequency', 'delta', this)">Delta (0.5-4Hz)</div>
+                        <div class="rd-option-chip" onclick="window.rdApp.selectOption('frequency', 'gamma', this)">Gamma (30-100Hz)</div>
+                    </div>
+                </div>
+
+                <div class="rd-onboard-step" data-step="3">
+                    <span class="rd-tag">Calibration 03 â€” Finalize</span>
+                    <h2 class="rd-onboard-title rd-font-serif">Ready to Initiate?</h2>
+                    <p class="rd-text-muted">Final adjustment of your baseline resonance score.</p>
+                    <input type="range" id="baseline-slider" min="0" max="100" value="50" style="width:100%; margin:2rem 0; accent-color:var(--rd-gold);">
+                    <button class="rd-btn-primary" onclick="window.rdApp.completeOnboarding()">ACCESS PORTAL</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: WELCOME / LANDING -->
+        <section id="view-welcome" class="rd-view">
+            <div class="rd-section-header">
+                <span class="rd-tag">Welcome Home</span>
+                <h1 class="rd-title-main rd-font-serif">Reality Architecture</h1>
+                <p class="rd-text-muted">Your physical, mental, and digital existence, synchronized.</p>
+            </div>
+            
+            <div class="rd-grid-3col">
+                <div class="rd-panel" style="background:var(--rd-panel-bg);">
+                    <span class="rd-panel-label">Active Mode</span>
+                    <h2 id="summary-mode" style="font-size:1.4rem; color:var(--rd-gold); margin:0.5rem 0;">â€”</h2>
+                    <p id="summary-mode-desc" style="font-size:0.85rem; line-height:1.6; opacity:0.7;">Initialize your reality design system to begin.</p>
+                </div>
+                <div class="rd-panel">
+                    <span class="rd-panel-label">Current Timeline</span>
+                    <div id="summary-time" style="font-size:1.4rem; font-weight:700; margin:0.5rem 0;">00:00:00</div>
+                    <div id="summary-date" style="font-size:0.7rem; letter-spacing:0.1em; opacity:0.5; font-weight:800;">--- --, ----</div>
+                </div>
+                <div class="rd-panel">
+                    <span class="rd-panel-label">Global Resonance</span>
+                    <div style="display:flex; align-items:flex-end; gap:0.5rem; margin:0.5rem 0;">
+                        <span id="summary-resonance" style="font-size:1.8rem; font-weight:800; line-height:1;">0</span>
+                        <span style="opacity:0.4; font-weight:800;">%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rd-grid-2col" style="margin-top:2rem;">
+                <div class="rd-panel">
+                    <span class="rd-panel-label">System Status</span>
+                    <div style="margin-top:1rem; display:flex; flex-direction:column; gap:0.75rem;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:0.8rem; opacity:0.7;">ðŸŽ§ Acoustic</span>
+                            <span id="summary-acoustic" style="font-size:0.8rem; font-weight:600; color:var(--rd-gold);">â€”</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:0.8rem; opacity:0.7;">ðŸ’¡ Chromatic</span>
+                            <span id="summary-chromatic" style="font-size:0.8rem; font-weight:600; color:var(--rd-gold);">â€”</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:0.8rem; opacity:0.7;">ðŸ½ï¸ Nutrition</span>
+                            <span id="summary-nutrition" style="font-size:0.8rem; font-weight:600; color:var(--rd-gold);">â€”</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:0.8rem; opacity:0.7;">âœ¨ Creative</span>
+                            <span id="summary-creative" style="font-size:0.8rem; font-weight:600; color:var(--rd-gold);">â€”</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:0.8rem; opacity:0.7;">ðŸŒ™ Sleep Readiness</span>
+                            <span id="summary-sleep" style="font-size:0.8rem; font-weight:600; color:var(--rd-gold);">â€”</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="rd-panel">
+                    <span class="rd-panel-label">Active Rituals</span>
+                    <div class="rd-checklist" id="welcome-ritual-list" style="margin-top:1rem;">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: DASHBOARD (SYSTEM) -->
+        <section id="view-dashboard" class="rd-view">
+            <div class="rd-section-header">
+                <span class="rd-tag">Bio-Intelligence Command</span>
+                <h1 class="rd-title-main rd-font-serif">System Overview</h1>
+                <p class="rd-text-muted">Real-time synchronization of your nutritional, creative, and restorative subsystems.</p>
+            </div>
+
+            <div class="rd-grid-side-panel">
+                <!-- Left: Detailed Metrics -->
+                <div style="display:flex; flex-direction:column; gap:2rem;">
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">Bio-Resonance Analytics</span>
+                        <div style="height: 250px; margin-top:1.5rem;">
+                            <canvas id="resonanceChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="rd-grid-2col">
+                        <div class="rd-panel" style="padding:1.5rem;">
+                            <span class="rd-panel-label">Nutritional Flow</span>
+                            <div style="height:150px; margin-top:1rem;">
+                                <canvas id="stateCompositionChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="rd-panel" style="padding:1.5rem;">
+                            <span class="rd-panel-label">Creative Momentum</span>
+                            <div style="height:150px; margin-top:1rem;">
+                                <canvas id="cognitiveDimensionsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Global Alignment & Sync Widgets -->
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="rd-score-panel">
+                        <span class="rd-panel-label" style="color:rgba(0,0,0,0.5)">Current Alignment</span>
+                        <div class="rd-score-val" style="cursor: pointer;" onclick="window.rdApp.tuneAlignment(5)">
+                            <span id="rd-resonance-score">--</span><span style="font-size: 1.5rem; opacity: 0.5;">%</span>
+                        </div>
+                        <div class="rd-progress-track">
+                            <div id="rd-resonance-fill" class="rd-progress-fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Sync Widgets -->
+                    <div class="rd-grid-2col" style="gap: 1rem;">
+                        <div class="rd-panel" style="padding: 1.2rem; text-align: center;">
+                            <span class="rd-panel-label" style="font-size: 0.6rem;">Nutritional Intake</span>
+                            <div id="overview-calories" style="font-size: 1.2rem; font-weight: 700; color: var(--rd-gold); margin-top: 0.5rem;">-- kcal</div>
+                        </div>
+                        <div class="rd-panel" style="padding: 1.2rem; text-align: center;">
+                            <span class="rd-panel-label" style="font-size: 0.6rem;">Creative Flow</span>
+                            <div id="overview-hobby-progress" style="font-size: 1.2rem; font-weight: 700; color: var(--rd-gold); margin-top: 0.5rem;">--%</div>
+                        </div>
+                    </div>
+
+                    <div class="rd-panel" style="padding: 1.2rem;">
+                        <span class="rd-panel-label">Sleep Readiness</span>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.5rem;">
+                            <div id="overview-sleep-score" style="font-size: 1.5rem; font-weight: 800;">0%</div>
+                            <div style="flex:1; margin-left:1.5rem; height:6px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden;">
+                                <div id="overview-sleep-fill" style="width:0%; height:100%; background:#818cf8; transition: width 0.8s ease;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                        <a href="#" class="rd-action-tile" onclick="window.rdApp.setView('sensory')"><span>ðŸ‘ï¸</span><span>Sensory</span></a>
+                        <a href="#" class="rd-action-tile" onclick="window.rdApp.setView('sleep')"><span>ðŸŒ™</span><span>Sleep Ritual</span></a>
+                    </div>
+
+                    <div class="rd-panel" style="margin-top:1.5rem; flex:1;">
+                        <span class="rd-panel-label" style="display:flex; justify-content:space-between; align-items:center;">
+                            Neural Core Logs
+                            <span class="rd-tag" style="background:rgba(201,168,76,0.1); color:var(--rd-gold); font-size:0.6rem;">Live</span>
+                        </span>
+                        <div id="rd-system-log-content" class="rd-font-mono" style="height: 120px; overflow-y: auto; font-size: 0.7rem; color: #888; line-height: 1.5; margin-top: 1rem; scrollbar-width: thin;">
+                            <!-- Activity stream -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: SENSORY (ENVIRONMENT) -->
+        <section id="view-sensory" class="rd-view view-with-hero">
+            <!-- Sensory Hero / Active State Display - NOW ON TOP -->
+            <div class="rd-sensory-hero mode-focus" id="sensory-hero">
+                <div style="position:relative; z-index:2;">
+                    <span id="active-mode-label" class="rd-tag" style="color:inherit; opacity:0.8;">DEEP WORK MODE</span>
+                    <h2 id="active-mode-title" class="rd-font-serif" style="font-size:3.5rem; margin:0.5rem 0;">Focus</h2>
+                    <p id="active-mode-desc" style="max-width:500px; margin:0 auto; opacity:0.8; font-size:0.95rem;">Sub-bass grounding and blue light calibration.</p>
+                </div>
+            </div>
+
+            <div class="rd-section-header" style="margin-top: 2rem;">
+                <span class="rd-tag">Atmospheric Control</span>
+                <h1 class="rd-title-main rd-font-serif">Environmental Calibration</h1>
+                <p class="rd-text-muted">Tuning your immediate physical workspace to a target mental state.</p>
+            </div>
+            
+            <div class="mode-selector-cloud" style="margin-bottom:2.5rem;">
+                <div class="mode-chip active" data-mode="focus" onclick="window.rdApp.setSensoryMode('focus')">ðŸŽ¯ Focus</div>
+                <div class="mode-chip" data-mode="relax" onclick="window.rdApp.setSensoryMode('relax')">ðŸ§˜ Relax</div>
+                <div class="mode-chip" data-mode="create" onclick="window.rdApp.setSensoryMode('create')">ðŸŽ¨ Create</div>
+                <div class="mode-chip" data-mode="sleep" onclick="window.rdApp.setSensoryMode('sleep')">ðŸŒ™ Sleep</div>
+            </div>
+
+            <div class="rd-grid-side-panel">
+                <div style="display:flex; flex-direction:column; gap:2rem;">
+                    <!-- Category Selection -->
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">Category Filter</span>
+                        <div class="rd-option-cloud" style="margin-top:1.5rem;">
+                            <div class="rd-option-chip active" onclick="window.rdApp.filterSensory('all', this)">All Nodes</div>
+                            <div class="rd-option-chip" onclick="window.rdApp.filterSensory('visual', this)">Visual</div>
+                            <div class="rd-option-chip" onclick="window.rdApp.filterSensory('auditory', this)">Auditory</div>
+                            <div class="rd-option-chip" onclick="window.rdApp.filterSensory('spatial', this)">Spatial</div>
+                            <div class="rd-option-chip" onclick="window.rdApp.filterSensory('kinesthetic', this)">Kinesthetic</div>
+                        </div>
+                    </div>
+
+                    <div class="rd-grid-2col" id="sensory-node-grid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Right: Active Mode -->
+                <div class="rd-panel" id="sensory-active-panel">
+                    <span class="rd-panel-label">Active Calibration</span>
+                    <div id="sensory-active-content" style="margin-top:2rem; text-align:center;">
+                        <div id="active-category-icon" style="font-size:3rem; margin-bottom:1rem;">âš–ï¸</div>
+                        <h3 id="active-category-title" class="rd-font-serif" style="font-size:1.5rem; margin-bottom:0.5rem;">Balanced Neutral</h3>
+                        <p id="active-category-desc" style="font-size:0.8rem; opacity:0.6; line-height:1.6;">Currently maintaining a baseline equilibrium state for multi-modal synthesis.</p>
+                        
+                        <div class="rd-progress-track" style="margin:2rem 0;">
+                            <div id="mode-intensity-fill" class="rd-progress-fill" style="width: 50%; background:var(--rd-gold);"></div>
+                        </div>
+                        
+                        <button class="rd-btn-primary" onclick="window.rdApp.resetSensory()">RESET TO BASELINE</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: RITUALS (AUTO-ARCHIVE) -->
+        <section id="view-rituals" class="rd-view view-with-hero">
+            <div class="rd-sensory-hero" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('assets/reality-design/rituals-hero.png'); background-size: cover; background-position: center;">
+                <div style="position:relative; z-index:2;">
+                    <span class="rd-tag" style="color:var(--rd-gold); border-color:var(--rd-gold);">Modular Habits</span>
+                    <h2 class="rd-font-serif" style="font-size:3.5rem; margin:0.5rem 0;">Ritual Sequence</h2>
+                    <p style="max-width:500px; margin:0 auto; opacity:0.8; font-size:0.95rem;">Designing and chaining automated responses to life's trigger events.</p>
+                </div>
+            </div>
+
+            <div class="rd-section-header" style="margin-top: 2rem;">
+                <span class="rd-tag">Modular Habits</span>
+                <h1 class="rd-title-main rd-font-serif">Ritual Sequence Builder</h1>
+                <p class="rd-text-muted">Design and chain automated responses to life's trigger events.</p>
+            </div>
+
+            <div class="rd-grid-side-panel">
+                <div class="rd-panel">
+                    <span class="rd-panel-label">Available Ritual Modules</span>
+                    <div class="rd-checklist" id="ritual-library" style="margin-top:1.5rem;">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+                <div class="rd-panel">
+                    <span class="rd-panel-label">Active Sequence</span>
+                    <div id="active-ritual-sequence" style="margin-top:1.5rem; display:flex; flex-direction:column; gap:0.5rem;">
+                        <div class="meal-empty-state" style="opacity:0.5; font-size:0.8rem; padding:1rem;">Add modules from the left panel to build your sequence.</div>
+                    </div>
+                    <button id="commit-sequence-btn" class="rd-btn-primary" style="margin-top:2rem;" onclick="window.rdApp.commitSequence()">COMMIT SEQUENCE</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: REPORT (ROADMAP) -->
+        <section id="view-roadmap" class="rd-view view-with-hero">
+            <div class="rd-sensory-hero" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('assets/reality-design/roadmap-hero.png'); background-size: cover; background-position: center;">
+                <div style="position:relative; z-index:2;">
+                    <span class="rd-tag" style="color:var(--rd-gold); border-color:var(--rd-gold);">Intelligence Report</span>
+                    <h2 class="rd-font-serif" style="font-size:3.5rem; margin:0.5rem 0;">Life-Design Roadmap</h2>
+                    <p style="max-width:500px; margin:0 auto; opacity:0.8; font-size:0.95rem;">A synthesized projection of your current trajectory based on active rituals.</p>
+                </div>
+            </div>
+
+            <div class="rd-section-header" style="margin-top: 2rem;">
+                <span class="rd-tag">Intelligence Report</span>
+                <h1 id="roadmap-title" class="rd-title-main rd-font-serif">Life-Design Roadmap</h1>
+                <p class="rd-text-muted">A synthesized projection of your current trajectory based on active rituals and sensory calibration.</p>
+                <div id="roadmap-progress" style="margin-top:1rem; font-size:0.8rem; font-weight:700; letter-spacing:0.1em; color:var(--rd-gold);">0% Protocol Completion</div>
+            </div>
+
+            <div id="roadmap-portal">
+                <div class="rd-grid-3col" style="margin-bottom:2rem;">
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">Daily Protocol</span>
+                        <div class="rd-checklist" id="roadmap-daily" style="margin-top:1.5rem;"><!-- Populated by JS --></div>
+                    </div>
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">Weekly Milestones</span>
+                        <div class="rd-checklist" id="roadmap-weekly" style="margin-top:1.5rem;"><!-- Populated by JS --></div>
+                    </div>
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">Monthly Outcomes</span>
+                        <div class="rd-checklist" id="roadmap-monthly" style="margin-top:1.5rem;"><!-- Populated by JS --></div>
+                    </div>
+                </div>
+
+                <div class="rd-panel rd-report-box" style="padding:2rem;">
+                    <span class="rd-panel-label">Strategic Intelligence Summary</span>
+                    <div id="roadmap-summary" style="margin-top:1rem; font-size:0.85rem; line-height:1.8;"><!-- Populated by JS --></div>
+                </div>
+
+                <!-- Live Data from User Engines -->
+                <div class="rd-grid-3col" style="margin-top:2rem;">
+                    <div class="rd-panel" style="text-align:center;">
+                        <span class="rd-panel-label">Active Hobby Projects</span>
+                        <div id="roadmap-hobby-count" style="font-size:2.5rem; font-weight:800; color:var(--rd-gold); margin-top:0.5rem;">0</div>
+                    </div>
+                    <div class="rd-panel" style="text-align:center;">
+                        <span class="rd-panel-label">Avg. Creative Progress</span>
+                        <div id="roadmap-hobby-avg" style="font-size:2.5rem; font-weight:800; color:var(--rd-gold); margin-top:0.5rem;">--%</div>
+                    </div>
+                    <div class="rd-panel" style="text-align:center;">
+                        <span class="rd-panel-label">Weekly Meal Plan</span>
+                        <div id="roadmap-meal-status" style="font-size:1.1rem; font-weight:700; color:var(--rd-gold); margin-top:0.8rem;">Not Generated</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: HOBBIES (CREATIVE ARCHIVE) -->
+        <section id="view-hobbies" class="rd-view view-with-hero">
+            <div class="rd-sensory-hero" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('assets/reality-design/hobbies-hero.png'); background-size: cover; background-position: center;">
+                <div style="position:relative; z-index:2;">
+                    <span class="rd-tag" style="color:var(--rd-gold); border-color:var(--rd-gold);">Creative Alchemy</span>
+                    <h2 class="rd-font-serif" style="font-size:3.5rem; margin:0.5rem 0;">Hobby Archives</h2>
+                    <p style="max-width:500px; margin:0 auto; opacity:0.8; font-size:0.95rem;">Preserving creative soul-residue through non-commercial exploration.</p>
+                </div>
+            </div>
+
+            <div class="rd-section-header" style="margin-top: 2rem;">
+                <span class="rd-tag">Creative Alchemy</span>
+                <h1 class="rd-title-main rd-font-serif">Activity Log</h1>
+                <p class="rd-text-muted">Tracking non-commercial pursuits to maintain your creative soul-residue.</p>
+            </div>
+
+            <nav class="meals-tab-nav" style="margin-bottom:2rem;">
+                <button class="hobby-tab-btn active" data-hobby-tab="flow">ðŸ”„ Flow Phase</button>
+                <button class="hobby-tab-btn" data-hobby-tab="archives">ðŸ““ The Archive</button>
+                <button class="hobby-tab-btn" data-hobby-tab="metrics">ðŸ“‰ Equilibrium</button>
+            </nav>
+
+            <div id="hobby-tab-flow" class="hobby-tab-panel active">
+                <div class="rd-grid-side-panel">
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">State Calibration Selection</span>
+                        <div class="rd-checklist" id="hobby-selection-list" style="margin-top:1.5rem;">
+                            <div class="rd-check-item" data-hobby="coding">
+                                <div class="rd-checkbox"></div><div class="rd-check-label">Coding (High Logic)</div>
+                            </div>
+                            <div class="rd-check-item" data-hobby="design">
+                                <div class="rd-checkbox"></div><div class="rd-check-label">Design (Visual Synthesis)</div>
+                            </div>
+                            <div class="rd-check-item" data-hobby="music">
+                                <div class="rd-checkbox"></div><div class="rd-check-label">Music (Auditory Flow)</div>
+                            </div>
+                            <div class="rd-check-item" data-hobby="reading">
+                                <div class="rd-checkbox"></div><div class="rd-check-label">Reading (Linguistic Depth)</div>
+                            </div>
+                            <div class="rd-check-item" data-hobby="fitness">
+                                <div class="rd-checkbox"></div><div class="rd-check-label">Fitness (Somatic Precision)</div>
+                            </div>
+                            <div class="rd-check-item" data-hobby="cooking">
+                                <div class="rd-checkbox"></div><div class="rd-check-label">Cooking (Molecular Play)</div>
+                            </div>
+                            <div class="rd-check-item" data-hobby="photography">
+                                <div class="rd-checkbox"></div><div class="rd-check-label">Photography (Visual Preservation)</div>
+                            </div>
+                            <div class="rd-check-item" data-hobby="gaming">
+                                <div class="rd-checkbox"></div><div class="rd-check-label">Gaming (Strategic Flow)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rd-panel" style="position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:3rem; overflow:hidden;">
+                        <span class="rd-panel-label">Deep Flow Timer</span>
+                        <div id="flow-pulse-bg" style="position:absolute; top:50%; left:50%; width:10px; height:10px; background:var(--rd-gold); border-radius:50%; opacity:0; z-index:0; pointer-events:none; transform:translate(-50%,-50%);"></div>
+                        <div id="flow-timer-display" style="position:relative; font-size:5rem; font-weight:800; font-family:'JetBrains Mono'; margin:2rem 0; color:var(--rd-gold); z-index:1;">25:00</div>
+                        <div style="position:relative; display:flex; gap:1rem; z-index:1;">
+                            <button id="flow-timer-btn" class="rd-btn-primary" style="width:auto; padding:1rem 3rem;" onclick="window.rdApp.hobbyEngine.toggleTimer()">START FLOW</button>
+                            <button id="flow-reset-btn" class="rd-btn-secondary" style="width:auto; padding:1rem 2rem;" onclick="window.rdApp.hobbyEngine.resetTimer()">RESET</button>
+                        </div>
+                        <div style="position:relative; margin-top:2.5rem; text-align:center; z-index:1;">
+                            <div id="flow-active-label" style="font-size:0.75rem; letter-spacing:0.2em; opacity:0.5; font-weight:700;">SELECT A HOBBY TO CALIBRATE</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="hobby-tab-archives" class="hobby-tab-panel">
+                <div class="rd-panel" style="margin-bottom:2rem;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+                        <span class="rd-panel-label">Log New Discovery</span>
+                        <div style="display:flex; gap:0.75rem; flex:1; max-width:500px;">
+                            <input type="text" id="archive-input" placeholder="Project name, book, skill..." style="flex:1; min-width:0; padding:0.65rem 1rem; border-radius:10px; background:rgba(255,255,255,0.05); border:1px solid var(--rd-border); color:var(--rd-text); font-size:0.84rem;">
+                            <button class="rd-btn-primary" style="width:auto; padding:0.65rem 1.5rem; font-size:0.75rem; white-space:nowrap;" onclick="window.rdApp.hobbyEngine.addArchive()">+ ARCHIVE</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="rd-grid-3col" id="hobby-archive-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <div id="hobby-tab-metrics" class="hobby-tab-panel">
+                <div class="rd-grid-2col">
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">Creative Pulse (7 Days)</span>
+                        <div style="height:300px; margin-top:1.5rem;"><canvas id="hobbyPulseChart"></canvas></div>
+                    </div>
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">Equilibrium Map</span>
+                        <div style="height:300px; margin-top:1.5rem;"><canvas id="hobbyEquilibriumChart"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: MEALS (NUTRITIONAL ARCHITECTURE) -->
+        <section id="view-meals" class="rd-view view-with-hero">
+            <div class="rd-sensory-hero" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=1200'); background-size: cover; background-position: center;">
+                <div style="position:relative; z-index:2;">
+                    <span class="rd-tag" style="color:var(--rd-gold); border-color:var(--rd-gold);">Nutritional Intelligence</span>
+                    <h2 class="rd-font-serif" style="font-size:3.5rem; margin:0.5rem 0;">Bio-Fuel Engineering</h2>
+                    <p style="max-width:500px; margin:0 auto; opacity:0.8; font-size:0.95rem;">Precise caloric and micronutrient synthesis for peak biological performance.</p>
+                </div>
+            </div>
+
+            <div class="rd-section-header">
+                <span class="rd-tag">Bio-Fuel Engineering</span>
+                <h1 class="rd-title-main rd-font-serif">Nutritional Architecture</h1>
+                <p class="rd-text-muted">Precise caloric and micronutrient synthesis for peak biological performance.</p>
+            </div>
+
+            <nav class="meals-tab-nav" style="margin-bottom:2rem;">
+                <button class="meals-tab-btn active" data-tab="search">ðŸ” Discovery</button>
+                <button class="meals-tab-btn" data-tab="planner">ðŸ“… Weekly Plan</button>
+                <button class="meals-tab-btn" data-tab="analysis">ðŸ“Š Analysis</button>
+                <button class="meals-tab-btn" data-tab="menu">ðŸ“‹ Quick Menu</button>
+                <button class="meals-tab-btn" data-tab="smart">âš™ï¸ Smart Tools</button>
+            </nav>
+
+            <!-- TAB 1: SEARCH -->
+            <div class="meals-tab-panel active" id="meals-tab-search">
+                <div class="rd-grid-side-panel">
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">Search Console</span>
+                        <div class="meals-search-bar">
+                            <input type="text" id="recipe-search-input" placeholder="Search dishes...">
+                            <button class="search-exec-btn" onclick="window.rdApp.nutritionalEngine.searchRecipes()">SCAN</button>
+                        </div>
+                        <div class="filter-section" id="diet-filters" style="margin-top:1.5rem;">
+                            <span class="rd-panel-label" style="font-size:0.65rem;">Diet Filters</span>
+                            <div class="rd-option-cloud" style="gap:0.5rem; margin-top:0.5rem;">
+                                <div class="filter-chip" onclick="this.classList.toggle('active')">Vegan</div>
+                                <div class="filter-chip" onclick="this.classList.toggle('active')">Vegetarian</div>
+                                <div class="filter-chip" onclick="this.classList.toggle('active')">Keto</div>
+                                <div class="filter-chip" onclick="this.classList.toggle('active')">Paleo</div>
+                                <div class="filter-chip" onclick="this.classList.toggle('active')">Gluten Free</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">Found Nodes</span>
+                        <div id="search-result-count" style="font-size:0.7rem; opacity:0.5; margin-top:0.5rem;">Initialization complete: Ready for queries.</div>
+                        <div class="recipe-results-container">
+                            <div id="recipe-results-grid" class="recipe-card-grid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: PLANNER -->
+            <div class="meals-tab-panel" id="meals-tab-planner">
+                <div class="rd-section-header" style="display:flex; justify-content:space-between; align-items:center;">
+                    <span class="rd-panel-label" style="margin:0;">Dynamic 7-Day Protocol</span>
+                    <div style="display:flex; gap:1rem;">
+                        <button id="btn-toggle-shopping" class="rd-btn-secondary commitment-btn" onclick="window.rdApp.nutritionalEngine.toggleShoppingList()">ðŸ›ï¸ SHOPPING LIST</button>
+                        <button id="btn-export-plan" class="rd-btn-secondary commitment-btn" onclick="window.rdApp.nutritionalEngine.exportPlan()">ðŸ“‘ EXPORT</button>
+                    </div>
+                </div>
+                <div class="rd-report-box" style="margin-bottom:2rem; padding:1.5rem;">
+                    <div class="rd-grid-3col" style="gap:2rem; align-items:center;">
+                        <label>Target Cal/Day <br><input type="number" id="plan-calories" value="2000" step="50" style="margin-top:0.5rem; width:100%; border-radius:8px; padding:0.6rem; border:1px solid var(--rd-border); background:rgba(0,0,0,0.2)"></label>
+                        <label>Diet Protocol <br>
+                            <select id="plan-diet" style="margin-top:0.5rem; width:100%; border-radius:8px; padding:0.6rem; border:1px solid var(--rd-border); background:rgba(0,0,0,0.2); color:white;">
+                                <option value="">Standard</option><option value="vegan">Vegan</option><option value="keto">Keto</option><option value="paleo">Paleo</option>
+                            </select>
+                        </label>
+                        <button class="rd-btn-primary" style="margin-top:1.4rem;" onclick="window.rdApp.nutritionalEngine.generateWeeklyPlan()">GENERATE SYNC-PLAN</button>
+                    </div>
+                </div>
+                <div class="weekly-planner-grid" id="weekly-planner-grid"></div>
+                
+                <!-- Shopping List Panel (Refined) -->
+                <div id="shopping-list-panel" class="rd-panel shopping-list-panel" style="display:none;">
+                    <div class="shopping-list-header">
+                        <span class="rd-panel-label">Consolidated Inventory</span>
+                        <div class="shopping-list-controls">
+                            <button id="btn-export-list" class="rd-btn-secondary commitment-btn" onclick="window.rdApp.nutritionalEngine.exportShoppingList()">PRINT / EXPORT</button>
+                            <button id="btn-close-list" class="rd-btn-secondary" onclick="window.rdApp.nutritionalEngine.toggleShoppingList()">CLOSE</button>
+                        </div>
+                    </div>
+                    <div id="shopping-list-content" class="shopping-list-scroll">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: ANALYSIS -->
+            <div class="meals-tab-panel" id="meals-tab-analysis">
+                <div class="rd-panel">
+                    <span class="rd-panel-label">Bio-Marker Analysis</span>
+                    <div id="analysis-content">
+                        <div class="rd-empty-state">Select a dish from Discovery to initialize analysis.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: MENU -->
+            <div class="meals-tab-panel" id="meals-tab-menu">
+                <div class="rd-grid-side-panel">
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">Fast Food & Menu Integration</span>
+                        <div class="meals-search-bar" style="margin-top:1.5rem;">
+                            <input type="text" id="menu-search-input" placeholder="e.g. McDonald's Big Mac...">
+                            <button class="search-exec-btn" onclick="window.rdApp.nutritionalEngine.searchMenuItems()">SCAN</button>
+                        </div>
+                        <div id="menu-results" style="margin-top:1.5rem;"></div>
+                    </div>
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">Menu Logic</span>
+                        <p style="font-size:0.75rem; line-height:1.6; opacity:0.6;">Sync your outside eating habits with your internal reality design. High-fidelity caloric tracking for commercial food nodes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: SMART TOOLS -->
+            <div class="meals-tab-panel" id="meals-tab-smart">
+                <div class="rd-grid-2col">
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">ðŸ§  Natural Language Extraction</span>
+                        <textarea id="natural-msg-input" placeholder="Paste raw ingredients..." style="width:100%; height:120px; margin:1rem 0; background:rgba(0,0,0,0.2); color:white; border:1px solid var(--rd-border); border-radius:12px; padding:1rem;"></textarea>
+                        <button class="rd-btn-primary" onclick="window.rdApp.nutritionalEngine.parseText()">EXTRACT SYMBOLS</button>
+                        <div id="parsed-ingredients-output"></div>
+                    </div>
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">ðŸ¤– Food Image Analysis</span>
+                        <label style="display:block; padding:3rem; border:2px dashed var(--rd-gold); border-radius:16px; margin-top:1.5rem; text-align:center; cursor:pointer;">
+                            <input type="file" id="food-image-input" accept="image/*" style="display:none;" onchange="window.rdApp.nutritionalEngine.analyzeImage(this)">
+                            ðŸ“· SCAN IMAGE
+                        </label>
+                        <div id="image-analysis-output" style="margin-top:1.5rem;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- â•â• VIEW: SLEEP & SUBCONSCIOUS ALIGNMENT â•â• -->
+        <section id="view-sleep" class="rd-view view-with-hero">
+            <!-- Sleep Hero - NOW ON TOP -->
+            <div class="rd-sensory-hero" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=1200'); background-size: cover; background-position: center;">
+                <div style="position:relative; z-index:2;">
+                    <span class="rd-tag" style="color:#818cf8; border-color:#818cf8;">Restorative Architecture</span>
+                    <h2 class="rd-font-serif" style="font-size:3.5rem; margin:0.5rem 0;">Subconscious Alignment</h2>
+                    <p style="max-width:500px; margin:0 auto; opacity:0.8; font-size:0.95rem;">Enhancing deep restoration and pattern integration through somatic cues.</p>
+                </div>
+            </div>
+
+            <div class="rd-section-header">
+                <span class="rd-tag">Restorative Architecture</span>
+                <h1 class="rd-title-main rd-font-serif">Sleep & Subconscious</h1>
+                <p class="rd-text-muted">Enhance deep restoration and activate subconscious manifestation through somatic and auditory cues.</p>
+            </div>
+
+            <nav class="meals-tab-nav" style="margin-bottom:2rem;">
+                <button class="sleep-tab-btn active" data-sleep-tab="frequencies">ðŸŽ§ Frequencies</button>
+                <button class="sleep-tab-btn" data-sleep-tab="bowls">ðŸ¥£ Vibrations</button>
+                <button class="sleep-tab-btn" data-sleep-tab="guided">ðŸ§˜ Guided</button>
+                <button class="sleep-tab-btn" data-sleep-tab="ambient">ðŸŒ² Ambient</button>
+                <button class="sleep-tab-btn" data-sleep-tab="routine">ðŸŒ™ Routine</button>
+            </nav>
+
+            <div id="sleep-tab-frequencies" class="sleep-tab-panel active">
+                <div class="rd-grid-side-panel">
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">Resonance Tracks</span>
+                        <div class="rd-checklist" id="sleep-tracks-grid" style="margin-top:1.5rem;"></div>
+                    </div>
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">Frequency Intelligence</span>
+                        <div class="rd-report-box" style="margin-top:1rem; font-size:0.8rem; line-height:1.6;">
+                            <div style="margin-bottom:1rem;"><strong style="color:var(--rd-gold);">Delta Waves (1-4 Hz):</strong> Deep restorative sleep and body repair.</div>
+                            <div style="margin-bottom:1rem;"><strong style="color:var(--rd-gold);">Theta Waves (4-7 Hz):</strong> Dream state, intuition, and subconscious access.</div>
+                            <div style="margin-bottom:1rem;"><strong style="color:var(--rd-gold);">528 Hz:</strong> DNA repair and emotional equilibrium.</div>
+                            <div style="margin-bottom:1rem;"><strong style="color:var(--rd-gold);">417/852/963 Hz:</strong> Stress release and high-frequency intuition.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sleep-tab-bowls" class="sleep-tab-panel">
+                <div class="rd-grid-side-panel"><div class="rd-panel"><div class="rd-checklist" id="sleep-bowls-grid"></div></div></div>
+            </div>
+
+            <div id="sleep-tab-guided" class="sleep-tab-panel">
+                <div class="rd-grid-side-panel"><div class="rd-panel"><div class="rd-checklist" id="sleep-guided-grid"></div></div></div>
+            </div>
+
+            <div id="sleep-tab-ambient" class="sleep-tab-panel">
+                <div class="rd-grid-side-panel"><div class="rd-panel"><div class="rd-checklist" id="sleep-ambient-grid"></div></div></div>
+            </div>
+
+            <div id="sleep-tab-routine" class="sleep-tab-panel">
+                <div class="rd-grid-side-panel">
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">Evening Prep Checklist</span>
+                        <div class="rd-checklist" style="margin-top:1.5rem;">
+                            <div class="rd-check-item" data-sleep-check="magnesium" onclick="window.rdApp.sleepEngine.toggleChecklist('magnesium')">
+                                <div class="rd-checkbox"></div><div class="rd-check-label">Magnesium Glycinate (30-60m before)</div>
+                            </div>
+                            <div class="rd-check-item" data-sleep-check="fountain" onclick="window.rdApp.sleepEngine.toggleChecklist('fountain')">
+                                <div class="rd-checkbox"></div><div class="rd-check-label">Activate Water Fountain (Grounding)</div>
+                            </div>
+                            <div class="rd-check-item" data-sleep-check="candle" onclick="window.rdApp.sleepEngine.toggleChecklist('candle')">
+                                <div class="rd-checkbox"></div><div class="rd-check-label">Calm Visual Anchor (White/Red Candle)</div>
+                            </div>
+                            <div class="rd-check-item" data-sleep-check="journal" onclick="window.rdApp.sleepEngine.toggleChecklist('journal')">
+                                <div class="rd-checkbox"></div><div class="rd-check-label">Journal Subconscious Intentions</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rd-panel">
+                        <span class="rd-panel-label">Sample Protocol</span>
+                        <div class="rd-report-box" style="margin-top:1rem; font-size:0.8rem; line-height:1.4;">
+                            <p><strong>21:00:</strong> Light stretching & MgH</p>
+                            <p><strong>21:05:</strong> Reflection Journaling</p>
+                            <p><strong>21:15:</strong> Dim lights, activate anchors</p>
+                            <p><strong>21:20:</strong> Play Delta/Bowl sequence</p>
+                            <p><strong>21:30:</strong> Drift to sleep (Focus on breath)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- â•â• RECIPE DETAIL MODAL â•â• -->
+        <div class="recipe-modal-overlay" id="recipe-modal-overlay" onclick="if(event.target===this) window.rdApp.nutritionalEngine.closeModal()">
+            <div class="recipe-modal" id="recipe-modal">
+                <button class="recipe-modal-close" onclick="window.rdApp.nutritionalEngine.closeModal()">âœ•</button>
+                <div id="recipe-modal-content"></div>
+            </div>
+        </div>
+    </div><!-- /.rd-app-container -->
+
+    <!-- Floating Navigation -->
+    <nav class="rd-view-nav">
+        <a href="#" class="rd-view-link active" data-route="welcome" data-icon="ðŸ "><span>Overview</span></a>
+        <a href="#" class="rd-view-link" data-route="dashboard" data-icon="ðŸ“Š"><span>System</span></a>
+        <a href="#" class="rd-view-link" data-route="sensory" data-icon="ðŸŽ­"><span>Sensory</span></a>
+        <a href="#" class="rd-view-link" data-route="sleep" data-icon="ðŸŒ™"><span>Rest</span></a>
+        <a href="#" class="rd-view-link" data-route="rituals" data-icon="âš¡"><span>Rituals</span></a>
+        <a href="#" class="rd-view-link" data-route="roadmap" data-icon="ðŸ—ºï¸"><span>Roadmap</span></a>
+        <a href="#" class="rd-view-link" data-route="hobbies" data-icon="âœ¨"><span>Hobbies</span></a>
+        <a href="#" class="rd-view-link" data-route="meals" data-icon="ðŸ½ï¸"><span>Meals</span></a>
+    </nav>
+
+    <!-- Global Scripts -->
+    <script src="js/cart.js"></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/reality-app.js?v=5"></script>
+</body>
+</html>

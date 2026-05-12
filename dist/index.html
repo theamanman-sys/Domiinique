@@ -96,6 +96,57 @@
         </div>
     </header>
 
+    <!-- ═══ 6-STAGE JOURNEY SLIDER ═══ -->
+    <section class="journey-section">
+        <div class="journey-header">
+            <span class="t-eyebrow">The Path</span>
+            <h2 class="t-h2">Six Stages of Becoming</h2>
+        </div>
+        <div class="journey-wrapper">
+            <button class="journey-arrow journey-arrow--left" aria-label="Previous">&#10094;</button>
+            <div class="journey-track" id="journey-track">
+                <div class="journey-stage">
+                    <span class="journey-num">01</span>
+                    <h3 class="journey-title">IDENTITY</h3>
+                    <p class="journey-sub">The Origin</p>
+                    <p class="journey-desc">Who you are at your core — the unshakable foundation from which everything else is built.</p>
+                </div>
+                <div class="journey-stage">
+                    <span class="journey-num">02</span>
+                    <h3 class="journey-title">ENVIRONMENT</h3>
+                    <p class="journey-sub">The Sanctuary</p>
+                    <p class="journey-desc">The spaces you inhabit — crafted to reflect, support, and elevate your inner world.</p>
+                </div>
+                <div class="journey-stage">
+                    <span class="journey-num">03</span>
+                    <h3 class="journey-title">ARCHITECTURE</h3>
+                    <p class="journey-sub">The Blueprint</p>
+                    <p class="journey-desc">The master structure — a 10-pillar system that organizes life into conscious, intentional design.</p>
+                </div>
+                <div class="journey-stage">
+                    <span class="journey-num">04</span>
+                    <h3 class="journey-title">INTEGRATION</h3>
+                    <p class="journey-sub">The Empire</p>
+                    <p class="journey-desc">Every pillar woven together — a life where work, home, spirit, and purpose move as one.</p>
+                </div>
+                <div class="journey-stage">
+                    <span class="journey-num">05</span>
+                    <h3 class="journey-title">RESONANCE</h3>
+                    <p class="journey-sub">The Connection</p>
+                    <p class="journey-desc">The frequency of alignment — relationships, energy, and presence vibrating at the same note.</p>
+                </div>
+                <div class="journey-stage">
+                    <span class="journey-num">06</span>
+                    <h3 class="journey-title">THE FINAL SIGNATURE</h3>
+                    <p class="journey-sub">The Destination</p>
+                    <p class="journey-desc">The ultimate expression — a life lived as a work of art, sovereign and complete.</p>
+                </div>
+            </div>
+            <button class="journey-arrow journey-arrow--right" aria-label="Next">&#10095;</button>
+        </div>
+        <div class="journey-dots" id="journey-dots"></div>
+    </section>
+
     <!-- ═══ SENSORY SECTION ═══ -->
     <section class="sensory-section">
         <div class="sensory-header">
@@ -460,6 +511,61 @@
     <script src="js/main.js" defer></script>
     <script type="module" src="js/search.js" defer></script>
     <script type="module" src="js/fetchHomeBookCovers.js" defer></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const track = document.getElementById('journey-track');
+        if (!track) return;
+        const stages = track.querySelectorAll('.journey-stage');
+        const prevBtn = document.querySelector('.journey-arrow--left');
+        const nextBtn = document.querySelector('.journey-arrow--right');
+        const dotsContainer = document.getElementById('journey-dots');
+
+        stages.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'journey-dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => {
+                stages[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            });
+            dotsContainer.appendChild(dot);
+        });
+
+        function updateDots() {
+            const center = track.scrollLeft + track.offsetWidth / 2;
+            let activeIdx = 0;
+            stages.forEach((s, i) => {
+                const rect = s.getBoundingClientRect();
+                const sCenter = rect.left + rect.width / 2;
+                if (Math.abs(sCenter - center) < 150) activeIdx = i;
+            });
+            document.querySelectorAll('.journey-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === activeIdx);
+            });
+            if (prevBtn) prevBtn.disabled = track.scrollLeft <= 10;
+            if (nextBtn) nextBtn.disabled = track.scrollLeft >= track.scrollWidth - track.offsetWidth - 10;
+        }
+
+        track.addEventListener('scroll', updateDots);
+
+        if (prevBtn) prevBtn.addEventListener('click', () => {
+            const w = stages[0].offsetWidth + 24;
+            track.scrollBy({ left: -w, behavior: 'smooth' });
+        });
+        if (nextBtn) nextBtn.addEventListener('click', () => {
+            const w = stages[0].offsetWidth + 24;
+            track.scrollBy({ left: w, behavior: 'smooth' });
+        });
+
+        let isDown = false, startX, scrollLeft;
+        track.addEventListener('mousedown', e => { isDown = true; track.style.cursor = 'grabbing'; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; });
+        track.addEventListener('mouseleave', () => { isDown = false; track.style.cursor = 'grab'; });
+        track.addEventListener('mouseup', () => { isDown = false; track.style.cursor = 'grab'; });
+        track.addEventListener('mousemove', e => { if (!isDown) return; e.preventDefault(); const x = e.pageX - track.offsetLeft; track.scrollLeft = scrollLeft - (x - startX); });
+
+        updateDots();
+        window.addEventListener('resize', updateDots);
+    });
+    </script>
 </body>
 </html>
 

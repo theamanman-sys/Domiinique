@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Database</title>
+    <style>
+        body { font-family: monospace; background: #1a1a2e; color: #fff; padding: 20px; }
+        button { background: #f44336; color: white; border: none; padding: 15px 30px; cursor: pointer; font-size: 16px; border-radius: 4px; }
+        .success { color: #4CAF50; }
+        .error { color: #f44336; }
+    </style>
+</head>
+<body>
+    <h1>⚠️ Clear Books Database</h1>
+    <p>This will DELETE all books from the database. Use this before re-seeding.</p>
+    <button onclick="clearBooks()">🗑️ Clear All Books</button>
+    <div id="status"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+
+        const { FIREBASE_CONFIG } = await import('./js/env-config.js');
+        const app = initializeApp(FIREBASE_CONFIG);
+        const db = getFirestore(app);
+
+        async function clearBooks() {
+            const status = document.getElementById('status');
+            status.textContent = 'Clearing...';
+            
+            try {
+                const snapshot = await getDocs(collection(db, 'books'));
+                let deleted = 0;
+                
+                for (const docSnap of snapshot.docs) {
+                    await deleteDoc(doc(db, 'books', docSnap.id));
+                    deleted++;
+                    status.textContent = `Deleting... ${deleted}/${snapshot.size}`;
+                }
+                
+                status.textContent = `✅ Deleted ${deleted} books. Now go to seed-database.html to re-seed with covers.`;
+                status.className = 'success';
+            } catch(e) {
+                status.textContent = 'Error: ' + e.message;
+                status.className = 'error';
+            }
+        }
+        
+        window.clearBooks = clearBooks;
+    </script>
+</body>
+</html>

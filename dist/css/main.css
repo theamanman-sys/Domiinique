@@ -865,3 +865,134 @@ footer { border-top:1px solid var(--border-soft); background:var(--bg); transiti
 /* Beautiful Emojis */
 .emoji, .sensory-icon, #theme-toggle, .cart-toast span:first-child { font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif !important; }
 
+/* ──────── 6-STAGE JOURNEY SLIDER ──────── */
+.journey-section {
+    padding: 6rem 2rem;
+    background: var(--bg2);
+    overflow: hidden;
+}
+.journey-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+.journey-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+.journey-track {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 1rem 0.5rem;
+    cursor: grab;
+    scroll-behavior: smooth;
+    flex: 1;
+}
+.journey-track::-webkit-scrollbar { display: none; }
+.journey-track:active { cursor: grabbing; }
+.journey-stage {
+    scroll-snap-align: center;
+    min-width: 280px;
+    max-width: 280px;
+    flex-shrink: 0;
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    transition: all 0.4s ease;
+    position: relative;
+}
+.journey-stage:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.journey-num {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.8rem;
+}
+.journey-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fg);
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+}
+.journey-sub {
+    font-family: 'Luxurious Script', cursive;
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    opacity: 0.85;
+}
+.journey-desc {
+    font-size: 0.72rem;
+    line-height: 1.7;
+    color: var(--fg-sub);
+    opacity: 0.75;
+}
+.journey-arrow {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--fg);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.journey-arrow:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+}
+.journey-arrow:disabled {
+    opacity: 0.2;
+    cursor: default;
+    pointer-events: none;
+}
+.journey-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 2rem;
+}
+.journey-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+.journey-dot.active {
+    background: var(--accent);
+    width: 24px;
+    border-radius: 4px;
+}
+@media (max-width: 768px) {
+    .journey-section { padding: 4rem 1rem; }
+    .journey-stage { min-width: 240px; max-width: 240px; }
+    .journey-arrow { display: none; }
+}
+

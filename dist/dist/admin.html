@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="theme-color" content="#800020">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Control — Domiinique</title>
+<link rel="icon" type="image/png" href="assets/domiinique_logo.png">
+<link rel="apple-touch-icon" href="assets/domiinique_logo.png">
+<meta name="robots" content="noindex,nofollow">
+<style>
+/* ── Admin-exclusive design system ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --adm-bg:#09080a;--adm-bg2:#111016;--adm-bg3:#1a1920;
+  --adm-card:#16151e;--adm-border:rgba(255,255,255,.07);
+  --adm-accent:#800020;--adm-gold:#c9a84c;
+  --adm-green:#2ecc71;--adm-red:#e74c3c;--adm-blue:#3498db;
+  --adm-fg:#e8e4f0;--adm-fg-sub:rgba(232,228,240,.45);
+  --adm-sans:'Inter',system-ui,sans-serif;--adm-mono:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.23,1,.32,1);
+}
+.zoom-screenshot{transition:transform .3s ease,box-shadow .3s ease;cursor:pointer;z-index:1;position:relative;}
+.zoom-screenshot:hover{transform:scale(8);transform-origin:center right;box-shadow:0 10px 30px rgba(0,0,0,0.8);z-index:9999;}
+html{overflow-x:hidden;}
+body{background:var(--adm-bg);color:var(--adm-fg);font-family:var(--adm-sans);font-size:.875rem;line-height:1.6;min-height:100dvh;display:flex;flex-direction:column;}
+
+/* ─ Login screen ─ */
+#login-screen{
+  position:fixed;inset:0;z-index:9999;background:var(--adm-bg);
+  display:flex;align-items:center;justify-content:center;
+  background-image:radial-gradient(ellipse at 50% 30%,rgba(128,0,32,.22) 0%,transparent 60%);
+}
+.adm-login-card{
+  width:100%;max-width:400px;padding:2.8rem 2.4rem;
+  background:var(--adm-card);border:1px solid rgba(128,0,32,.3);border-radius:12px;
+  box-shadow:0 40px 120px rgba(0,0,0,.7);
+}
+.adm-login-logo{font-size:1.4rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--adm-fg);margin-bottom:.2rem;}
+.adm-login-sub{font-size:.58rem;letter-spacing:.35em;text-transform:uppercase;color:var(--adm-accent);margin-bottom:2.2rem;display:block;font-weight:500;}
+.adm-field{margin-bottom:1.1rem;}
+.adm-field label{display:block;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--adm-fg-sub);margin-bottom:.45rem;}
+.adm-field input{width:100%;background:var(--adm-bg3);border:1.5px solid var(--adm-border);border-radius:6px;padding:.7rem 1rem;color:var(--adm-fg);font-family:var(--adm-mono);font-size:.88rem;outline:none;transition:border-color .3s;}
+.adm-field input:focus{border-color:var(--adm-accent);}
+.adm-login-btn{width:100%;padding:.85rem;background:var(--adm-accent);color:#fff;border:none;border-radius:6px;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;margin-top:.4rem;transition:background .3s;}
+.adm-login-btn:hover{background:#9a0025;}
+#login-err{color:#ff6b6b;font-size:.75rem;margin-top:.8rem;display:none;text-align:center;background:rgba(200,0,0,.1);padding:.5rem;border-radius:4px;}
+.adm-login-note{font-size:.62rem;color:var(--adm-fg-sub);margin-top:1.5rem;text-align:center;line-height:1.5;}
+
+/* ─ Dashboard layout ─ */
+#dashboard{display:none;flex:1;flex-direction:row;min-height:100dvh;}
+
+/* Sidebar */
+.adm-sidebar{
+  width:240px;flex-shrink:0;background:var(--adm-bg2);border-right:1px solid var(--adm-border);
+  display:flex;flex-direction:column;position:sticky;top:0;height:100dvh;overflow-y:auto;
+}
+.adm-sidebar__header{padding:1.8rem 1.4rem 1.2rem;border-bottom:1px solid var(--adm-border);}
+.adm-sidebar__logo{font-size:1.1rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--adm-fg);}
+.adm-sidebar__role{font-size:.54rem;letter-spacing:.25em;color:var(--adm-accent);text-transform:uppercase;margin-top:.2rem;}
+.adm-sidebar__user{font-size:.72rem;color:var(--adm-fg-sub);margin-top:.3rem;}
+.adm-nav{padding:1rem 0;flex:1;}
+.adm-nav-section{font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:var(--adm-fg-sub);padding:.6rem 1.4rem .4rem;margin-top:.5rem;}
+.adm-nav-item{display:flex;align-items:center;gap:.75rem;padding:.65rem 1.4rem;cursor:pointer;color:var(--adm-fg-sub);font-size:.8rem;border-left:2px solid transparent;transition:all .2s;}
+.adm-nav-item:hover{color:var(--adm-fg);background:rgba(255,255,255,.03);}
+.adm-nav-item.active{color:var(--adm-fg);background:rgba(128,0,32,.12);border-left-color:var(--adm-accent);}
+.adm-nav-item .icon{font-size:1rem;flex-shrink:0;}
+.adm-sidebar__footer{padding:1.2rem 1.4rem;border-top:1px solid var(--adm-border);}
+.adm-logout-btn{width:100%;padding:.6rem;background:transparent;border:1px solid rgba(200,0,0,.3);color:var(--adm-red);border-radius:5px;font-size:.6rem;letter-spacing:.18em;cursor:pointer;text-transform:uppercase;transition:all .3s;}
+.adm-logout-btn:hover{background:rgba(200,0,0,.12);}
+
+/* Main area */
+.adm-main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden;}
+.adm-topbar{border-bottom:1px solid var(--adm-border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:var(--adm-bg);flex-shrink:0;}
+.adm-topbar__title{font-size:1rem;font-weight:600;color:var(--adm-fg);}
+.adm-topbar__time{font-family:var(--adm-mono);font-size:.72rem;color:var(--adm-fg-sub);}
+.adm-content{flex:1;padding:2rem;overflow:auto;min-height:0;}
+
+/* Panel visibility */
+.adm-panel{display:none;}
+.adm-panel.shown{display:block;}
+
+/* Cards / Stats */
+.adm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-bottom:2rem;}
+.adm-stat{background:var(--adm-card);border:1px solid var(--adm-border);border-radius:10px;padding:1.4rem 1.6rem;}
+.adm-stat__num{font-size:2rem;font-weight:700;line-height:1;margin-bottom:.3rem;}
+.adm-stat__label{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--adm-fg-sub);}
+.adm-stat.c-green .adm-stat__num{color:var(--adm-green);}
+.adm-stat.c-red   .adm-stat__num{color:var(--adm-red);}
+.adm-stat.c-gold  .adm-stat__num{color:var(--adm-gold);}
+.adm-stat.c-blue  .adm-stat__num{color:var(--adm-blue);}
+
+/* Tables */
+.adm-table-wrap{background:var(--adm-card);border:1px solid var(--adm-border);border-radius:10px;overflow:auto;margin-bottom:1.5rem;max-width:100%;}
+.adm-table-header{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.5rem;border-bottom:1px solid var(--adm-border);}
+.adm-table-header h3{font-size:.85rem;font-weight:600;}
+.adm-table-header .actions{display:flex;gap:.6rem;}
+.adm-tbl{width:100%;border-collapse:collapse;}
+.adm-tbl th{background:var(--adm-bg3);padding:.6rem 1rem;font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--adm-fg-sub);text-align:left;border-bottom:1px solid var(--adm-border);}
+.adm-tbl td{padding:.7rem 1rem;border-bottom:1px solid rgba(255,255,255,.04);font-size:.8rem;vertical-align:middle;}
+.adm-tbl tr:last-child td{border-bottom:none;}
+.adm-tbl tr:hover td{background:rgba(255,255,255,.02);}
+.adm-badge{display:inline-block;font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;padding:.22rem .55rem;border-radius:20px;}
+.adm-badge.on {background:rgba(46,204,113,.15);color:var(--adm-green);border:1px solid rgba(46,204,113,.3);}
+.adm-badge.off{background:rgba(231,76,60,.12);color:var(--adm-red);border:1px solid rgba(231,76,60,.3);}
+
+/* Buttons */
+.adm-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .85rem;border-radius:5px;border:none;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:all .25s;}
+.adm-btn-pill{padding:.3rem .7rem;border-radius:20px;border:none;font-size:.55rem;text-transform:uppercase;letter-spacing:.12em;cursor:pointer;}
+.adm-btn.primary  {background:var(--adm-accent);color:#fff;}
+.adm-btn.primary:hover{background:#9a0025;}
+.adm-btn.outline  {background:transparent;border:1px solid var(--adm-border);color:var(--adm-fg-sub);}
+.adm-btn.outline:hover{border-color:var(--adm-fg-sub);color:var(--adm-fg);}
+.adm-btn.danger   {background:rgba(231,76,60,.12);border:1px solid rgba(231,76,60,.3);color:var(--adm-red);}
+.adm-btn.danger:hover{background:rgba(231,76,60,.22);}
+.adm-btn.success  {background:rgba(46,204,113,.12);border:1px solid rgba(46,204,113,.3);color:var(--adm-green);}
+
+/* Quick-add form */
+.adm-form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.8rem;margin-bottom:1rem;}
+.adm-form-row input,.adm-form-row select{background:var(--adm-bg3);border:1.5px solid var(--adm-border);border-radius:6px;padding:.55rem .8rem;color:var(--adm-fg);font-size:.82rem;outline:none;transition:border-color .3s;width:100%;}
+.adm-form-row input:focus,.adm-form-row select:focus{border-color:var(--adm-accent);}
+
+/* Toggle switch */
+.adm-toggle{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.4rem;border-bottom:1px solid var(--adm-border);}
+.adm-toggle:last-child{border-bottom:none;}
+.adm-toggle__label h4{font-size:.83rem;font-weight:500;margin-bottom:.1rem;}
+.adm-toggle__label p{font-size:.72rem;color:var(--adm-fg-sub);}
+.switch{position:relative;width:48px;height:26px;flex-shrink:0;}
+.switch input{opacity:0;width:0;height:0;}
+.slider{position:absolute;inset:0;background:rgba(255,255,255,.12);border-radius:26px;cursor:pointer;transition:.35s;}
+.slider::before{content:'';position:absolute;left:4px;top:4px;width:18px;height:18px;background:#fff;border-radius:50%;transition:.35s;}
+input:checked+.slider{background:var(--adm-accent);}
+input:checked+.slider::before{transform:translateX(22px);}
+
+/* Export bar */
+.adm-export-bar{display:flex;gap:.8rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+
+@media(max-width:768px){
+  .adm-stats{grid-template-columns:1fr 1fr;}
+  .adm-sidebar{width:220px;}
+  .adm-content{padding:1.2rem;}
+  .adm-topbar{padding:1rem 1.2rem;}
+}
+@media(max-width:600px){
+  .adm-stats{grid-template-columns:1fr;}
+  .adm-sidebar{
+    position:fixed; left:-240px; top:0; bottom:0; z-index:10000;
+    width:240px; box-shadow:20px 0 60px rgba(0,0,0,0.8);
+    transition:left .4s var(--ease);
+    display:flex;
+  }
+  .adm-sidebar.open{left:0;}
+  .adm-menu-toggle{display:flex !important;}
+  .sidebar-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,.8); backdrop-filter:blur(4px); z-index:9999;
+    opacity:0; visibility:hidden; transition:all .4s var(--ease);
+  }
+  .sidebar-overlay.open{opacity:1; visibility:visible;}
+  .adm-topbar{padding:0.8rem 1.2rem;}
+  .adm-tbl-wrap{overflow-x:auto;}
+}
+
+/* Toggle Button */
+.adm-menu-toggle{
+  display:none; align-items:center; justify-content:center;
+  width:38px; height:38px; background:var(--adm-bg3); border:1px solid var(--adm-border);
+  border-radius:6px; cursor:pointer; color:var(--adm-fg); font-size:1.1rem;
+  transition:all .2s;
+}
+.adm-sidebar .adm-menu-toggle{
+  position:absolute; right:1rem; top:1.8rem;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="sidebar-overlay" id="sb-overlay" onclick="toggleSidebar()"></div>
+
+<!-- ══ LOGIN SCREEN ══ -->
+<div id="login-screen">
+<div class="adm-login-card">
+<div class="adm-login-logo">Domiinique</div>
+<span class="adm-login-sub">Admin Control Room</span>
+<form id="adm-login-form" onsubmit="event.preventDefault();adminLogin();">
+<div class="adm-field"><label for="adm-u">Admin Username</label><input type="text" id="adm-u" name="adm-u" placeholder="username" autocomplete="username"></div>
+<div class="adm-field"><label for="adm-p">Admin Password</label><input type="password" id="adm-p" name="adm-p" placeholder="•••••••••••••" autocomplete="current-password"></div>
+<button class="adm-login-btn" type="submit">Access Control Room &rarr;</button>
+</form>
+<div id="login-err">Invalid credentials. Access denied.</div>
+<p class="adm-login-note">This area is restricted to authorised administrators only. All access is logged.</p>
+</div>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<div id="dashboard">
+
+<!-- Sidebar -->
+<aside class="adm-sidebar">
+<div class="adm-sidebar__header">
+  <div class="adm-sidebar__logo">Admin</div>
+  <button class="adm-menu-toggle" onclick="toggleSidebar()">✕</button>
+<div class="adm-sidebar__role" id="adm-role-label">Super Admin</div>
+<div class="adm-sidebar__user" id="adm-user-label">—</div>
+</div>
+<nav class="adm-nav">
+<div class="adm-nav-section">Overview</div>
+<div class="adm-nav-item active" onclick="showPanel('overview')"><span class="icon">🏠</span> Dashboard</div>
+<div class="adm-nav-section">Members</div>
+<div class="adm-nav-item" onclick="showPanel('users')"><span class="icon">👥</span> Users &amp; Members</div>
+<div class="adm-nav-item" onclick="showPanel('subscribers')"><span class="icon">📩</span> Subscribers</div>
+<div class="adm-nav-section">Commerce</div>
+<div class="adm-nav-item" onclick="showPanel('orders')"><span class="icon">📋</span> Orders</div>
+<div class="adm-nav-item" onclick="showPanel('products')"><span class="icon">🛍️</span> Shop Products</div>
+<div class="adm-nav-item" onclick="showPanel('books')"><span class="icon">📚</span> Books</div>
+<div class="adm-nav-item" onclick="showPanel('packages')"><span class="icon">💎</span> Packages</div>
+<div class="adm-nav-section">System</div>
+<div class="adm-nav-item" onclick="showPanel('settings')"><span class="icon">⚙️</span> Site Settings</div>
+<div class="adm-nav-item" onclick="showPanel('export')"><span class="icon">📤</span> Export Data</div>
+</nav>
+<div class="adm-sidebar__footer">
+<a href="index.html" class="adm-logout-btn" style="display:inline-block;text-align:center;text-decoration:none;margin-bottom:.5rem;color:var(--adm-gold);border-color:rgba(201,168,76,.3);">&#8592; Main Site</a>
+<button class="adm-logout-btn" onclick="adminLogout()">Sign Out</button>
+</div>
+</aside>
+
+<!-- Main -->
+<div class="adm-main">
+<div class="adm-topbar">
+<div style="display:flex;align-items:center;gap:1rem;">
+  <button class="adm-menu-toggle" onclick="toggleSidebar()">☰</button>
+  <div class="adm-topbar__title" id="panel-title">Dashboard</div>
+</div>
+<div class="adm-topbar__time" id="adm-clock">—</div>
+</div>
+<div class="adm-content">
+
+<!-- ── OVERVIEW ── -->
+<div class="adm-panel shown" id="panel-overview">
+<div class="adm-stats">
+<div class="adm-stat c-blue"><div class="adm-stat__num" id="st-users">0</div><div class="adm-stat__label">Members</div></div>
+<div class="adm-stat c-gold"><div class="adm-stat__num" id="st-products">8</div><div class="adm-stat__label">Products</div></div>
+<div class="adm-stat c-green"><div class="adm-stat__num" id="st-books">56</div><div class="adm-stat__label">Books</div></div>
+<div class="adm-stat c-red"><div class="adm-stat__num" id="st-cart">0</div><div class="adm-stat__label">Cart Items</div></div>
+</div>
+<div class="adm-table-wrap" style="margin-top:1.5rem;">
+<div class="adm-table-header"><h3>System Activity</h3></div>
+<div style="padding:1.5rem;background:var(--adm-bg3);border-radius:0 0 10px 10px;">
+<canvas id="stats-chart" style="max-height:300px;width:100%;"></canvas>
+</div>
+</div>
+<div class="adm-table-wrap">
+<div class="adm-table-header"><h3>Recent Member Registrations</h3></div>
+<div id="recent-members-list" style="padding:1.2rem;font-size:.8rem;color:var(--adm-fg-sub);">No members yet.</div>
+</div>
+<div class="adm-table-wrap">
+<div class="adm-table-header"><h3>Quick Actions</h3></div>
+<div style="padding:1.5rem;display:flex;flex-wrap:wrap;gap:.8rem;">
+<button class="adm-btn primary" onclick="showPanel('users')">Manage Users</button>
+<button class="adm-btn outline" onclick="showPanel('products')">Manage Products</button>
+<button class="adm-btn outline" onclick="showPanel('books')">Manage Books</button>
+<button class="adm-btn outline" onclick="showPanel('settings')">Site Settings</button>
+<button class="adm-btn success" onclick="showPanel('export')">Export CSV</button>
+</div>
+</div>
+</div>
+
+<!-- ── USERS ── -->
+<div class="adm-panel" id="panel-users">
+<div class="adm-export-bar">
+<button class="adm-btn primary" onclick="addUserPrompt()">+ Add User</button>
+<button class="adm-btn outline" onclick="exportCSV('members')">&#8595; Export CSV</button>
+</div>
+<div class="adm-table-wrap" style="margin-bottom:1.5rem;">
+<div class="adm-table-header"><h3>⏳ Pending Approvals</h3></div>
+<table class="adm-tbl"><thead><tr><th>Username</th><th>Name</th><th>Email</th><th>Phone</th><th>Registered</th><th>Actions</th></tr></thead>
+<tbody id="pending-tbody"></tbody></table>
+</div>
+<div class="adm-table-wrap">
+<div class="adm-table-header"><h3>Members &amp; Users</h3><div class="actions"><input id="user-search" type="text" placeholder="Search..." oninput="renderUsers()" style="background:var(--adm-bg3);border:1px solid var(--adm-border);border-radius:4px;padding:.35rem .7rem;color:var(--adm-fg);font-size:.75rem;outline:none;"></div></div>
+<table class="adm-tbl" id="users-table">
+<thead><tr><th>Username</th><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Joined</th><th>Actions</th></tr></thead>
+<tbody id="users-tbody"></tbody>
+</table>
+</div>
+</div>
+
+<!-- ── SUBSCRIBERS ── -->
+<div class="adm-panel" id="panel-subscribers">
+<div class="adm-export-bar">
+<button class="adm-btn primary" onclick="promptAddSub()">+ Add Subscriber</button>
+<button class="adm-btn outline" onclick="exportCSV('subs')">&#8595; Export CSV</button>
+</div>
+<div class="adm-table-wrap" style="margin-bottom:1.5rem;">
+<div class="adm-table-header"><h3>Add New Subscriber</h3></div>
+<div style="padding:1.2rem;display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;">
+  <input type="email" id="new-sub-email" placeholder="subscriber@email.com" style="background:var(--adm-bg3);border:1.5px solid var(--adm-border);border-radius:6px;padding:.55rem .8rem;color:var(--adm-fg);font-size:.82rem;outline:none;flex:1;min-width:200px;">
+  <input type="text" id="new-sub-name" placeholder="Name (optional)" style="background:var(--adm-bg3);border:1.5px solid var(--adm-border);border-radius:6px;padding:.55rem .8rem;color:var(--adm-fg);font-size:.82rem;outline:none;width:180px;">
+  <button class="adm-btn primary" onclick="addSubscriber()">Subscribe</button>
+</div>
+</div>
+<div class="adm-table-wrap">
+<div class="adm-table-header"><h3>Newsletter Subscribers</h3></div>
+<table class="adm-tbl">
+<thead><tr><th>Email</th><th>Name</th><th>Subscribed</th><th>Status</th><th>Actions</th></tr></thead>
+<tbody id="subs-tbody"></tbody>
+</table>
+</div>
+</div>
+
+<!-- ── PRODUCTS ── -->
+<div class="adm-panel" id="panel-products">
+<div class="adm-export-bar">
+<button class="adm-btn primary" onclick="addProductPrompt()">+ Add Product</button>
+<button class="adm-btn outline" onclick="exportCSV('products')">&#8595; Export CSV</button>
+</div>
+<div class="adm-table-wrap">
+<div class="adm-table-header"><h3>Shop Products</h3></div>
+<table class="adm-tbl">
+<thead><tr><th>ID</th><th>Product</th><th>Category</th><th>Price (Birr)</th><th>Status</th><th>Actions</th></tr></thead>
+<tbody id="products-tbody"></tbody>
+</table>
+</div>
+<div class="adm-table-wrap" style="margin-top:1.5rem;">
+<div class="adm-table-header"><h3>Quick Add Product</h3></div>
+<div style="padding:1.4rem;">
+<div class="adm-form-row">
+<input type="text" id="np-name" placeholder="Product Name">
+<select id="np-cat"><option>Ritual</option><option>Sensory</option><option>Wellness</option><option>Stationery</option></select>
+<input type="number" id="np-price" placeholder="Price ETB">
+<input type="text" id="np-img" placeholder="Image Path">
+</div>
+<button class="adm-btn primary" onclick="addProduct()">Add Product</button>
+</div>
+</div>
+</div>
+
+<!-- ── BOOKS ── -->
+<div class="adm-panel" id="panel-books">
+<div class="adm-export-bar">
+<button class="adm-btn primary" onclick="addBookPrompt()">+ Add Book</button>
+<button class="adm-btn outline" onclick="exportCSV('books')">&#8595; Export CSV</button>
+</div>
+<div class="adm-table-wrap">
+<div class="adm-table-header"><h3>Book Archive</h3></div>
+<table class="adm-tbl">
+<thead><tr><th>Cover</th><th>Author</th><th>Category</th><th>Price</th><th>Rare</th><th>Status</th><th>Actions</th></tr></thead>
+<tbody id="books-tbody"></tbody>
+</table>
+</div>
+<div class="adm-table-wrap" style="margin-top:1.5rem;">
+<div class="adm-table-header"><h3>Quick Add Book</h3></div>
+<div style="padding:1.4rem;">
+<div class="adm-form-row">
+<input type="text" id="nb-title" placeholder="Book Title">
+<input type="text" id="nb-author" placeholder="Author">
+<input type="text" id="nb-cat" placeholder="Category">
+<input type="number" id="nb-price" placeholder="Price ETB">
+<input type="text" id="nb-img" placeholder="Cover URL">
+</div>
+<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+<label style="font-size:.72rem;color:var(--adm-fg-sub);display:flex;align-items:center;gap:.5rem;">
+<input type="checkbox" id="nb-rare"> Rare Collection (members only)
+</label>
+</div>
+<button class="adm-btn primary" onclick="addBook()">Add Book</button>
+</div>
+</div>
+</div>
+
+<!-- ── ORDERS ── -->
+<div class="adm-panel" id="panel-orders">
+<div class="adm-export-bar">
+<button class="adm-btn outline" onclick="exportCSV('orders')">&#8595; Export CSV</button>
+<button class="adm-btn danger" onclick="clearAllOrders()">Clear All</button>
+</div>
+<div class="adm-table-wrap">
+<div class="adm-table-header"><h3>Customer Orders</h3></div>
+<table class="adm-tbl">
+<thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Payment</th><th>Receipt</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+<tbody id="orders-tbody"></tbody>
+</table>
+</div>
+</div>
+
+<!-- ── PACKAGES ── -->
+<div class="adm-panel" id="panel-packages">
+<div class="adm-table-wrap">
+<div class="adm-table-header"><h3>Service Packages</h3></div>
+<table class="adm-tbl" id="packages-table">
+<thead><tr><th>Package</th><th>Price (Birr)</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead>
+<tbody id="pkg-tbody"></tbody>
+</table>
+</div>
+</div>
+
+<!-- ── SITE SETTINGS ── -->
+<div class="adm-panel" id="panel-settings">
+<div class="adm-table-wrap">
+<div class="adm-table-header"><h3>Website Feature Toggles</h3></div>
+<div id="settings-list">
+<!-- Populated by JS -->
+</div>
+</div>
+</div>
+
+<!-- ── EXPORT ── -->
+<div class="adm-panel" id="panel-export">
+<div class="adm-table-wrap">
+<div class="adm-table-header"><h3>Data Export</h3></div>
+<div style="padding:1.4rem;display:flex;flex-direction:column;gap:.8rem;">
+<div style="display:flex;align-items:center;justify-content:space-between;padding:.9rem 1rem;background:var(--adm-bg3);border-radius:6px;">
+<div><div style="font-size:.82rem;font-weight:500;">Members / Users</div><div style="font-size:.68rem;color:var(--adm-fg-sub);">username, name, email, phone, role, joined</div></div>
+<button class="adm-btn primary" onclick="exportCSV('members')">&#8595; Download CSV</button>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:.9rem 1rem;background:var(--adm-bg3);border-radius:6px;">
+<div><div style="font-size:.82rem;font-weight:500;">Shop Products</div><div style="font-size:.68rem;color:var(--adm-fg-sub);">id, name, category, price, image, status</div></div>
+<button class="adm-btn primary" onclick="exportCSV('products')">&#8595; Download CSV</button>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:.9rem 1rem;background:var(--adm-bg3);border-radius:6px;">
+<div><div style="font-size:.82rem;font-weight:500;">Books Archive</div><div style="font-size:.68rem;color:var(--adm-fg-sub);">id, title, author, category, price, cover url, rare, status</div></div>
+<button class="adm-btn primary" onclick="exportCSV('books')">&#8595; Download CSV</button>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:.9rem 1rem;background:var(--adm-bg3);border-radius:6px;">
+<div><div style="font-size:.82rem;font-weight:500;">Cart / Orders</div><div style="font-size:.68rem;color:var(--adm-fg-sub);">Current active cart data from localStorage</div></div>
+<button class="adm-btn primary" onclick="exportCSV('cart')">&#8595; Download CSV</button>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:.9rem 1rem;background:var(--adm-bg3);border-radius:6px;">
+<div><div style="font-size:.82rem;font-weight:500;">ALL DATA</div><div style="font-size:.68rem;color:var(--adm-fg-sub);">Complete site data export as JSON</div></div>
+<button class="adm-btn success" onclick="exportAllJSON()">&#8595; Download JSON</button>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- /adm-content -->
+</div><!-- /adm-main -->
+</div><!-- /dashboard -->
+
+<!-- ══ BOOK EDIT MODAL ══ -->
+<div id="edit-book-modal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.8);backdrop-filter:blur(5px);align-items:center;justify-content:center;">
+    <div class="adm-login-card" style="max-width:500px;background:var(--adm-card);">
+        <h3 style="margin-bottom:1.5rem;font-size:1rem;">Edit Book Details</h3>
+        <input type="hidden" id="eb-id">
+        <div class="adm-field"><label>Title</label><input type="text" id="eb-title"></div>
+        <div class="adm-field"><label>Author</label><input type="text" id="eb-author"></div>
+        <div class="adm-field"><label>Category</label><input type="text" id="eb-cat"></div>
+        <div class="adm-field"><label>Price (Birr)</label><input type="number" id="eb-price"></div>
+        <div style="display:flex; gap:1rem; align-items:flex-end; margin-bottom:1rem;">
+            <img id="eb-img-preview" src="" style="width:40px;height:60px;object-fit:cover;border-radius:4px;display:none;">
+            <div class="adm-field" style="flex:1;margin-bottom:0;"><label>Cover URL</label><input type="text" id="eb-img" oninput="document.getElementById('eb-img-preview').src=this.value; document.getElementById('eb-img-preview').style.display='block';"></div>
+        </div>
+        <label style="font-size:.72rem;color:var(--adm-fg-sub);display:flex;align-items:center;gap:.5rem;margin-bottom:1.5rem;">
+            <input type="checkbox" id="eb-rare"> Rare Collection
+        </label>
+        <div style="display:flex;gap:1rem;">
+            <button class="adm-login-btn" onclick="saveBookEdit()" style="margin-top:0;">Save</button>
+            <button class="adm-btn outline" onclick="closeEditModal()" style="flex:1;text-transform:uppercase;">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══ USER EDIT MODAL ══ -->
+<div id="edit-user-modal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.8);backdrop-filter:blur(5px);align-items:center;justify-content:center;">
+    <div class="adm-login-card" style="max-width:500px;background:var(--adm-card);">
+        <h3 style="margin-bottom:1.5rem;font-size:1rem;">Edit User Profile</h3>
+        <input type="hidden" id="eu-uid">
+        <div style="display:flex; gap:1rem; align-items:center; margin-bottom:1rem;">
+            <img id="eu-img-preview" src="" style="width:50px;height:50px;object-fit:cover;border-radius:50%;display:none;">
+            <div class="adm-field" style="flex:1;margin-bottom:0;"><label>Avatar/Photo URL</label><input type="text" id="eu-img" oninput="document.getElementById('eu-img-preview').src=this.value; document.getElementById('eu-img-preview').style.display='block';"></div>
+        </div>
+        <div class="adm-field"><label>Full Name</label><input type="text" id="eu-name"></div>
+        <div class="adm-field"><label>Username</label><input type="text" id="eu-uname" readonly style="opacity:0.5;background:transparent;"></div>
+        <div class="adm-field"><label>Email</label><input type="text" id="eu-email" readonly style="opacity:0.5;background:transparent;"></div>
+        <div class="adm-field"><label>Role</label><select id="eu-role" style="width:100%;padding:.7rem;background:var(--adm-bg3);border:1px solid var(--adm-border);color:var(--adm-fg);border-radius:6px;outline:none;"><option value="member">Member</option><option value="admin">Admin</option></select></div>
+        <div style="display:flex;gap:1rem;margin-top:1.5rem;">
+            <button class="adm-login-btn" onclick="saveUserEdit()" style="margin-top:0;">Save</button>
+            <button class="adm-btn outline" onclick="closeUserEditModal()" style="flex:1;text-transform:uppercase;">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══ PRODUCT EDIT MODAL ══ -->
+<div id="edit-product-modal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.8);backdrop-filter:blur(5px);align-items:center;justify-content:center;">
+    <div class="adm-login-card" style="max-width:500px;background:var(--adm-card);">
+        <h3 style="margin-bottom:1.5rem;font-size:1rem;">Edit Product Details</h3>
+        <input type="hidden" id="ep-id">
+        <div class="adm-field"><label>Name</label><input type="text" id="ep-name"></div>
+        <div class="adm-field"><label>Category</label><input type="text" id="ep-cat"></div>
+        <div class="adm-field"><label>Price (Birr)</label><input type="number" id="ep-price"></div>
+        <div style="display:flex; gap:1rem; align-items:flex-end; margin-bottom:1.5rem;">
+            <img id="ep-img-preview" src="" style="width:50px;height:50px;object-fit:cover;border-radius:4px;display:none;">
+            <div class="adm-field" style="flex:1;margin-bottom:0;"><label>Image Path/URL</label><input type="text" id="ep-img" oninput="document.getElementById('ep-img-preview').src=this.value; document.getElementById('ep-img-preview').style.display='block';"></div>
+        </div>
+        <div style="display:flex;gap:1rem;">
+            <button class="adm-login-btn" onclick="saveProductEdit()" style="margin-top:0;">Save</button>
+            <button class="adm-btn outline" onclick="closeProductEditModal()" style="flex:1;text-transform:uppercase;">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+import { db, auth } from './js/firebase-config.js';
+import { 
+  collection, doc, getDocs, getDoc, setDoc, updateDoc, 
+  deleteDoc, query, where, orderBy, limit, serverTimestamp,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut as firebaseSignOut
+} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+
+// ══ CREDENTIALS ══
+var ADMINS = [
+  {username:'domiinique_admin', password:'Domiinique@2026!', role:'Admin'},
+  {username:'superadmin',       password:'DomRoot#9821',     role:'Super Admin'}
+];
+var ADMIN_SESSION = 'domiinique-admin-sess';
+var MEMBER_KEY    = 'domiinique-members'; // Still used minimally for legacy compatibility
+var SUBS_KEY      = 'domiinique-subscribers';
+var PRODUCTS_KEY  = 'adm-products';
+var BOOKS_KEY     = 'adm-books';
+var SETTINGS_KEY  = 'adm-settings';
+var PKGS_KEY      = 'adm-packages';
+var CART_KEY      = 'domiinique-cart';
+var ORDERS_KEY    = 'adm-orders';
+
+// ── Default static data ──
+var DEFAULT_PRODUCTS = [
+  {id:1,name:'Sacred Aroma Oils',category:'Ritual',price:2400,img:'assets/Shop/aroma oils.jpg',status:'active'},
+  {id:2,name:'Black Mahakala Tibetan Incense',category:'Ritual',price:980,img:'assets/Shop/black_mahakala_tibetan_incense.jpg',status:'active'},
+  {id:3,name:'Ceremonial Candle Set',category:'Sensory',price:1650,img:'assets/Shop/candles.jpg',status:'active'},
+  {id:4,name:'Corinthian Wind Chime Bells',category:'Sensory',price:3200,img:'assets/Shop/corinthian_bells.jpg',status:'active'},
+  {id:5,name:'Artisan Mist Diffuser',category:'Wellness',price:4500,img:'assets/Shop/diffuser.jpg',status:'active'},
+  {id:6,name:'Conscious Living Journal',category:'Stationery',price:1200,img:'assets/Shop/notebook.jpg',status:'active'},
+  {id:7,name:'Sacred Tea Ceremony Set',category:'Wellness',price:5800,img:'assets/Shop/tea_set.jpg',status:'active'},
+  {id:8,name:'Presence Practice Mat',category:'Wellness',price:3800,img:'assets/Shop/yoga_mat.jpg',status:'active'}
+];
+var DEFAULT_BOOKS = [
+  {id:'r1',title:'The Book on the Taboo Against Knowing Who You Are',author:'Alan Wilson Watts',category:'Philosophy',price:2200,img:'https://m.media-amazon.com/images/I/71OqGSEWDOL._AC_UF1000,1000_QL80_.jpg',rare:true,status:'active'},
+  {id:'r2',title:'The Prophet',author:'Kahlil Gibran',category:'Poetry',price:1400,img:'https://m.media-amazon.com/images/I/61Lj5wbkw4L._AC_UF1000,1000_QL80_.jpg',rare:true,status:'active'},
+  {id:'r3',title:'The Red Book',author:'C.G. Jung',category:'Psychology',price:8500,img:'https://m.media-amazon.com/images/I/71pOqXeJT3L._AC_UF1000,1000_QL80_.jpg',rare:true,status:'active'},
+  {id:'r4',title:'The Way of the Superior Man',author:'David Deida',category:'Spirituality',price:2600,img:'https://m.media-amazon.com/images/I/71Kw5TZbRtL._AC_UF1000,1000_QL80_.jpg',rare:true,status:'active'},
+  {id:'r5',title:'The Secret Doctrine',author:'Helena Blavatsky',category:'Esoteric',price:5200,img:'https://m.media-amazon.com/images/I/81oU7skkD2L._AC_UF1000,1000_QL80_.jpg',rare:true,status:'active'},
+  {id:'r6',title:'Women Who Run with the Wolves',author:'Clarissa Pinkola Estés',category:'Psychology',price:3100,img:'https://m.media-amazon.com/images/I/71H2KXjZH9L._AC_UF1000,1000_QL80_.jpg',rare:true,status:'active'}
+];
+var DEFAULT_PKGS = [
+  {id:'p1',name:'One Hour Clarity Call',price:0,duration:'1 Hour',status:'active'},
+  {id:'p2',name:'Three Month Life System Program',price:160000,duration:'3 Months Online',status:'active'},
+  {id:'p3',name:'Six Month Life System Mentorship',price:310000,duration:'6 Months In-Person+Online',status:'active'}
+];
+var DEFAULT_SETTINGS = [
+  {key:'shop',label:'Shop Page',desc:'Enable the shop / e-commerce features',on:true},
+  {key:'books',label:'Books Archive',desc:'Enable the books and rare collections sections',on:true},
+  {key:'rareCollection',label:'Rare Collection',desc:'Show rare books to integrated members only',on:true},
+  {key:'memberLogin',label:'Member Login',desc:'Enable member login and sign-up system',on:true},
+  {key:'audio',label:'Background Audio',desc:'Enable background music player across all pages',on:true},
+  {key:'packages',label:'Packages Page',desc:'Show packages on the integrated page',on:true},
+  {key:'checkout',label:'Checkout / Cart',desc:'Enable add-to-cart and checkout functionality',on:true},
+  {key:'darkMode',label:'Dark Mode Default',desc:'Set dark mode as the website default theme',on:true}
+];
+
+function getStore(key,def){var v=localStorage.getItem(key);return v?JSON.parse(v):def;}
+function setStore(key,val){localStorage.setItem(key,JSON.stringify(val));}
+
+// Global scope bindings for inline HTML handlers
+window.adminLogin = adminLogin;
+window.adminLogout = adminLogout;
+window.showPanel = showPanel;
+window.approveUser = approveUser;
+window.rejectUser = rejectUser;
+window.deleteUser = deleteUser;
+window.addUserPrompt = addUserPrompt;
+window.setOrderStatus = setOrderStatus;
+window.delOrder = delOrder;
+window.clearAllOrders = clearAllOrders;
+window.exportCSV = exportCSV;
+window.exportAllJSON = exportAllJSON;
+
+// Make the inline bindings for the remaining static functions
+window.toggleProduct = toggleProduct;
+window.delProduct = delProduct;
+window.addProductPrompt = addProductPrompt;
+window.addProduct = addProduct;
+window.toggleBook = toggleBook;
+window.delBook = delBook;
+window.editBook = editBook;
+window.saveBookEdit = saveBookEdit;
+window.closeEditModal = closeEditModal;
+window.addBookPrompt = addBookPrompt;
+window.addBook = addBook;
+window.deleteSub = deleteSub;
+window.toggleSetting = toggleSetting;
+
+// New Modal Bindings
+window.editUserPrompt = editUserPrompt;
+window.saveUserEdit = saveUserEdit;
+window.closeUserEditModal = closeUserEditModal;
+window.editProductPrompt = editProductPrompt;
+window.saveProductEdit = saveProductEdit;
+window.closeProductEditModal = closeProductEditModal;
+window.toggleSidebar = toggleSidebar;
+
+function toggleSidebar(){
+  const sb = document.querySelector('.adm-sidebar');
+  const overlay = document.getElementById('sb-overlay');
+  sb.classList.toggle('open');
+  overlay.classList.toggle('open');
+}
+
+// ── Clock ──
+function tick(){var d=new Date();document.getElementById('adm-clock').textContent=d.toLocaleDateString('en-GB')+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});}
+setInterval(tick,1000);tick();
+
+// ── Auth ──
+async function adminLogin(){
+  var u=document.getElementById('adm-u').value.trim();
+  var p=document.getElementById('adm-p').value;
+  var found=ADMINS.find(function(a){return a.username===u&&a.password===p;});
+  if(found){
+    // Admin credentials are hardcoded and have no Firebase Auth account.
+    // We auto-bootstrap one using a derived email so Firestore rules (which require auth) work.
+    var derivedEmail = found.username.replace(/[^a-z0-9_]/gi,'') + '@domiinique.app';
+    try {
+      // Try signing in first
+      await signInWithEmailAndPassword(auth, derivedEmail, p);
+      console.log('Firebase Auth: admin session established.');
+    } catch(signInErr) {
+      if (signInErr.code === 'auth/configuration-not-found') {
+        console.log('Firebase Auth: Email/Password provider not enabled in Firebase Console — skipping Firebase Auth bootstrap.');
+      } else if (signInErr.code === 'auth/user-not-found' || signInErr.code === 'auth/invalid-credential') {
+        // First-time login: create the Firebase Auth account and Firestore admin profile
+        try {
+          var cred = await createUserWithEmailAndPassword(auth, derivedEmail, p);
+          await setDoc(doc(db, 'users', cred.user.uid), {
+            uid: cred.user.uid,
+            username: found.username,
+            name: found.role,
+            email: derivedEmail,
+            role: 'admin',
+            status: 'approved',
+            joinedAt: serverTimestamp()
+          });
+          await setDoc(doc(db, 'usernames', found.username), { uid: cred.user.uid, email: derivedEmail });
+          console.log('Firebase Auth: admin account auto-created and signed in.');
+        } catch(createErr) {
+          console.error('Firebase Auth: failed to bootstrap admin account:', createErr.message);
+        }
+      } else {
+        console.warn('Firebase Auth sign-in error:', signInErr.message);
+      }
+    }
+    sessionStorage.setItem(ADMIN_SESSION,JSON.stringify({username:found.username,role:found.role}));
+    bootDashboard(found);
+  } else {
+    var e=document.getElementById('login-err');e.style.display='block';
+    setTimeout(function(){e.style.display='none';},3000);
+  }
+}
+document.getElementById('adm-p').addEventListener('keydown',function(e){if(e.key==='Enter')adminLogin();});
+document.getElementById('adm-u').addEventListener('keydown',function(e){if(e.key==='Enter')adminLogin();});
+
+async function adminLogout(){
+  sessionStorage.removeItem(ADMIN_SESSION);
+  try { await firebaseSignOut(auth); } catch(e) { /* ignore */ }
+  document.getElementById('dashboard').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('adm-u').value='';
+  document.getElementById('adm-p').value='';
+}
+
+function bootDashboard(admin){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('dashboard').style.display='flex';
+  document.getElementById('adm-user-label').textContent=admin.username;
+  document.getElementById('adm-role-label').textContent=admin.role;
+  refreshStats();
+  renderPending();
+  renderUsers();
+  renderSubs();
+  renderProducts();
+  renderBooks();
+  renderPackages();
+  renderSettings();
+  renderRecent();
+  renderOrders();
+}
+
+// Auto-login if session active
+var admSess=sessionStorage.getItem(ADMIN_SESSION);
+if(admSess){
+  var aObj=JSON.parse(admSess);
+  bootDashboard(aObj);
+}
+
+// ── Panel navigation ──
+var PANEL_NAMES={overview:'Dashboard',users:'Users & Members',subscribers:'Subscribers',products:'Shop Products',books:'Books Archive',packages:'Packages',settings:'Site Settings',export:'Export Data'};
+function showPanel(id){
+  document.querySelectorAll('.adm-panel').forEach(function(p){p.classList.remove('shown');});
+  document.querySelectorAll('.adm-nav-item').forEach(function(n){n.classList.remove('active');});
+  var el=document.getElementById('panel-'+id);
+  if(el)el.classList.add('shown');
+  var navItems=document.querySelectorAll('.adm-nav-item');
+  navItems.forEach(function(n){if(n.textContent.toLowerCase().includes(id.replace('panel-','')))n.classList.add('active');});
+  document.getElementById('panel-title').textContent=PANEL_NAMES[id]||id;
+  
+  // Close sidebar on mobile after selection
+  if(window.innerWidth <= 600){
+    document.querySelector('.adm-sidebar').classList.remove('open');
+    document.getElementById('sb-overlay').classList.remove('open');
+  }
+}
+
+// ── Stats ──
+async function refreshStats(){
+  try {
+    // Real-time listener for user count
+    onSnapshot(collection(db, 'users'), (snap) => {
+      document.getElementById('st-users').textContent = snap.size;
+    });
+
+    // Real-time listener for products count
+    onSnapshot(collection(db, 'products'), (snap) => {
+      document.getElementById('st-products').textContent = snap.size;
+    });
+
+    // Real-time listener for books count
+    onSnapshot(collection(db, 'books'), (snap) => {
+      document.getElementById('st-books').textContent = snap.size;
+    });
+
+    // Cart is local storage, so we check it once or add a window listener if needed
+    var cart=getStore(CART_KEY,[]);
+    var cartQty=cart.reduce(function(s,i){return s+(i.qty||1);},0);
+    document.getElementById('st-cart').textContent=cartQty;
+
+    // Charts update
+    onSnapshot(collection(db, 'orders'), (snap) => {
+       renderChartsFromSnapshot(snap);
+    });
+    
+  } catch(e) { console.error("Stats error", e); }
+}
+
+
+let statsChart = null;
+function renderChartsFromSnapshot(snap) {
+  const canvas = document.getElementById('stats-chart');
+  if (!canvas) return;
+
+  try {
+    let stats = { pending: 0, confirmed: 0, fulfilled: 0 };
+    snap.forEach(d => {
+      let s = d.data().status;
+      if (stats[s] !== undefined) stats[s]++;
+      else stats.pending++;
+    });
+
+    if (statsChart) statsChart.destroy();
+
+    statsChart = new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: ['Pending', 'Confirmed', 'Fulfilled'],
+        datasets: [{
+          label: 'Orders by Status',
+          data: [stats.pending, stats.confirmed, stats.fulfilled],
+          backgroundColor: ['rgba(231, 76, 60, 0.2)', 'rgba(46, 204, 113, 0.2)', 'rgba(52, 152, 219, 0.2)'],
+          borderColor: ['#e74c3c', '#2ecc71', '#3498db'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          title: { display: true, text: 'Order Workflow Status', color: '#fff' }
+        },
+        scales: {
+          y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#888' } },
+          x: { grid: { display: false }, ticks: { color: '#888' } }
+        }
+      }
+    });
+  } catch (e) { console.error("Chart error", e); }
+}
+
+// ── Users ──
+async function renderPending(){
+  var tbody=document.getElementById('pending-tbody');
+  if(!tbody)return;
+  
+  try {
+    const q = query(collection(db, 'users'), where("status", "==", "pending"));
+    
+    // Replace getDocs with onSnapshot for real-time updates
+    onSnapshot(q, (snap) => {
+      if(snap.empty){
+        tbody.innerHTML='<tr><td colspan="6" style="text-align:center;opacity:.4;padding:1.2rem;">No pending registrations.</td></tr>';
+        return;
+      }
+      
+      let html = '';
+      snap.forEach((docSnap) => {
+        const m = docSnap.data();
+        let joined = m.joinedAt ? new Date(m.joinedAt.toDate()).toLocaleDateString() : '—';
+        html += '<tr><td style="font-family:var(--adm-mono);font-size:.78rem;">'+m.username+'</td><td>'+m.name+'</td><td>'+m.email+'</td><td>'+(m.phone||'—')+'</td>'
+        +'<td style="font-size:.72rem;color:var(--adm-fg-sub);">'+joined+'</td>'
+        +'<td style="display:flex;gap:.4rem;"><button class="adm-btn success" onclick="approveUser(\''+m.uid+'\')" style="font-size:.58rem;">✓ Approve</button><button class="adm-btn danger" onclick="rejectUser(\''+m.uid+'\')" style="font-size:.58rem;">✕ Reject</button></td></tr>';
+      });
+      tbody.innerHTML = html;
+    }, (error) => {
+      console.error("Real-time users error:", error);
+    });
+    
+  } catch(e) { console.error(e); }
+}
+
+async function approveUser(uid){
+  try {
+    const userDocRef = doc(db, 'users', uid);
+    const userSnap = await getDoc(userDocRef);
+    if(userSnap.exists()){
+      const uData = userSnap.data();
+      if(uData.username && uData.email) {
+         await setDoc(doc(db, 'usernames', uData.username), { uid: uid, email: uData.email });
+      }
+    }
+    await updateDoc(userDocRef, { status: 'approved' });
+    renderPending(); renderUsers(); refreshStats();
+    alert('User approved. They can now log in.');
+  } catch(e) { alert("Error approving: " + e.message); }
+}
+
+async function rejectUser(uid){
+  if(!confirm('Reject and completely remove this user application?'))return;
+  // We can either set status='rejected' or delete the document. For privacy, we'll delete the users doc and their username alias doc
+  try {
+    const userSnap = await getDoc(doc(db, 'users', uid));
+    if (userSnap.exists()) {
+      const uname = userSnap.data().username;
+      await deleteDoc(doc(db, 'usernames', uname));
+      await deleteDoc(doc(db, 'users', uid));
+    }
+    renderPending(); renderUsers(); refreshStats();
+  } catch(e) { alert("Error rejecting user."); }
+}
+
+async function renderUsers(){
+  var q=(document.getElementById('user-search')||{}).value||'';
+  q = q.toLowerCase();
+  var tbody=document.getElementById('users-tbody');
+  
+  try {
+    const qry = query(collection(db, 'users'));
+    
+    // Real-time listener for main user list
+    onSnapshot(qry, (snap) => {
+      let activeUsers = [];
+      snap.forEach((docSnap) => {
+        let data = docSnap.data();
+        if(data.status !== 'pending') activeUsers.push(data);
+      });
+
+      // Filter local search
+      if(q) {
+        activeUsers = activeUsers.filter(m => 
+          (m.username||'').toLowerCase().includes(q) || 
+          (m.name||'').toLowerCase().includes(q) || 
+          (m.email||'').toLowerCase().includes(q)
+        );
+      }
+
+      if(!activeUsers.length){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;opacity:.4;padding:2rem;">No approved members found.</td></tr>';return;}
+      
+      tbody.innerHTML=activeUsers.map(function(m){
+        var badge=m.status==='approved'?'<span class="adm-badge on">approved</span>':'<span class="adm-badge off">'+m.status+'</span>';
+        let joined = m.joinedAt ? new Date(m.joinedAt.toDate()).toLocaleDateString() : '—';
+        var avatar = m.photoURL || 'https://api.dicebear.com/7.x/initials/svg?seed='+m.name;
+        return '<tr><td style="font-family:var(--adm-mono);font-size:.78rem;">'+m.username+'</td>'
+        +'<td style="display:flex;align-items:center;gap:.8rem;">'
+        +'<img src="'+avatar+'" class="zoom-screenshot" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">'
+        +'<span>'+m.name+'</span></td>'
+        +'<td>'+m.email+'</td>'
+        +'<td><span class="adm-badge on">'+(m.role||'member')+'</span></td>'
+        +'<td>'+badge+'</td>'
+        +'<td style="font-size:.72rem;color:var(--adm-fg-sub);">'+joined+'</td>'
+        +'<td style="display:flex;gap:.3rem;"><button class="adm-btn outline" onclick="editUserPrompt(\''+m.uid+'\')">Edit</button><button class="adm-btn danger" onclick="deleteUser(\''+m.uid+'\')">Del</button></td></tr>';
+      }).join('');
+    });
+  } catch(e) { console.error(e); }
+}
+
+async function deleteUser(uid){
+  if(!confirm('Remove this member? This will delete their database profile.'))return;
+  try {
+    const userSnap = await getDoc(doc(db, 'users', uid));
+    if (userSnap.exists()) {
+      const uname = userSnap.data().username;
+      await deleteDoc(doc(db, 'usernames', uname));
+      await deleteDoc(doc(db, 'users', uid));
+    }
+    renderPending(); renderUsers(); refreshStats();
+  } catch(e) { alert("Error: " + e.message); }
+}
+
+async function editUserPrompt(uid){
+  try {
+    const snap = await getDoc(doc(db, 'users', uid));
+    if(snap.exists()){
+      const m = snap.data();
+      document.getElementById('eu-uid').value = uid;
+      document.getElementById('eu-uname').value = m.username || '';
+      document.getElementById('eu-name').value = m.name || '';
+      document.getElementById('eu-email').value = m.email || '';
+      document.getElementById('eu-role').value = m.role || 'member';
+      document.getElementById('eu-img').value = m.photoURL || '';
+      document.getElementById('eu-img-preview').src = m.photoURL || 'https://api.dicebear.com/7.x/initials/svg?seed='+m.name;
+      document.getElementById('eu-img-preview').style.display='block';
+      document.getElementById('edit-user-modal').style.display='flex';
+    }
+  } catch(e) { console.error(e); }
+}
+
+async function saveUserEdit(){
+  var uid = document.getElementById('eu-uid').value;
+  var newData = {
+    name: document.getElementById('eu-name').value,
+    role: document.getElementById('eu-role').value,
+    photoURL: document.getElementById('eu-img').value
+  };
+  try {
+    await updateDoc(doc(db, 'users', uid), newData);
+    closeUserEditModal();
+    renderUsers();
+    renderPending();
+  } catch(e) { alert("Failed to save."); }
+}
+function closeUserEditModal(){ document.getElementById('edit-user-modal').style.display='none'; }
+
+async function addUserPrompt(){
+  const username = prompt("Enter new username:");
+  if(!username) return;
+  const email = prompt("Enter email:");
+  if(!email) return;
+  const password = prompt("Enter temporary password (min 6 chars):");
+  if(!password || password.length < 6) { alert("Invalid password"); return; }
+  const name = prompt("Enter full name:");
+  
+  try {
+    // We can't use createUserWithEmailAndPassword here easily without signing out the admin
+    // So we'll instruct the admin that this is for Firestore profile creation only, 
+    // or better, we'll use a placeholder and tell them to have the user register.
+    // BUT for "Admin adds user", typically we'd need a Cloud Function.
+    alert('To add a user, please have them register on the Login page. You can then Approve them here instantly.');
+  } catch(e) { alert("Error: " + e.message); }
+}
+
+
+// Charts are now handled by renderCharts() called from refreshStats()
+
+// ── Subscribers (Firestore) ──
+async function renderSubs(){
+  var tbody=document.getElementById('subs-tbody');
+  if(!tbody)return;
+  try {
+    // Real-time listener for subscribers
+    onSnapshot(collection(db, 'subscribers'), (snap) => {
+      var localSubs = getStore(SUBS_KEY,[]);
+      if(snap.empty && !localSubs.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;opacity:.4;padding:2rem;">No subscribers yet.</td></tr>';return;}
+      let html='';
+      snap.forEach((ds)=>{
+        const s=ds.data();
+        let date=s.subscribedAt?new Date(s.subscribedAt.toDate()).toLocaleDateString():(s.date||'—');
+        html+='<tr><td>'+s.email+'</td><td>'+(s.name||'—')+'</td><td style="font-size:.72rem;">'+date+'</td><td><span class="adm-badge on">Active</span></td><td><button class="adm-btn danger" onclick="deleteSub(\''+ds.id+'\')">Remove</button></td></tr>';
+      });
+      localSubs.forEach((s,i)=>{
+        html+='<tr><td>'+s.email+'</td><td>—</td><td style="font-size:.72rem;color:var(--adm-gold);">'+(s.date||'Local')+'</td><td><span class="adm-badge on">Active</span></td><td><button class="adm-btn danger" onclick="deleteLocalSub('+i+')">Remove</button></td></tr>';
+      });
+      tbody.innerHTML=html||'<tr><td colspan="5" style="text-align:center;opacity:.4;padding:2rem;">No subscribers yet.</td></tr>';
+    });
+  } catch(e){console.error(e);}
+}
+async function addSubscriber(){
+  const email=(document.getElementById('new-sub-email').value||'').trim().toLowerCase();
+  const name=(document.getElementById('new-sub-name').value||'').trim();
+  if(!email||!/\S+@\S+\.\S+/.test(email)){alert('Valid email required.');return;}
+  try{
+    await setDoc(doc(db,'subscribers',email),{email,name,subscribedAt:serverTimestamp(),status:'active'});
+    document.getElementById('new-sub-email').value='';
+    document.getElementById('new-sub-name').value='';
+    renderSubs();
+  }catch(e){alert('Failed: '+e.message);}
+}
+async function deleteSub(id){
+  if(!confirm('Remove subscriber?'))return;
+  try{await deleteDoc(doc(db,'subscribers',id));renderSubs();}catch(e){alert('Failed: '+e.message);}
+}
+function deleteLocalSub(i){if(!confirm('Remove?'))return;var s=getStore(SUBS_KEY,[]);s.splice(i,1);setStore(SUBS_KEY,s);renderSubs();}
+function promptAddSub(){document.getElementById('new-sub-email').focus();}
+
+window.addSubscriber=addSubscriber;
+window.deleteSub=deleteSub;
+window.deleteLocalSub=deleteLocalSub;
+window.promptAddSub=promptAddSub;
+window.renderSubs=renderSubs;
+
+// ── Products ──
+async function renderProducts(){
+  var tbody=document.getElementById('products-tbody');
+  try {
+    // Real-time listener for products
+    onSnapshot(collection(db, 'products'), (snap) => {
+      if (snap.empty) {
+        tbody.innerHTML='<tr><td colspan="6" style="text-align:center;opacity:.4;padding:2rem;">No products found in database.</td></tr>';
+        return;
+      }
+
+      let html = '';
+      snap.forEach((docSnap) => {
+        let p = docSnap.data();
+        let pImg = p.img || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="%231a1920"/><text x="50%25" y="55%25" text-anchor="middle" fill="%23555" font-size="8">No img</text></svg>';
+        html += '<tr><td style="font-size:.72rem;color:var(--adm-fg-sub);">'+p.id+'</td>'
+        +'<td style="display:flex;align-items:center;gap:.8rem;">'
+        +'<img src="'+pImg+'" class="zoom-screenshot" style="width:36px;height:36px;object-fit:cover;border-radius:4px;">'
+        +'<span>'+p.name+'</span></td>'
+        +'<td>'+p.category+'</td>'
+        +'<td>'+(p.price||0).toLocaleString()+' Birr</td>'
+        +'<td><span class="adm-badge '+(p.status==='active'?'on':'off')+'">'+p.status+'</span></td>'
+        +'<td style="display:flex;gap:.4rem;"><button class="adm-btn primary" onclick="editProductPrompt(\''+p.id+'\')">Edit</button><button class="adm-btn outline" onclick="toggleProduct(\''+p.id+'\')">Toggle</button><button class="adm-btn danger" onclick="delProduct(\''+p.id+'\')">Del</button></td></tr>';
+      });
+      tbody.innerHTML = html;
+    });
+  } catch(e) { console.error("Error loading products", e); }
+}
+
+async function addProduct(){
+  var name=document.getElementById('np-name').value.trim();
+  if(!name){alert('Product name required.');return;}
+  
+  var newId = 'prod_' + Date.now();
+  var prodData = {
+    id: newId,
+    name: name,
+    category: document.getElementById('np-cat').value,
+    price: parseInt(document.getElementById('np-price').value)||0,
+    img: document.getElementById('np-img').value,
+    status: 'active'
+  };
+
+  try {
+    await setDoc(doc(db, 'products', newId), prodData);
+    renderProducts();
+    document.getElementById('np-name').value=document.getElementById('np-price').value=document.getElementById('np-img').value='';
+  } catch(e) { alert("Failed to add product."); }
+}
+
+async function toggleProduct(id){
+  try {
+    const docRef = doc(db, 'products', id);
+    const snap = await getDoc(docRef);
+    if(snap.exists()) {
+      let currentStatus = snap.data().status;
+      await updateDoc(docRef, { status: currentStatus === 'active' ? 'inactive' : 'active' });
+      renderProducts();
+    }
+  } catch(e) { console.error(e); }
+}
+
+async function delProduct(id){
+  if(!confirm('Delete product?'))return;
+  try {
+    await deleteDoc(doc(db, 'products', id));
+    renderProducts();
+  } catch(e) { alert("Failed to delete."); }
+}
+
+async function editProductPrompt(id){
+  try {
+    const snap = await getDoc(doc(db, 'products', id));
+    if(snap.exists()){
+      const p = snap.data();
+      document.getElementById('ep-id').value = id;
+      document.getElementById('ep-name').value = p.name || '';
+      document.getElementById('ep-cat').value = p.category || '';
+      document.getElementById('ep-price').value = p.price || 0;
+      document.getElementById('ep-img').value = p.img || '';
+      document.getElementById('ep-img-preview').src = p.img || '';
+      document.getElementById('ep-img-preview').style.display='block';
+      document.getElementById('edit-product-modal').style.display='flex';
+    }
+  } catch(e) { console.error(e); }
+}
+
+async function saveProductEdit(){
+  var id = document.getElementById('ep-id').value;
+  var newData = {
+    name: document.getElementById('ep-name').value,
+    category: document.getElementById('ep-cat').value,
+    price: parseInt(document.getElementById('ep-price').value)||0,
+    img: document.getElementById('ep-img').value
+  };
+  try {
+    await updateDoc(doc(db, 'products', id), newData);
+    closeProductEditModal();
+    renderProducts();
+  } catch(e) { alert("Failed to save."); }
+}
+function closeProductEditModal(){ document.getElementById('edit-product-modal').style.display='none'; }
+
+function addProductPrompt(){document.getElementById('np-name').focus();}
+
+// ── Books ──
+async function renderBooks(){
+  var tbody=document.getElementById('books-tbody');
+  try {
+    // Real-time listener for books
+    onSnapshot(collection(db, 'books'), (snap) => {
+      if (snap.empty) {
+         tbody.innerHTML='<tr><td colspan="7" style="text-align:center;opacity:.4;padding:2rem;">No books found in database.</td></tr>';
+         return;
+      }
+
+      let html = '';
+      snap.forEach((docSnap) => {
+        let b = docSnap.data();
+        let bImg = b.img || b.image || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="60"><rect width="40" height="60" fill="%231a1920"/><text x="50%25" y="55%25" text-anchor="middle" fill="%23555" font-size="7">No Cover</text></svg>';
+        html += '<tr>'
+        +'<td style="display:flex;align-items:center;gap:.8rem;">'
+        +'<img src="'+bImg+'" class="zoom-screenshot" style="width:30px;height:45px;object-fit:cover;border-radius:2px;">'
+        +'<span style="font-size:.78rem;">'+b.title+'</span></td>'
+        +'<td style="font-size:.72rem;color:var(--adm-fg-sub);">'+b.author+'</td><td>'+b.category+'</td>'
+        +'<td>'+(b.price||0).toLocaleString()+' Birr</td>'
+        +'<td>'+(b.rare?'<span class="adm-badge on">&#128142;</span>':'—')+'</td>'
+        +'<td><span class="adm-badge '+(b.status==='active'?'on':'off')+'">'+b.status+'</span></td>'
+        +'<td style="display:flex;gap:.4rem;flex-wrap:wrap;">'
+        +'<button class="adm-btn primary" onclick="editBook(\''+b.id+'\')" style="font-size:.55rem;">Edit</button>'
+        +'<button class="adm-btn outline" onclick="toggleBook(\''+b.id+'\')" style="font-size:.55rem;">Toggle</button>'
+        +'<button class="adm-btn danger" onclick="delBook(\''+b.id+'\')" style="font-size:.55rem;">Del</button></td></tr>';
+      });
+      tbody.innerHTML = html;
+    });
+  } catch(e) { console.error("Error loading books", e); }
+}
+
+async function addBook(){
+  var title=document.getElementById('nb-title').value.trim();
+  if(!title){alert('Book title required.');return;}
+  
+  var newId = 'b'+Date.now();
+  var bookData = {
+    id: newId,
+    title: title,
+    author: document.getElementById('nb-author').value,
+    category: document.getElementById('nb-cat').value,
+    price: parseInt(document.getElementById('nb-price').value)||0,
+    img: document.getElementById('nb-img').value,
+    rare: document.getElementById('nb-rare').checked,
+    status: 'active'
+  };
+
+  try {
+    await setDoc(doc(db, 'books', newId), bookData);
+    renderBooks();
+    ['nb-title','nb-author','nb-cat','nb-price','nb-img'].forEach(function(id){document.getElementById(id).value='';});
+    document.getElementById('nb-rare').checked=false;
+  } catch(e) { alert("Failed to add book."); }
+}
+
+async function toggleBook(id){
+  try {
+    const docRef = doc(db, 'books', id);
+    const snap = await getDoc(docRef);
+    if(snap.exists()) {
+      let currentStatus = snap.data().status;
+      await updateDoc(docRef, { status: currentStatus === 'active' ? 'inactive' : 'active' });
+      renderBooks();
+    }
+  } catch(e) { console.error(e); }
+}
+
+async function delBook(id){
+  if(!confirm('Delete book?'))return;
+  try {
+    await deleteDoc(doc(db, 'books', id));
+    renderBooks();
+  } catch(e) { alert("Failed to delete book."); }
+}
+
+async function editBook(id){
+  try {
+    const snap = await getDoc(doc(db, 'books', id));
+    if(snap.exists()){
+      const b = snap.data();
+      document.getElementById('eb-id').value = id;
+      document.getElementById('eb-title').value = b.title || '';
+      document.getElementById('eb-author').value = b.author || '';
+      document.getElementById('eb-cat').value = b.category || '';
+      document.getElementById('eb-price').value = b.price || 0;
+      document.getElementById('eb-img').value = b.image || b.img || '';
+      document.getElementById('eb-rare').checked = !!b.rare;
+      document.getElementById('edit-book-modal').style.display = 'flex';
+    }
+  } catch(e) { alert("Failed to load book for editing."); }
+}
+
+function closeEditModal(){
+  document.getElementById('edit-book-modal').style.display = 'none';
+}
+
+async function saveBookEdit(){
+  const id = document.getElementById('eb-id').value;
+  const updateData = {
+    title: document.getElementById('eb-title').value,
+    author: document.getElementById('eb-author').value,
+    category: document.getElementById('eb-cat').value,
+    price: parseInt(document.getElementById('eb-price').value)||0,
+    image: document.getElementById('eb-img').value,
+    rare: document.getElementById('eb-rare').checked
+  };
+  try {
+    await updateDoc(doc(db, 'books', id), updateData);
+    closeEditModal();
+    renderBooks();
+  } catch(e) { alert("Failed to save changes."); }
+}
+
+function addBookPrompt(){document.getElementById('nb-title').focus();}
+
+// ── Packages ──
+async function renderPackages(){
+  var tbody=document.getElementById('pkg-tbody');
+  try {
+    // Real-time listener for packages
+    onSnapshot(collection(db, 'packages'), (snap) => {
+      if (snap.empty) {
+         tbody.innerHTML='<tr><td colspan="5" style="text-align:center;opacity:.4;padding:2rem;">No packages found in database.</td></tr>';
+         return;
+      }
+
+      let html = '';
+      snap.forEach((docSnap) => {
+        let p = docSnap.data();
+        html += '<tr><td style="font-weight:500;">'+p.name+'</td><td>'+(p.price===0?'Free':(p.price||0).toLocaleString()+' Birr')+'</td><td>'+p.duration+'</td>'
+        +'<td><span class="adm-badge '+(p.status==='active'?'on':'off')+'">'+p.status+'</span></td>'
+        +'<td><a href="packages.html" class="adm-btn outline" style="font-size:.55rem;text-decoration:none;">View Page</a></td></tr>';
+      });
+      tbody.innerHTML = html;
+    });
+  } catch(e) { console.error("Error loading packages", e); }
+}
+
+// ── Settings ──
+async function renderSettings(){
+  var list=document.getElementById('settings-list');
+  try {
+    // Real-time listener for settings
+    onSnapshot(collection(db, 'site_settings'), (snap) => {
+      if (snap.empty) {
+         list.innerHTML = '<p style="padding:1.5rem;opacity:.5;">No settings found.</p>';
+         return;
+      }
+
+      let html = '';
+      snap.forEach((docSnap) => {
+        let s = docSnap.data();
+        html += '<div class="adm-toggle">'
+        +'<div class="adm-toggle__label"><h4>'+s.label+'</h4><p>'+s.desc+'</p></div>'
+        +'<label class="switch"><input type="checkbox"'+(s.on?' checked':'')+' onchange="toggleSetting(\''+s.id+'\',this.checked)"><span class="slider"></span></label>'
+        +'</div>';
+      });
+      list.innerHTML = html;
+    });
+  } catch(e) { console.error("Error loading settings", e); }
+}
+
+async function toggleSetting(id,val){
+  try {
+    await updateDoc(doc(db, 'site_settings', id), { on: val });
+    // Note: We don't necessarily need to re-render here as the checkbox already moved, 
+    // but we could refresh the stats if settings affect them.
+  } catch(e) { 
+    alert("Failed to update setting.");
+    renderSettings(); // Revert UI
+  }
+}
+
+// ── Recent members ──
+async function renderRecent(){
+  var el=document.getElementById('recent-members-list');
+  try {
+    const qry = query(collection(db, 'users'), orderBy('joinedAt', 'desc'), limit(5));
+    
+    // Real-time listener for recent members
+    onSnapshot(qry, (snap) => {
+      if(snap.empty){el.innerHTML='<p style="opacity:.4;font-size:.8rem;">No members registered yet.</p>';return;}
+      
+      let recent = [];
+      snap.forEach(d => recent.push(d.data()));
+      
+      el.innerHTML='<table class="adm-tbl"><thead><tr><th>Username</th><th>Email</th><th>Joined</th><th>Role</th></tr></thead><tbody>'
+      +recent.map(function(m){
+         let joined = m.joinedAt ? new Date(m.joinedAt.toDate()).toLocaleDateString() : '—';
+         return '<tr><td style="font-family:var(--adm-mono);font-size:.78rem;">'+m.username+'</td><td>'+m.email+'</td><td style="font-size:.72rem;color:var(--adm-fg-sub);">'+joined+'</td><td><span class="adm-badge on">'+(m.role||'member')+'</span></td></tr>';
+      }).join('')
+      +'</tbody></table>';
+    });
+  } catch(e) { console.error(e); }
+}
+
+// ── CSV Export ──
+function toCSV(rows){
+  if(!rows.length)return '';
+  var keys=Object.keys(rows[0]);
+  return keys.join(',')+'\n'+rows.map(function(r){return keys.map(function(k){var v=r[k]===undefined?'':String(r[k]);return '"'+v.replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+}
+function downloadCSV(name,csv){
+  var a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download=name+'-'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+}
+async function exportCSV(type){
+  try {
+    if(type==='members'){
+      const snap = await getDocs(collection(db, 'users'));
+      let rows = []; snap.forEach(d => rows.push(d.data()));
+      downloadCSV('domiinique-members',toCSV(rows));
+    }
+    else if(type==='products'){
+      const snap = await getDocs(collection(db, 'products'));
+      let rows = []; snap.forEach(d => rows.push(d.data()));
+      downloadCSV('domiinique-products',toCSV(rows));
+    }
+    else if(type==='books'){
+      const snap = await getDocs(collection(db, 'books'));
+      let rows = []; snap.forEach(d => rows.push(d.data()));
+      downloadCSV('domiinique-books',toCSV(rows));
+    }
+    else if(type==='orders'){
+      const snap = await getDocs(collection(db, 'orders'));
+      let rows = []; snap.forEach(d => rows.push(d.data()));
+      downloadCSV('domiinique-orders',toCSV(rows));
+    }
+    else if(type==='cart'){downloadCSV('domiinique-cart',toCSV(getStore(CART_KEY,[])));}
+  } catch(e) { alert("Export failed."); }
+}
+// ── Orders ──
+async function clearAllOrders(){
+  if(!confirm('Clear all orders from database forever?'))return;
+  // Firestore doesn't support clear all from web directly easily, we must fetch and delete one by one
+  try {
+    const snap = await getDocs(collection(db, 'orders'));
+    snap.forEach((doc) => deleteDoc(doc.ref));
+    renderOrders();
+  } catch(e) { alert("Failed to clear documents."); }
+}
+
+function renderOrders(){
+  var tbody=document.getElementById('orders-tbody');
+  if(!tbody)return;
+
+  try {
+    const qry = query(collection(db, 'orders'), orderBy('date', 'desc'));
+    
+    // Real-time listener for orders
+    onSnapshot(qry, (snap) => {
+      if(snap.empty){tbody.innerHTML='<tr><td colspan="8" style="text-align:center;opacity:.4;padding:2rem;">No orders yet.</td></tr>';return;}
+      
+      let html = '';
+      snap.forEach((docSnap) => {
+        let o = docSnap.data();
+        var itemSummary=(o.items||[]).map(function(it){return (it.qty||1)+'× '+it.title;}).join(', ');
+        var statusColors={pending:'off',confirmed:'on',fulfilled:'on'};
+        var sc=statusColors[o.status]||'off';
+        html += '<tr>'
+        +'<td style="font-family:var(--adm-mono);font-size:.78rem;">'+o.id+'</td>'
+        +'<td>'+o.userName+'<br><span style="font-size:.68rem;color:var(--adm-fg-sub);">@'+o.user+'</span></td>'
+        +'<td style="font-size:.75rem;max-width:160px;">'+itemSummary+'</td>'
+        +'<td>'+(o.total||0).toLocaleString()+' Birr</td>'
+        +'<td>'+o.payment+'</td>'
+        +'<td>'
+        +(o.screenshotUrl ? '<a href="'+o.screenshotUrl+'" target="_blank"><img src="'+o.screenshotUrl+'" class="zoom-screenshot" style="width:40px;height:40px;object-fit:cover;border-radius:4px;border:1px solid var(--adm-border);"></a>' : '<span style="opacity:.3;font-size:.65rem;">No Receipt</span>')
+        +'</td>'
+        +'<td><span class="adm-badge '+sc+'">'+o.status+'</span></td>'
+        +'<td style="font-size:.72rem;color:var(--adm-fg-sub);">'+(o.date?o.date.slice(0,10):'—')+'</td>'
+        +'<td style="display:flex;gap:.3rem;flex-wrap:wrap;">'
+        +'<button class="adm-btn success" onclick="setOrderStatus(\''+o.id+'\',\'confirmed\')">Confirm</button>'
+        +'<button class="adm-btn outline" onclick="setOrderStatus(\''+o.id+'\',\'fulfilled\')">Fulfilled</button>'
+        +'<button class="adm-btn danger" onclick="delOrder(\''+o.id+'\')">Del</button></td>'
+        +'</tr>';
+      });
+      tbody.innerHTML = html;
+    });
+  } catch(e) { console.error("Error loading orders", e); }
+}
+
+async function setOrderStatus(id,status){
+  try {
+    await updateDoc(doc(db, 'orders', id), { status: status });
+    renderOrders();
+  } catch(e) { alert("Error updating status: " + e.message); }
+}
+
+async function delOrder(id){
+  if(!confirm('Delete this order?'))return;
+  try {
+    await deleteDoc(doc(db, 'orders', id));
+    renderOrders();
+  } catch(e) { alert("Error deleting order: " + e.message); }
+}
+function exportAllJSON(){
+  var data={members:getStore(MEMBER_KEY,[]),subscribers:getStore(SUBS_KEY,[]),products:getStore(PRODUCTS_KEY,DEFAULT_PRODUCTS),books:getStore(BOOKS_KEY,DEFAULT_BOOKS),packages:getStore(PKGS_KEY,DEFAULT_PKGS),settings:getStore(SETTINGS_KEY,DEFAULT_SETTINGS),cart:getStore(CART_KEY,[]),orders:getStore(ORDERS_KEY,[]),exported:new Date().toISOString()};
+  var a=document.createElement('a');
+  a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(data,null,2));
+  a.download='domiinique-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+}
+</script>
+<script type="module" src="js/auth.js"></script>
+</body>
+</html>
+
