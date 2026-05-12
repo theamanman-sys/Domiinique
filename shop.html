@@ -367,7 +367,7 @@ async function loadProducts() {
 }
 
 function applyFilter(f) {
-    document.querySelectorAll('.product-card').forEach(c => { 
+    document.querySelectorAll('#shop-grid .product-card').forEach(c => { 
         c.style.display = (f === 'all' || c.dataset.cat === f) ? 'block' : 'none'; 
     });
     const appsSection = document.getElementById('apps-section');
