@@ -1,12 +1,8 @@
 # Environment variables
 .env
-js/env-config.js
 
 # Dependencies
 node_modules/
-
-# Build output
-dist/
 
 # IDE
 .vscode/
