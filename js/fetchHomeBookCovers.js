@@ -117,18 +117,18 @@ async function loadHomeCarousel() {
         if (list.length) selected.push(list[0]);
     });
 
-    // Fill remaining slots up to 20 with the newest remaining books across all categories
+    // Fill remaining slots up to 8 with the newest remaining books across all categories
     const remaining = allBooks
         .filter(b => !selected.includes(b))
         .sort((a, b) => getBookTime(b) - getBookTime(a));
 
     for (const book of remaining) {
-        if (selected.length >= 20) break;
+        if (selected.length >= 8) break;
         selected.push(book);
     }
 
-    // Trim in case we somehow exceed 20
-    const finalSelection = selected.slice(0, 20);
+    // Trim in case we somehow exceed 8
+    const finalSelection = selected.slice(0, 8);
     
     track.innerHTML = '';
     finalSelection.forEach(book => {
