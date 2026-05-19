@@ -75,7 +75,7 @@ html[data-theme="light"] .pkg-hero__bg::before{opacity:.1;mix-blend-mode:multipl
 <nav id="nav" role="navigation" aria-label="Main Navigation">
 <a class="nav__logo" href="index.html"><span class="nav__logo-text">DOMIINIQUE</span><span class="nav__logo-motto">Living Signature</span></a>
 <ul class="nav__links">
-<li><a href="blueprint.html">Blueprint</a></li><li><a href="integrated.html">The Empire</a></li><li><a href="time.html">Time</a></li><li><a href="inspiration.html">Inspiration</a></li><li><a href="creative.html">Creative</a></li><li><a href="canvas.html">Canvas</a></li><li><a href="portraits.html">Portraits</a></li><li><a href="journal.html">Journal</a></li><li><a href="you.html">YOU</a></li><li><a href="cocreation.html">Co-Creation</a></li><li><a href="shop.html">Catalog</a></li>
+<li><a href="blueprint.html">Blueprint</a></li><li><a href="integrated.html">The Empire</a></li><li><a href="time.html">Time</a></li><li><a href="inspiration.html">Inspiration</a></li><li><a href="creative.html">Creative</a></li><li><a href="canvas.html">Canvas</a></li><li><a href="portraits.html">Portraits</a></li><li><a href="journal.html">Journal</a></li><li><a href="you.html">YOU</a></li><li><a href="cocreation.html">Co-Creation</a></li><li><a href="shop.html">Catalog</a></li><li><a href="checkout.html">Acquired</a></li>
 </ul>
 <div class="nav__utilities">
 
@@ -178,7 +178,7 @@ This is your invitation to begin that journey. No rigid formulas and no labels, 
 </ul>
 </div>
 <div class="pkg-card__cta">
-<button class="pkg-add-btn" onclick="addPkgToCart(this,'Three Month Life System Program',160000)">Add to Cart &rarr;</button>
+<button class="pkg-add-btn" onclick="addPkgToCart(this,'Three Month Life System Program',160000)">Acquire &rarr;</button>
 </div>
 </div>
 </div>
@@ -206,7 +206,7 @@ This is your invitation to begin that journey. No rigid formulas and no labels, 
 </ul>
 </div>
 <div class="pkg-card__cta">
-<button class="pkg-add-btn" onclick="addPkgToCart(this,'Six Month Life System Mentorship',310000)">Add to Cart &rarr;</button>
+<button class="pkg-add-btn" onclick="addPkgToCart(this,'Six Month Life System Mentorship',310000)">Acquire &rarr;</button>
 </div>
 </div>
 </div>
@@ -245,7 +245,7 @@ function addPkgToCart(btn,name,price){
     if(window.domCart) {
         window.domCart.addItem(btn.closest('.pkg-card'));
         btn.textContent='? Added';btn.classList.add('added');
-        setTimeout(function(){btn.textContent=price===0?'Book Free Session \u2192':'Add to Cart \u2192';btn.classList.remove('added');},2200);
+        setTimeout(function(){btn.textContent=price===0?'Book Free Session \u2192':'Acquire \u2192';btn.classList.remove('added');},2200);
     }
 }
 </script>
