@@ -1,6 +1,6 @@
 /**
  * pillars.js — Living System Room Data
- * Domiinique: The Witness Residence Architecture
+ * DOMIINIQUE: The Witness Residence Architecture
  */
 
 window.PILLAR_DATA = {
@@ -12,7 +12,7 @@ window.PILLAR_DATA = {
             <p>The Verandah is the liminal space where the inner architecture meets the outer world. It is the place of the witness — standing at a distance to gain the clarity required to see the whole system.</p>
             <div class="modal__quote">"Distance is not a void; it is the space required for perspective."</div>
             <h4>Atmosphere: Expansive & Liminal</h4>
-            <p>The Verandah Chronicles act as the primary documentation of the Domiinique journey. It is here that we record the observations of the system in motion.</p>
+            <p>The Verandah Chronicles act as the primary documentation of the DOMIINIQUE journey. It is here that we record the observations of the system in motion.</p>
             <h4>Purpose: Landing & Context</h4>
             <ul>
                 <li><strong>Identity Observation</strong> — Seeing the self as a system.</li>

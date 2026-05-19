@@ -1,6 +1,6 @@
 /**
  * canvas.js — Three.js ambient holographic canvas
- * Domiinique: Conscious Holographic Reality
+ * DOMIINIQUE: Conscious Holographic Reality
  */
 
 (function () {

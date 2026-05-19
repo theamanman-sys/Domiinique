@@ -1,5 +1,5 @@
 /**
- * Domiinique — Music Module (YouTube)
+ * DOMIINIQUE — Music Module (YouTube)
  * 1,300+ Track Resolution — Dimensional Navigation
  * Version: v5.3.0 (Nature/Ambient Placeholder Engine + CSP Resolve)
  */
@@ -24,7 +24,7 @@ console.log("[Music] Gravity Fix v5.3.0 active");
         'Romance': '💋', 'LuxuryLifestyle': '✨', 'MindExpansion': '🧠'
       };
 
-      // Nature/Ambient Placeholder Collection (Curated for Domiinique aesthetic)
+      // Nature/Ambient Placeholder Collection (Curated for DOMIINIQUE aesthetic)
       var naturePool = [
         'photo-1441974231531-c6227db76b6e', 'photo-1470071459604-3b5ec3a7fe05', 
         'photo-1501854140801-50d01698950b', 'photo-1447752875215-b2761acb3c5d',
@@ -251,7 +251,7 @@ console.log("[Music] Gravity Fix v5.3.0 active");
           <div style="text-align:center; margin-bottom:5rem; padding: 0 1rem;">
             <span class="t-eyebrow" style="color:var(--rd-gold); letter-spacing:0.4em; text-transform:uppercase; font-size:0.75rem;">Multidimensional Frequency Archive</span>
             <h2 class="t-h2" style="margin-top:1rem; letter-spacing:-0.03em; font-size:3.5rem;">Reality Design Music</h2>
-            <p class="t-body" style="max-width:650px; margin:2rem auto 0; opacity:0.6; font-size:1.1rem; line-height:1.8;">Attune your environment to the high-fidelity soundscapes of the Domiinique Living Signature.</p>
+            <p class="t-body" style="max-width:650px; margin:2rem auto 0; opacity:0.6; font-size:1.1rem; line-height:1.8;">Attune your environment to the high-fidelity soundscapes of the DOMIINIQUE Living Signature.</p>
           </div>
           
           <div id="mus-player-area" class="mus-player-area"></div>

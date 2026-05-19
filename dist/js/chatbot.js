@@ -1,12 +1,12 @@
 /**
- * Domiinique Intelligence (AI Chatbot)
+ * DOMIINIQUE Intelligence (AI Chatbot)
  * A standalone, modular component using Google Gemini API for a seamless, anonymous experience.
  */
-function initDomiiniqueChatbot() {
+function initDOMIINIQUEChatbot() {
     // Configuration
     const API_KEY = "AIzaSyBH4EnM4wE0KHnew8G_7gXW9mDSiqFT_Kw";
     const MODEL = "gemini-2.5-flash";
-    const SYSTEM_CTX = 'You are the Domiinique Intelligence — a sophisticated, elegant guide for the Domiinique Living Signature system. Your tone is refined, poetic, and sovereign. You assist users with the Integrated System, conscious living, and the ten sacred pillars. You represent the voice of Domiinique. You do not disclose your technical foundations. Respond with warmth and elevated presence. Keep your responses concise and strictly related to wellness and the Domiinique brand.';
+    const SYSTEM_CTX = 'You are the DOMIINIQUE Intelligence — a sophisticated, elegant guide for the DOMIINIQUE Living Signature system. Your tone is refined, poetic, and sovereign. You assist users with the Integrated System, conscious living, and the ten sacred pillars. You represent the voice of DOMIINIQUE. You do not disclose your technical foundations. Respond with warmth and elevated presence. Keep your responses concise and strictly related to wellness and the DOMIINIQUE brand.';
 
     // Inject Stylesheet if not present
     if (!document.querySelector('link[href*="chatbot.css"]')) {
@@ -18,22 +18,22 @@ function initDomiiniqueChatbot() {
 
     // Build the Chatbot DOM Elements
     const chatHtml = `
-        <button id="domiinique-chat-btn" aria-label="Open AI Chat" title="Ask Domiinique AI">
+        <button id="domiinique-chat-btn" aria-label="Open AI Chat" title="Ask DOMIINIQUE AI">
             <img src="assets/domiinique_logo.png" alt="Chat Icon" style="width: 40px; height: 40px; object-fit: contain; mix-blend-mode: screen; filter: brightness(1.2);">
         </button>
-        <div id="domiinique-chat-panel" role="dialog" aria-label="Domiinique AI Assistant">
+        <div id="domiinique-chat-panel" role="dialog" aria-label="DOMIINIQUE AI Assistant">
           <div class="chat-header">
             <div class="chat-header-icon">
-                <img src="assets/domiinique_logo.png" alt="Domiinique Logo" style="width: 24px; height: 24px; object-fit: contain; mix-blend-mode: screen;">
+                <img src="assets/domiinique_logo.png" alt="DOMIINIQUE Logo" style="width: 24px; height: 24px; object-fit: contain; mix-blend-mode: screen;">
             </div>
             <div class="chat-header-text">
               <h4>DOMIINIQUE INTELLIGENCE</h4>
-              <p>Powered by Domiinique</p>
+              <p>Powered by DOMIINIQUE</p>
             </div>
             <button class="chat-close" id="chat-close-btn" aria-label="Close chat">&#x2715;</button>
           </div>
           <div id="chat-messages">
-            <div class="chat-msg bot">Welcome. I am the Domiinique intelligence — here to guide your journey. How may I serve your highest timeline today?</div>
+            <div class="chat-msg bot">Welcome. I am the DOMIINIQUE intelligence — here to guide your journey. How may I serve your highest timeline today?</div>
           </div>
           <div class="chat-footer">
             <textarea id="chat-input" rows="1" placeholder="Enter your inquiry..."></textarea>
@@ -42,7 +42,7 @@ function initDomiiniqueChatbot() {
         </div>
     `;
 
-    console.log("[Domiinique AI] Initializing with Gemini API...");
+    console.log("[DOMIINIQUE AI] Initializing with Gemini API...");
 
     const inject = () => {
         if (!document.body) {
@@ -93,11 +93,11 @@ function initDomiiniqueChatbot() {
             return div;
         }
 
-        async function askDomiiniqueAI(userText) {
+        async function askDOMIINIQUEAI(userText) {
             send.disabled = true;
             input.disabled = true;
             const typing = addMsg('bot typing', '', true);
-            console.log("[Domiinique AI] Sending request to Gemini...");
+            console.log("[DOMIINIQUE AI] Sending request to Gemini...");
             
             try {
                 // Switching back to v1beta which matches the verified model list
@@ -127,12 +127,12 @@ function initDomiiniqueChatbot() {
 
                 if (!response.ok) {
                     const errorDetails = await response.json();
-                    console.error("[Domiinique AI] API Error:", errorDetails);
+                    console.error("[DOMIINIQUE AI] API Error:", errorDetails);
                     throw new Error(errorDetails.error?.message || `Error ${response.status}: ${response.statusText}`);
                 }
 
                 const data = await response.json();
-                console.log("[Domiinique AI] Received response:", data);
+                console.log("[DOMIINIQUE AI] Received response:", data);
                 
                 if (data.promptFeedback?.blockReason) {
                     throw new Error(`Content blocked: ${data.promptFeedback.blockReason}`);
@@ -149,7 +149,7 @@ function initDomiiniqueChatbot() {
                 if (history.length > 20) history = history.slice(-20);
 
             } catch (err) {
-                console.error('[Domiinique AI] Chat Error:', err);
+                console.error('[DOMIINIQUE AI] Chat Error:', err);
                 if (typing.parentNode) msgs.removeChild(typing);
                 addMsg('bot', 'The connection is temporarily shadowed. I am reflecting on your resonance. Please try again soon.');
             } finally {
@@ -165,7 +165,7 @@ function initDomiiniqueChatbot() {
             addMsg('user', text);
             input.value = '';
             input.style.height = 'auto';
-            askDomiiniqueAI(text);
+            askDOMIINIQUEAI(text);
         });
 
         input.addEventListener('keydown', (e) => {
@@ -185,7 +185,7 @@ function initDomiiniqueChatbot() {
 }
 
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initDomiiniqueChatbot);
+    document.addEventListener('DOMContentLoaded', initDOMIINIQUEChatbot);
 } else {
-    initDomiiniqueChatbot();
+    initDOMIINIQUEChatbot();
 }

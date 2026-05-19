@@ -1,7 +1,0 @@
-# Specific allowance for metadata JSONs in the data directory
-# This ensures only authorized files are accessible to the frontend
-Require all denied
-
-<FilesMatch "^(music_library|music_resolved|movies|books|products|users)\.json$">
-    Require all granted
-</FilesMatch>

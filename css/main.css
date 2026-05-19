@@ -10,13 +10,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Luxurious+Script&display=swap');
 
 @font-face {
-    font-family: 'BickhamPro';
-    src: url('../assets/bickham-script-pro/Bickham Script Pro Regular.ttf') format('truetype');
+    font-family: 'OldLondon';
+    src: url('../assets/old_london/OldLondon.ttf') format('truetype');
     font-weight: 400; font-display: swap;
 }
 @font-face {
-    font-family: 'BickhamPro';
-    src: url('../assets/bickham-script-pro/Bickham Script Pro Bold.ttf') format('truetype');
+    font-family: 'OldLondon';
+    src: url('../assets/old_london/OldLondonAlternate.ttf') format('truetype');
     font-weight: 700; font-display: swap;
 }
 
@@ -55,7 +55,7 @@
 
     --f-serif  : 'Playfair Display', Georgia, serif;
     --f-sans   : 'Inter', system-ui, sans-serif;
-    --f-script : 'BickhamPro', 'Luxurious Script', cursive;
+    --f-script : 'OldLondon', 'Luxurious Script', cursive;
     --f-mono   : 'Courier New', monospace;
 
     /* Reality Design aliases */

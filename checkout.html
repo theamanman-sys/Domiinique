@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout â€” Domiinique</title>
+    <title>Checkout â€” DOMIINIQUE</title>
     <link rel="stylesheet" href="css/main.css?v=9">
     <link rel="stylesheet" href="css/home.css?v=1">
     <script type="module" src="js/auth.js"></script>
@@ -16,7 +16,7 @@
 
         /* Order Summary Card */
         .summary-card { background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: 12px; padding: 2.5rem; position: sticky; top: 120px; }
-        .summary-title { font-family: 'BickhamPro', serif; font-size: 1.8rem; color: var(--accent); margin-bottom: 2rem; border-bottom: 1px solid var(--border-soft); padding-bottom: 1rem; }
+        .summary-title { font-family: 'OldLondon', serif; font-size: 1.8rem; color: var(--accent); margin-bottom: 2rem; border-bottom: 1px solid var(--border-soft); padding-bottom: 1rem; }
         
         .checkout-item { display: grid; grid-template-columns: 60px 1fr auto; gap: 1.2rem; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .item-img { width: 60px; height: 80px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-soft); }
@@ -126,7 +126,7 @@
     <!-- â•â•â• NAV â•â•â• -->
     <nav id="nav">
         <a class="nav__logo" href="index.html">
-            <span class="nav__logo-text">Domiinique</span>
+            <span class="nav__logo-text">DOMIINIQUE</span>
             <span class="nav__logo-motto">Living Signature</span>
         </a>
         <ul class="nav__links">
@@ -297,7 +297,7 @@
                 </div>
                 
                 <p style="font-size:0.6rem; color:var(--fg-dim); margin-top:1.5rem; line-height:1.8; text-align:center;">
-                    Each item is part of the Domiinique Living Signature â€” a conscious addition to your environment.
+                    Each item is part of the DOMIINIQUE Living Signature â€” a conscious addition to your environment.
                 </p>
             </div>
         </div>
@@ -450,7 +450,7 @@
                         amount: String(amount),
                         currency: 'ETB',
                         email: 'customer@domiinique.com',
-                        first_name: 'Domiinique',
+                        first_name: 'DOMIINIQUE',
                         last_name: 'User',
                         availablePaymentMethods: ['telebirr', 'cbebirr', 'ebirr', 'mpesa'],
                         showPaymentMethodsNames: true,
@@ -539,7 +539,7 @@
                 tx_ref: txRef,
                 return_url: window.location.href.split('/').slice(0, -1).join('/') + '/order-success.html?orderId=' + currentOrderId + '&total=' + window._finalTotal,
                 customization: {
-                    title: 'Domiinique Store',
+                    title: 'DOMIINIQUE Store',
                     description: 'Order ' + currentOrderId
                 }
             };
@@ -608,7 +608,7 @@
                         tx_ref: txRef,
                         customizations: {
                             buttonText: 'Pay ' + window._finalTotal.toLocaleString() + ' ETB',
-                            successMessage: 'Payment successful! Your Domiinique order has been confirmed.',
+                            successMessage: 'Payment successful! Your DOMIINIQUE order has been confirmed.',
                             styles: `
                                 .chapa-pay-button {
                                     background: linear-gradient(135deg, #4CAF50, #388E3C) !important;

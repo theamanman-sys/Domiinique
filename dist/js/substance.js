@@ -1,5 +1,5 @@
 /**
- * Domiinique — The Substance Database
+ * DOMIINIQUE — The Substance Database
  * Extracted and distilled from the DOMIINIQUE INTEGRATION .pdf
  * This module is restricted to integrated.html and authenticated members.
  */

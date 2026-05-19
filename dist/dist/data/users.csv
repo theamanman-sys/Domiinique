@@ -1,3 +1,0 @@
-username,email,phone,password_hash,role,joined_date,status
-domiinique_admin,admin@domiinique.com,+251900000001,ADMIN_HASH_DO_NOT_SHARE,admin,2026-03-12,active
-superadmin,super@domiinique.com,+251900000002,ADMIN_HASH_DO_NOT_SHARE,superadmin,2026-03-12,active

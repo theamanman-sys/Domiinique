@@ -1,5 +1,5 @@
 /**
- * Domiinique Unified Cart Bridge
+ * DOMIINIQUE Unified Cart Bridge
  * Provides legacy NOW_CART API mapped to the domCart system.
  * Ensures backward compatibility with dist/ and older pages.
  */
@@ -142,7 +142,7 @@
     window.processPayment = function(gateway) {
         if (gateway === 'whatsapp') {
             var items = window.NOW_CART.items;
-            var msg = 'New Domiinique Order:\n';
+            var msg = 'New DOMIINIQUE Order:\n';
             items.forEach(function(item) {
                 msg += '- ' + item.title + '\n';
             });

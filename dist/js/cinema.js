@@ -1,6 +1,6 @@
 /**
- * Domiinique — Cinema Module (TMDB v3)
- * All 50 films from the Domiinique Integration PDF
+ * DOMIINIQUE — Cinema Module (TMDB v3)
+ * All 50 films from the DOMIINIQUE Integration PDF
  */
 (function () {
   'use strict';
@@ -12,7 +12,7 @@
   var IMG_W185   = 'https://image.tmdb.org/t/p/w185';
   var TMDB_OPTS  = { headers: { 'Authorization': 'Bearer ' + TMDB_TOKEN, 'Content-Type': 'application/json' } };
 
-  /* ── Curated list from Domiinique Integration PDF ─────────────────────── */
+  /* ── Curated list from DOMIINIQUE Integration PDF ─────────────────────── */
   var CATEGORIES = [
     {
       label: '✦ Reality & Perception',

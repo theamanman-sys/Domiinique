@@ -43,7 +43,7 @@ $payload = [
     'tx_ref'        => $input['tx_ref'],
     'return_url'    => $input['return_url'] ?? '',
     'customization' => $input['customization'] ?? [
-        'title' => 'Domiinique Living Signature',
+        'title' => 'DOMIINIQUE Living Signature',
         'description' => 'Order Payment'
     ]
 ];

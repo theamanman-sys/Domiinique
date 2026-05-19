@@ -1,5 +1,5 @@
 /**
- * Domiinique Unified Cart System
+ * DOMIINIQUE Unified Cart System
  * Handles: Cart State, UI Badges, Toasts, and Modals
  */
 

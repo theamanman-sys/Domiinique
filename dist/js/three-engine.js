@@ -1,9 +1,9 @@
 /**
- * Domiinique 3D Engine — Theme-Aware
+ * DOMIINIQUE 3D Engine — Theme-Aware
  * Three.js particles that respond to dark/light mode
  */
 
-class DomiiniqueEngine {
+class DOMIINIQUEEngine {
     constructor() {
         this.container = document.getElementById('hero-canvas');
         if (!this.container) return;
@@ -166,6 +166,6 @@ document.addEventListener('mousemove', (e) => {
 
 window.addEventListener('DOMContentLoaded', () => {
     if (typeof THREE !== 'undefined') {
-        new DomiiniqueEngine();
+        new DOMIINIQUEEngine();
     }
 });
