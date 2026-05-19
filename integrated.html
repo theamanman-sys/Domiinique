@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>The Empire — DOMIINIQUE Living Signature</title>
+    <title>The Empire â€” DOMIINIQUE Living Signature</title>
     <link rel="apple-touch-icon" href="assets/domiinique_logo.png">
     <link rel="stylesheet" href="css/main.css?v=9">
     <link rel="stylesheet" href="css/home.css?v=1">
@@ -24,7 +24,7 @@
 
     <style>
         /* ------------------------------------------
-           INTEGRATED HERO — mirrors home page hero layout
+           INTEGRATED HERO â€” mirrors home page hero layout
            but uses the 3D model as background
         ------------------------------------------ */
         body { background: #05020c; margin: 0; }
@@ -77,8 +77,8 @@
             display: none;
         }
 
-        /* Content — centred, highest z-index in hero */
-        /* Content — centred, fully opaque as requested */
+        /* Content â€” centred, highest z-index in hero */
+        /* Content â€” centred, fully opaque as requested */
         .integrated-hero__content {
             position: relative;
             z-index: 20;
@@ -126,7 +126,7 @@
             transition: color 0.3s ease;
         }
 
-        /* CTA row — identical to home page */
+        /* CTA row â€” identical to home page */
         .integrated-hero__actions {
             display: flex;
             align-items: center;
@@ -136,7 +136,7 @@
             pointer-events: all;
         }
 
-        /* Scroll hint — identical to home page .hero__scroll-hint */
+        /* Scroll hint â€” identical to home page .hero__scroll-hint */
         #model-hint {
             position: absolute;
             bottom: 2.5rem;
@@ -191,7 +191,7 @@
         .spinner-label { font-size: .6rem; letter-spacing: .2em; color: rgba(200,160,80,.7); }
 
         /* Content sections below sit above the hero */
-        /* Rest of page sections — highly transparent glass effect to see 3D model */
+        /* Rest of page sections â€” highly transparent glass effect to see 3D model */
         .section, .members-section, .marquee-strip, footer, .footer-legal-bar,
         section[style*="border-top"], .category-selector, .continue-journey-section {
             background: var(--glass-bg) !important;
@@ -292,7 +292,7 @@
         </div>
     </nav>
 
-    <!-- --- 3D HERO — same full-page layout as home hero --- -->
+    <!-- --- 3D HERO â€” same full-page layout as home hero --- -->
     <header class="integrated-hero" id="integrated-hero">
         <!-- 3D canvas acts as background (replaces hero__bg-image) -->
         <canvas id="hero-canvas"></canvas>
@@ -304,18 +304,18 @@
             <div class="spinner-label">Initializing 3D System...</div>
         </div>
 
-        <!-- Centred content — mirrors home page hero__content -->
+        <!-- Centred content â€” mirrors home page hero__content -->
         <div class="integrated-hero__content">
-            <div class="integrated-hero__eyebrow">02 — The Empire</div>
+            <div class="integrated-hero__eyebrow">02 â€” The Empire</div>
             <h1 class="integrated-hero__title">The Empire</h1>
-            <p class="integrated-hero__subtitle">Territory of the Principal — Infinite Expansion</p>
+            <p class="integrated-hero__subtitle">Territory of the Principal â€” Infinite Expansion</p>
             <div class="integrated-hero__actions">
                 <a href="#members" class="btn-primary">Become a Member</a>
                 <a href="packages.html" class="btn-secondary" style="display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border:1.5px solid var(--border);border-radius:6px;color:var(--fg);text-decoration:none;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;transition:all .3s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--fg)'">View Packages &rarr;</a>
             </div>
         </div>
 
-        <!-- Scroll hint — mirrors home page .hero__scroll-hint -->
+        <!-- Scroll hint â€” mirrors home page .hero__scroll-hint -->
         <div id="model-hint">
             <span>Scroll</span>
             <div id="model-hint-line"></div>
@@ -382,20 +382,20 @@
         controls.enableZoom = window.innerWidth > 768; 
         controls.enablePan = false;
 
-        // Ambient soft warm light — brightened
+        // Ambient soft warm light â€” brightened
         scene.add(new THREE.AmbientLight(0xfff0e0, 1.8));
 
-        // Key light — gold from top-right
+        // Key light â€” gold from top-right
         const keyLight = new THREE.DirectionalLight(0xc9a84c, 5.5);
         keyLight.position.set(5, 8, 5);
         scene.add(keyLight);
 
-        // Fill light — cool from left
+        // Fill light â€” cool from left
         const fillLight = new THREE.DirectionalLight(0x8060a0, 1.5);
         fillLight.position.set(-5, 2, 3);
         scene.add(fillLight);
 
-        // Rim light — burgundy from behind
+        // Rim light â€” burgundy from behind
         const rimLight = new THREE.DirectionalLight(0xff2244, 2.0);
         rimLight.position.set(0, -3, -6);
         scene.add(rimLight);
@@ -517,7 +517,7 @@
                 <div class="transmission-node reveal">
                     <span class="transmission-id">HEALTH &amp; WELLNESS</span>
                     <h3 class="t-h3" style="margin-bottom:1rem;">Physical Architecture</h3>
-                    <p class="t-body">Your body is the first home. Nourishment, movement, and rest — designed as sacred daily rituals that honour the temple you inhabit.</p>
+                    <p class="t-body">Your body is the first home. Nourishment, movement, and rest â€” designed as sacred daily rituals that honour the temple you inhabit.</p>
                 </div>
                 <div class="transmission-node reveal">
                     <span class="transmission-id">RELATIONSHIPS</span>
@@ -527,22 +527,22 @@
                 <div class="transmission-node reveal">
                     <span class="transmission-id">FINANCIAL LIFE</span>
                     <h3 class="t-h3" style="margin-bottom:1rem;">Financial Consciousness</h3>
-                    <p class="t-body">Wealth is energy. A conscious relationship with money — rooted in abundance, not scarcity — transforms the way you create and receive.</p>
+                    <p class="t-body">Wealth is energy. A conscious relationship with money â€” rooted in abundance, not scarcity â€” transforms the way you create and receive.</p>
                 </div>
                 <div class="transmission-node reveal">
                     <span class="transmission-id">ENVIRONMENT</span>
                     <h3 class="t-h3" style="margin-bottom:1rem;">Space as Teacher</h3>
-                    <p class="t-body">Your environment speaks to you constantly. Every room, every object, every corner — arranged with sovereign intention to support your highest self.</p>
+                    <p class="t-body">Your environment speaks to you constantly. Every room, every object, every corner â€” arranged with sovereign intention to support your highest self.</p>
                 </div>
                 <div class="transmission-node reveal">
                     <span class="transmission-id">SPIRITUAL PRACTICE</span>
                     <h3 class="t-h3" style="margin-bottom:1rem;">Inner Architecture</h3>
-                    <p class="t-body">Rituals, stillness, and a conscious relationship with the invisible dimensions of life — the foundation beneath every outer structure.</p>
+                    <p class="t-body">Rituals, stillness, and a conscious relationship with the invisible dimensions of life â€” the foundation beneath every outer structure.</p>
                 </div>
                 <div class="transmission-node reveal">
                     <span class="transmission-id">LIFESTYLE DESIGN</span>
                     <h3 class="t-h3" style="margin-bottom:1rem;">Holistic Design</h3>
-                    <p class="t-body">A life that works as a whole — where your morning, your work, your wardrobe, your plate all sing from the same intentional score.</p>
+                    <p class="t-body">A life that works as a whole â€” where your morning, your work, your wardrobe, your plate all sing from the same intentional score.</p>
                 </div>
             </div>
         </div>
@@ -574,7 +574,7 @@
                     <div class="benefit-card">
                         <div class="benefit-icon">??</div>
                         <h4>Full Integration PDF</h4>
-                        <p>The complete DOMIINIQUE Integration framework — all 10 pillars mapped across daily, weekly, and seasonal rhythms.</p>
+                        <p>The complete DOMIINIQUE Integration framework â€” all 10 pillars mapped across daily, weekly, and seasonal rhythms.</p>
                     </div>
                     <div class="benefit-card">
                         <div class="benefit-icon">??</div>
@@ -584,7 +584,7 @@
                     <div class="benefit-card">
                         <div class="benefit-icon">??</div>
                         <h4>Exclusive Content</h4>
-                        <p>Monthly transmissions, private journal entries, guided rituals, and deep-dive sessions with Dominique — only for members.</p>
+                        <p>Monthly transmissions, private journal entries, guided rituals, and deep-dive sessions with Dominique â€” only for members.</p>
                     </div>
                 </div>
 
@@ -602,7 +602,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="password" id="mod-login-pw" placeholder="••••••••" required>
+                                <input type="password" id="mod-login-pw" placeholder="â€”â€”â€”â€”â€”â€”â€”â€”" required>
                             </div>
                             <button type="submit" class="btn-primary">Enter the Inner Circle</button>
                             <div id="mod-login-msg" style="margin-top:1rem; font-size:0.75rem; text-align:center;"></div>

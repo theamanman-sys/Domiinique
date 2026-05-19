@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8"><meta name="theme-color" content="#800020">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sovereign Collection — DOMIINIQUE Living</title>
+<title>Catalog â€” DOMIINIQUE Living</title>
 <meta name="description" content="Curated tools for conscious living. Each piece chosen to elevate your sensory environment.">
 <link rel="stylesheet" href="css/main.css?v=9">
     <link rel="icon" type="image/png" href="assets/domiinique_logo.png">
@@ -34,6 +34,12 @@
 .btn-cart{padding:.45rem .9rem;background:var(--accent);color:#fff;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;border-radius:4px;border:none;cursor:pointer;transition:all .3s;}
 .btn-cart:hover{background:#9a0025;}
 .btn-cart.added{background:#2d7a3a;}
+.btn-queue{padding:.45rem .9rem;background:#1565c0;color:#fff;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;border-radius:4px;border:none;cursor:pointer;transition:all .3s;}
+.btn-queue:hover{background:#0d47a1;}
+.btn-queue.queued{background:#1565c0;}
+.btn-queue.queued:hover{background:#0d47a1;}
+.btn-queue.acquired{background:#2e7d32;cursor:default;opacity:.8;}
+.btn-queue.acquired:hover{background:#2e7d32;}
 .modal-overlay{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.78);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .35s var(--ease);}
 .modal-overlay.open{opacity:1;pointer-events:all;}
 .product-modal{background:var(--bg2);border:1px solid var(--border-soft);border-radius:14px;overflow:hidden;max-width:860px;width:100%;max-height:90vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;transform:scale(.95) translateY(20px);transition:transform .4s var(--ease);position:relative;}
@@ -101,7 +107,7 @@
 <main>
 <div class="shop-grid" id="shop-grid">
   <!-- Products will be loaded dynamically from Firestore -->
-  <p id="loading-msg" class="t-body" style="text-align:center;width:100%;grid-column:1/-1;opacity:.5;">Synchronizing Shop—</p>
+  <p id="loading-msg" class="t-body" style="text-align:center;width:100%;grid-column:1/-1;opacity:.5;">Loading Catalogâ€”</p>
 </div>
 </main>
 
@@ -110,7 +116,7 @@
     <div style="text-align:center;margin-bottom:3rem;">
         <span class="t-eyebrow">Digital Tools</span>
         <h2 class="t-h2">Conscious Tech &amp; Applications</h2>
-        <p style="max-width:560px;margin:1rem auto 0;color:var(--fg-sub);font-size:.82rem;line-height:1.7;">Curated digital tools that extend the DOMIINIQUE system — bridging mind, body, environment, and data.</p>
+        <p style="max-width:560px;margin:1rem auto 0;color:var(--fg-sub);font-size:.82rem;line-height:1.7;">Curated digital tools that extend the DOMIINIQUE system â€” bridging mind, body, environment, and data.</p>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2rem;">
 
@@ -145,7 +151,7 @@
             <div class="product-card__info">
                 <span class="product-card__cat">AI</span>
                 <h3 class="product-card__name">Personalized AI Concierge</h3>
-                <p class="product-card__desc">Your intelligent "Oracle" — AI-powered personal assistant for scheduling, insights, and decision-making.</p>
+                <p class="product-card__desc">Your intelligent "Oracle" â€” AI-powered personal assistant for scheduling, insights, and decision-making.</p>
                 <div class="product-card__footer" style="flex-direction:column;align-items:stretch;gap:.6rem;">
                     <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
                         <a href="https://chat.openai.com" target="_blank" class="btn-cart" style="flex:1;text-align:center;text-decoration:none;font-size:.5rem;">ChatGPT</a>
@@ -265,7 +271,7 @@
             <div class="product-card__info">
                 <span class="product-card__cat">Productivity</span>
                 <h3 class="product-card__name">Notion</h3>
-                <p class="product-card__desc">All-in-one workspace for notes, docs, databases, and project management — the operating system for your digital life.</p>
+                <p class="product-card__desc">All-in-one workspace for notes, docs, databases, and project management â€” the operating system for your digital life.</p>
                 <div class="product-card__footer" style="flex-direction:column;align-items:stretch;gap:.6rem;">
                     <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
                         <a href="https://www.notion.com/desktop" target="_blank" class="btn-cart" style="flex:1;text-align:center;text-decoration:none;font-size:.5rem;">Desktop</a>
@@ -283,7 +289,7 @@
             <div class="product-card__info">
                 <span class="product-card__cat">Wearable</span>
                 <h3 class="product-card__name">Oura Ring</h3>
-                <p class="product-card__desc">Smart ring tracking sleep, heart rate, HRV, body temperature, and activity — your personal health dashboard on your finger.</p>
+                <p class="product-card__desc">Smart ring tracking sleep, heart rate, HRV, body temperature, and activity â€” your personal health dashboard on your finger.</p>
                 <div class="product-card__footer" style="flex-direction:column;align-items:stretch;gap:.6rem;">
                     <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
                         <a href="https://ouraring.com" target="_blank" class="btn-cart" style="flex:1;text-align:center;text-decoration:none;font-size:.5rem;">Official Site</a>
@@ -355,11 +361,12 @@ async function loadProducts() {
             // Generate HTML for each product
             let benefitsHTML = p.benefits ? p.benefits : ''; 
             
+            var pid = p.id || p.name.toLowerCase().replace(/[^a-z0-9]/g, '-');
             html += `
-            <div class="product-card" data-id="${p.id}" data-cat="${p.category}" data-name="${p.name}" data-price="${p.price}" data-img="${p.img||'assets/books/book-placeholder.png'}" data-desc="${(p.desc||'').replace(/"/g, '&quot;')}" data-benefits="${benefitsHTML}" onclick="window.openBookModal(this)">
+            <div class="product-card" data-id="${pid}" data-cat="${p.category}" data-name="${p.name}" data-price="${p.price}" data-img="${p.img||'assets/books/book-placeholder.png'}" data-desc="${(p.desc||'').replace(/"/g, '&quot;')}" data-benefits="${benefitsHTML}" onclick="window.openBookModal(this)">
             <div class="product-card__img"><img src="${p.img||'assets/books/book-placeholder.png'}" alt="${p.name}" loading="lazy"><span class="product-card__badge">${p.category}</span></div>
             <div class="product-card__info"><span class="product-card__cat">${p.category}</span><h3 class="product-card__name">${p.name}</h3><p class="product-card__desc">${(p.desc||'').substring(0,80)}...</p>
-            <div class="product-card__footer"><span class="product-card__price">${(p.price||0).toLocaleString()} Birr</span><div class="product-card__actions"><button class="btn-detail" onclick="event.stopPropagation();window.openBookModal(this.closest('.product-card'))">Details</button><button class="btn-cart" onclick="event.stopPropagation();window.domCart.addItem(this.closest('.product-card'))">Add</button></div></div></div>
+            <div class="product-card__footer"><div class="product-card__actions"><button class="btn-detail" onclick="event.stopPropagation();window.openBookModal(this.closest('.product-card'))">Details</button><button class="btn-queue" data-id="${pid}" data-name="${p.name}" onclick="event.stopPropagation();window.toggleQueueBtn(this)">Queue</button></div></div></div>
             </div>`;
         });
         
@@ -375,10 +382,38 @@ async function loadProducts() {
             applyFilter(activeFilterBtn.dataset.filter);
         }
 
+        applyProductStatuses();
+
     } catch (err) {
         console.error("Error loading products:", err);
         if (msg) msg.innerHTML = 'Unable to load shop items. Please try again.';
     }
+}
+
+function toggleQueueBtn(el) {
+    var id = el.dataset.id;
+    var name = el.dataset.name;
+    var added = window.domCart.toggleQueue(id, name);
+    applyProductStatuses();
+    window.domCart.toast(added ? name + ' added to Queue' : name + ' removed from Queue');
+}
+
+function applyProductStatuses() {
+    document.querySelectorAll('.btn-queue').forEach(function(btn) {
+        var id = btn.dataset.id;
+        var name = btn.dataset.name;
+        var status = window.domCart.getItemStatus(id, name);
+        if (status === 'acquired') {
+            btn.textContent = 'Acquired';
+            btn.className = 'btn-queue acquired';
+        } else if (status === 'queued') {
+            btn.textContent = 'In Queue';
+            btn.className = 'btn-queue queued';
+        } else {
+            btn.textContent = 'Queue';
+            btn.className = 'btn-queue';
+        }
+    });
 }
 
 function applyFilter(f) {
@@ -407,4 +442,3 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-

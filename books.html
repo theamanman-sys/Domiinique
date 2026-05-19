@@ -331,8 +331,10 @@
             grid.innerHTML = '';
             
             filtered.forEach(function(book) {
+                var bid = (book.id || book.title).toLowerCase().replace(/[^a-z0-9]/g, '-');
                 var card = document.createElement('div');
                 card.className = 'book-card';
+                card.dataset.id = bid;
                 card.dataset.title = book.title;
                 card.dataset.author = book.author;
                 card.dataset.price = book.price;
@@ -341,9 +343,9 @@
                 
                 card.innerHTML = '<div style="position:relative;aspect-ratio:2/3;overflow:hidden;border-radius:4px;margin-bottom:.8rem;background:#0f0f1a;">' +
                     '<img src="' + book.image + '" alt="' + book.title + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.src=\'assets/books/book-placeholder.png\'; this.onerror=null;">' +
-                    '<button class="add-to-cart-btn" onclick="event.stopPropagation();addBookToCart(\'' + book.title.replace(/'/g, "\\'") + '\', \'' + book.author.replace(/'/g, "\\'") + '\', ' + book.price + ', \'' + book.image + '\')" ' +
+                    '<button class="btn-queue-book" data-id="' + bid + '" data-name="' + book.title.replace(/'/g, "\\'") + '" onclick="event.stopPropagation();toggleBookQueueBtn(this)" ' +
                         'style="position:absolute;bottom:10px;right:10px;background:#800020;color:white;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-size:0.8rem;font-weight:600;z-index:10;">' +
-                        'Add to Cart (' + book.price + ' ETB)' +
+                        'Queue' +
                     '</button>' +
                 '</div>' +
                 '<h3 style="font-size:.9rem;margin:.5rem 0 .3rem;color:#fff;font-weight:600;">' + book.title + '</h3>' +
@@ -365,6 +367,33 @@
                 };
                 
                 grid.appendChild(card);
+            });
+            applyBookStatuses();
+        }
+
+        function toggleBookQueueBtn(el) {
+            var id = el.dataset.id;
+            var name = el.dataset.name;
+            var added = window.domCart.toggleQueue(id, name);
+            applyBookStatuses();
+            window.domCart.toast(added ? name + ' added to Queue' : name + ' removed from Queue');
+        }
+
+        function applyBookStatuses() {
+            document.querySelectorAll('.btn-queue-book').forEach(function(btn) {
+                var id = btn.dataset.id;
+                var name = btn.dataset.name;
+                var status = window.domCart.getItemStatus(id, name);
+                if (status === 'acquired') {
+                    btn.textContent = 'Acquired';
+                    btn.style.background = '#2e7d32';
+                } else if (status === 'queued') {
+                    btn.textContent = 'In Queue';
+                    btn.style.background = '#1565c0';
+                } else {
+                    btn.textContent = 'Queue';
+                    btn.style.background = '#800020';
+                }
             });
         }
 

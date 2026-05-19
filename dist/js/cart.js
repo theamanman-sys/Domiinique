@@ -5,12 +5,15 @@
 
 (function() {
     const CART_KEY = 'domiinique-cart';
+    const QUEUE_KEY = 'domiinique-queue';
 
     const domCart = {
         items: JSON.parse(localStorage.getItem(CART_KEY) || '[]'),
+        queue: JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]'),
 
         save() {
             localStorage.setItem(CART_KEY, JSON.stringify(this.items));
+            localStorage.setItem(QUEUE_KEY, JSON.stringify(this.queue));
             this.updateBadges();
         },
 
@@ -97,6 +100,33 @@
         clear() {
             this.items = [];
             this.save();
+        },
+
+        // ── Queue System ──────────────────────────────────
+        toggleQueue(id, title) {
+            const idx = this.queue.findIndex(i => i.id === id || i.title === title);
+            if (idx > -1) {
+                this.queue.splice(idx, 1);
+                this.save();
+                return false;
+            }
+            this.queue.push({ id: id, title: title });
+            this.save();
+            return true;
+        },
+
+        isInQueue(id, title) {
+            return this.queue.some(i => i.id === id || i.title === title);
+        },
+
+        isInCart(id, title) {
+            return this.items.some(i => i.id === id || i.title === title);
+        },
+
+        getItemStatus(id, title) {
+            if (this.isInCart(id, title)) return 'acquired';
+            if (this.isInQueue(id, title)) return 'queued';
+            return 'none';
         },
 
         getTotalQty() {
