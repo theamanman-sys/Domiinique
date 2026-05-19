@@ -390,13 +390,13 @@ async function loadProducts() {
     }
 }
 
-function toggleQueueBtn(el) {
+window.toggleQueueBtn = function(el) {
     var id = el.dataset.id;
     var name = el.dataset.name;
     var added = window.domCart.toggleQueue(id, name);
     applyProductStatuses();
     window.domCart.toast(added ? name + ' added to Queue' : name + ' removed from Queue');
-}
+};
 
 function applyProductStatuses() {
     document.querySelectorAll('.btn-queue').forEach(function(btn) {
