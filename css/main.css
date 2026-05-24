@@ -441,7 +441,7 @@ html[data-theme="light"] .hero__bg-image {
     font-family:var(--f-script);
     color:var(--fg);
     font-size:clamp(3rem,12vw,9rem);
-    line-height:1; font-weight:400;
+    line-height:1.15; font-weight:400; padding-top:.15em;
     transition:color .4s var(--ease);
 }
 .hero__actions {
@@ -456,7 +456,7 @@ html[data-theme="light"] .hero__bg-image {
 .hero--sub .hero__content { text-align:left; margin-top:0; }
 
 @media (max-width:768px) {
-    .hero__content { margin-top:2rem; padding:0 1.2rem; }
+    .hero__content { margin-top:2rem; padding:1.2rem 1.2rem 0; }
     .hero__actions { flex-direction:column; gap:1rem; }
 }
 @media (max-width:480px) {

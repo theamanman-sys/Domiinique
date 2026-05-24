@@ -89,7 +89,7 @@
 
 @media(max-width: 1200px) { .shop-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; } }
 @media(max-width: 900px)  { .shop-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; } }
-@media(max-width: 480px)  { .shop-grid { grid-template-columns: 1fr; gap: 1.5rem; } }
+@media(max-width: 480px)  { .shop-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
 
 .shop-card { background:var(--bg-card); border:1px solid var(--border-soft); border-radius:8px; overflow:hidden; transition:transform .4s var(--ease), box-shadow .4s var(--ease); }
 .shop-card:hover { transform:translateY(-8px); box-shadow:var(--shadow); border-color:var(--accent-soft); }
@@ -129,7 +129,7 @@
 
 @media(max-width:1200px){ .shop-grid{grid-template-columns:repeat(3,1fr)} }
 @media(max-width:768px)  { .shop-grid{grid-template-columns:repeat(2,1fr); gap:1rem} }
-@media(max-width:480px)  { .shop-grid{grid-template-columns:1fr; gap:1rem} }
+@media(max-width:480px)  { .shop-grid{grid-template-columns:repeat(2,1fr); gap:.8rem} }
 
 /* ═══ MODALS AND TOAST HANDLED GLOBALLY BY main.css ═══ */
 
