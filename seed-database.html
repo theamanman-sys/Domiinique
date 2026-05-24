@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOMIINIQUE - Database Seeder</title>
+    <title>Domiinique - Database Seeder</title>
     <style>
         body { font-family: monospace; background: #1a1a2e; color: #fff; padding: 20px; }
         .log { background: #0f0f1a; padding: 10px; margin: 10px 0; border-radius: 4px; max-height: 500px; overflow-y: auto; }
@@ -20,7 +20,7 @@
     </style>
 </head>
 <body>
-    <h1>🔧 DOMIINIQUE Database Seeder</h1>
+    <h1>ðŸ”§ Domiinique Database Seeder</h1>
     <p>This will seed the database ONCE with users, settings, and books with covers.</p>
     
     <div class="stats">
@@ -34,7 +34,7 @@
         <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
     </div>
     
-    <button id="seedBtn" onclick="startSeeding()">🌱 Start Seeding</button>
+    <button id="seedBtn" onclick="startSeeding()">ðŸŒ± Start Seeding</button>
     <div id="log" class="log"></div>
 
     <script type="module">
@@ -92,7 +92,7 @@
 
         // Settings data
         const SETTINGS = {
-            siteName: "DOMIINIQUE",
+            siteName: "Domiinique",
             tagline: "Living Signature",
             email: "contact@domiinique.com",
             phone: "+251 992 013 589",
@@ -110,7 +110,7 @@
             { title: "Thinking Fast and Slow", author: "Daniel Kahneman", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 320, searchKey: "thinking fast and slow daniel kahneman" },
             { title: "The Denial of Death", author: "Ernest Becker", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 250, searchKey: "denial of death ernest becker" },
             { title: "The Crowd: A Study of the Popular Mind", author: "Gustave Le Bon", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 220, searchKey: "crowd gustave le bon popular mind" },
-            { title: "The Art of Worldly Wisdom", author: "Baltasar Gracián", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 200, searchKey: "art of worldly wisdom baltasar gracian" },
+            { title: "The Art of Worldly Wisdom", author: "Baltasar GraciÃ¡n", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 200, searchKey: "art of worldly wisdom baltasar gracian" },
             { title: "Influence: The Psychology of Persuasion", author: "Robert Cialdini", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 300, searchKey: "influence psychology persuasion robert cialdini" },
             { title: "The Moral Animal", author: "Robert Wright", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 270, searchKey: "moral animal robert wright" },
             { title: "Beyond Good and Evil", author: "Friedrich Nietzsche", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 180, searchKey: "beyond good and evil friedrich nietzsche" },
@@ -122,7 +122,7 @@
             { title: "Status Anxiety", author: "Alain de Botton", phase: "PHASE I: HUMAN NATURE", phaseOrder: 1, category: "Psychology", price: 210, searchKey: "status anxiety alain de botton" },
             
             // PHASE II: STATECRAFT (15 books)
-            { title: "The Prince", author: "Niccolò Machiavelli", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 190, searchKey: "prince niccolo machiavelli" },
+            { title: "The Prince", author: "NiccolÃ² Machiavelli", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 190, searchKey: "prince niccolo machiavelli" },
             { title: "The Art of War", author: "Sun Tzu", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 170, searchKey: "art of war sun tzu" },
             { title: "Diplomacy", author: "Henry Kissinger", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 330, searchKey: "diplomacy henry kissinger" },
             { title: "The Republic", author: "Plato", phase: "PHASE II: STATECRAFT", phaseOrder: 2, category: "Politics", price: 210, searchKey: "republic plato" },
@@ -141,7 +141,7 @@
             // PHASE III: SYSTEMS THINKING (15 books)
             { title: "Thinking in Systems", author: "Donella Meadows", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 280, searchKey: "thinking in systems donella meadows" },
             { title: "The Fifth Discipline", author: "Peter Senge", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 310, searchKey: "fifth discipline peter senge" },
-            { title: "Gödel, Escher, Bach", author: "Douglas Hofstadter", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 350, searchKey: "godel escher bach douglas hofstadter" },
+            { title: "GÃ¶del, Escher, Bach", author: "Douglas Hofstadter", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 350, searchKey: "godel escher bach douglas hofstadter" },
             { title: "The Master and His Emissary", author: "Iain McGilchrist", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 290, searchKey: "master and his emissary iain mcgilchrist" },
             { title: "The Age of AI", author: "Henry Kissinger", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 320, searchKey: "age of artificial intelligence henry kissinger" },
             { title: "Zero to One", author: "Peter Thiel", phase: "PHASE III: SYSTEMS THINKING", phaseOrder: 3, category: "Systems", price: 270, searchKey: "zero to one peter thiel" },
@@ -161,7 +161,7 @@
             { title: "The Architecture of Happiness", author: "Alain de Botton", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 230, searchKey: "architecture of happiness alain de botton" },
             { title: "A Pattern Language", author: "Christopher Alexander", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 320, searchKey: "pattern language christopher alexander" },
             { title: "Bauhaus", author: "Magdalena Droste", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 280, searchKey: "bauhaus magdalena droste" },
-            { title: "In Praise of Shadows", author: "Jun'ichirō Tanizaki", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 200, searchKey: "in praise of shadows junichiro tanizaki" },
+            { title: "In Praise of Shadows", author: "Jun'ichirÅ Tanizaki", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 200, searchKey: "in praise of shadows junichiro tanizaki" },
             { title: "Wabi-Sabi for Artists", author: "Leonard Koren", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 210, searchKey: "wabi sabi for artists leonard koren" },
             { title: "Minimalism", author: "Tartan & White", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 190, searchKey: "minimalism design tartan white" },
             { title: "The Elements of Style", author: "William Strunk Jr.", phase: "PHASE IV: AESTHETIC INTEGRITY", phaseOrder: 4, category: "Design", price: 150, searchKey: "elements of style william strunk" },
@@ -263,7 +263,7 @@
             try {
                 writeLog('Checking database collections...', 'info');
 
-                // ── 1. Users (Firebase Auth + Firestore profile) ──
+                // â”€â”€ 1. Users (Firebase Auth + Firestore profile) â”€â”€
                 writeLog('Seeding users...', 'info');
                 let userCount = 0;
                 for (const user of USERS) {
@@ -275,7 +275,7 @@
                             role: user.role,
                             createdAt: serverTimestamp()
                         });
-                        writeLog(`✓ Created ${user.role}: ${user.email}`, 'success');
+                        writeLog(`âœ“ Created ${user.role}: ${user.email}`, 'success');
                         userCount++;
                     } catch(e) {
                         if (e.code === 'auth/email-already-exists') {
@@ -287,28 +287,28 @@
                 }
                 usersCount.textContent = userCount || 'already exists';
 
-                // ── 2. Settings ──
+                // â”€â”€ 2. Settings â”€â”€
                 writeLog('Seeding settings...', 'info');
                 await setDoc(doc(db, 'settings', 'site'), SETTINGS);
-                writeLog('✓ Settings seeded!', 'success');
+                writeLog('âœ“ Settings seeded!', 'success');
 
-                // ── 3. Products ──
+                // â”€â”€ 3. Products â”€â”€
                 writeLog('Checking products collection...', 'info');
                 const productsCheck = await getDocs(collection(db, 'products'));
                 if (productsCheck.empty) {
                     writeLog(`Seeding ${PRODUCTS.length} products...`, 'info');
                     for (const p of PRODUCTS) {
                         await setDoc(doc(db, 'products', p.id), p);
-                        writeLog(`✓ Product: ${p.name}`, 'success');
+                        writeLog(`âœ“ Product: ${p.name}`, 'success');
                     }
                     productsCount.textContent = PRODUCTS.length;
-                    writeLog(`✅ ${PRODUCTS.length} products seeded.`, 'success');
+                    writeLog(`âœ… ${PRODUCTS.length} products seeded.`, 'success');
                 } else {
                     writeLog(`Products already seeded (${productsCheck.size} found). Skipping...`, 'info');
                     productsCount.textContent = productsCheck.size;
                 }
 
-                // ── 4. Books with Covers ──
+                // â”€â”€ 4. Books with Covers â”€â”€
                 writeLog('Checking books collection...', 'info');
                 const booksCheck = await getDocs(collection(db, 'books'));
                 if (!booksCheck.empty) {
@@ -339,16 +339,16 @@
                         updateProgress(i + 1, totalBooks);
                         booksCount.textContent = i + 1;
                         
-                        const icon = coverUrl.includes('openlibrary') ? '✓' : '○';
+                        const icon = coverUrl.includes('openlibrary') ? 'âœ“' : 'â—‹';
                         writeLog(icon + ' ' + book.title, coverUrl.includes('openlibrary') ? 'success' : 'warning');
                         
                         await new Promise(r => setTimeout(r, 200));
                     }
-                    writeLog(`✅ ${totalBooks} books with ${coversLoaded} covers loaded.`, 'success');
+                    writeLog(`âœ… ${totalBooks} books with ${coversLoaded} covers loaded.`, 'success');
                 }
 
-                writeLog('✅ Seeding complete!', 'success');
-                seedBtn.textContent = 'Seeding Complete ✓';
+                writeLog('âœ… Seeding complete!', 'success');
+                seedBtn.textContent = 'Seeding Complete âœ“';
 
             } catch(e) {
                 writeLog('Error: ' + e.message, 'error');
