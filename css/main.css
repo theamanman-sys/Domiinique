@@ -24,6 +24,21 @@
     src: url('../assets/fonts/Plain Germanica.ttf') format('truetype');
     font-weight: 400; font-display: swap;
 }
+@font-face {
+    font-family: 'Bickham Script Pro';
+    src: url('../assets/bickham-script-pro/Bickham Script Pro Regular.ttf') format('truetype');
+    font-weight: 400; font-display: swap;
+}
+@font-face {
+    font-family: 'Bickham Script Pro';
+    src: url('../assets/bickham-script-pro/Bickham Script Pro Semibold.ttf') format('truetype');
+    font-weight: 600; font-display: swap;
+}
+@font-face {
+    font-family: 'Bickham Script Pro';
+    src: url('../assets/bickham-script-pro/Bickham Script Pro Bold.ttf') format('truetype');
+    font-weight: 700; font-display: swap;
+}
 
 /* ────────────────────────────────────────────────────────
    DARK TOKENS (default)
@@ -60,7 +75,7 @@
 
     --f-serif  : 'Playfair Display', Georgia, serif;
     --f-sans   : 'Inter', system-ui, sans-serif;
-    --f-script : 'Germanica', 'OldLondon', 'Luxurious Script', cursive;
+    --f-script : 'Bickham Script Pro', 'Germanica', 'OldLondon', 'Luxurious Script', cursive;
     --f-mono   : 'Courier New', monospace;
 
     /* Reality Design aliases */
