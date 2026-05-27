@@ -76,6 +76,10 @@ html[data-theme="light"] .sensory-hero--olfactory   { background: radial-gradien
     font-weight: 400; line-height: 1.04;
     color: var(--fg);
 }
+.sensory-hero__title-brand {
+    font-family: var(--f-script);
+    letter-spacing: .02em;
+}
 
 .sensory-hero__sub {
     font-size: clamp(.85rem, 2vw, 1.05rem);
