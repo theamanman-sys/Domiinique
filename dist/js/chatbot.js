@@ -6,7 +6,7 @@ function initDOMIINIQUEChatbot() {
     // Configuration
     const API_KEY = "AIzaSyBH4EnM4wE0KHnew8G_7gXW9mDSiqFT_Kw";
     const MODEL = "gemini-2.5-flash";
-    const SYSTEM_CTX = 'You are the DOMIINIQUE Intelligence — a sophisticated, elegant guide for the DOMIINIQUE Living Signature system. Your tone is refined, poetic, and sovereign. You assist users with the Integrated System, conscious living, and the ten sacred pillars. You represent the voice of DOMIINIQUE. You do not disclose your technical foundations. Respond with warmth and elevated presence. Keep your responses concise and strictly related to wellness and the DOMIINIQUE brand.';
+    const SYSTEM_CTX = 'You are the Domiinique Intelligence — a sophisticated, elegant guide for the Domiinique Living Signature system. Your tone is refined, poetic, and sovereign. You assist users with the Integrated System, conscious living, and the ten sacred pillars. You represent the voice of Domiinique. You do not disclose your technical foundations. Respond with warmth and elevated presence. Keep your responses concise and strictly related to wellness and the Domiinique brand.';
 
     // Inject Stylesheet if not present
     if (!document.querySelector('link[href*="chatbot.css"]')) {
@@ -18,22 +18,22 @@ function initDOMIINIQUEChatbot() {
 
     // Build the Chatbot DOM Elements
     const chatHtml = `
-        <button id="domiinique-chat-btn" aria-label="Open AI Chat" title="Ask DOMIINIQUE AI">
+        <button id="domiinique-chat-btn" aria-label="Open AI Chat" title="Ask Domiinique AI">
             <img src="assets/domiinique_logo.png" alt="Chat Icon" style="width: 40px; height: 40px; object-fit: contain; mix-blend-mode: screen; filter: brightness(1.2);">
         </button>
-        <div id="domiinique-chat-panel" role="dialog" aria-label="DOMIINIQUE AI Assistant">
+        <div id="domiinique-chat-panel" role="dialog" aria-label="Domiinique AI Assistant">
           <div class="chat-header">
             <div class="chat-header-icon">
-                <img src="assets/domiinique_logo.png" alt="DOMIINIQUE Logo" style="width: 24px; height: 24px; object-fit: contain; mix-blend-mode: screen;">
+                <img src="assets/domiinique_logo.png" alt="Domiinique Logo" style="width: 24px; height: 24px; object-fit: contain; mix-blend-mode: screen;">
             </div>
             <div class="chat-header-text">
-              <h4>DOMIINIQUE INTELLIGENCE</h4>
-              <p>Powered by DOMIINIQUE</p>
+              <h4>Domiinique Intelligence</h4>
+              <p>Powered by Domiinique</p>
             </div>
             <button class="chat-close" id="chat-close-btn" aria-label="Close chat">&#x2715;</button>
           </div>
           <div id="chat-messages">
-            <div class="chat-msg bot">Welcome. I am the DOMIINIQUE intelligence — here to guide your journey. How may I serve your highest timeline today?</div>
+            <div class="chat-msg bot">Welcome. I am the Domiinique intelligence — here to guide your journey. How may I serve your highest timeline today?</div>
           </div>
           <div class="chat-footer">
             <textarea id="chat-input" rows="1" placeholder="Enter your inquiry..."></textarea>

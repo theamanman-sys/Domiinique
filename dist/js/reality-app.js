@@ -1423,7 +1423,7 @@ class RealityApp {
         this.sensoryNodes = [
             { id: 'v1', name: 'Arctic Spectrum', category: 'visual', icon: '❄️', value: 'arctic', desc: '450-490nm wavelength for high-logic cognitive tasks.' },
             { id: 'v2', name: 'Amber Glow', category: 'visual', icon: '🕯️', value: 'amber', desc: 'Selective blue-light reduction for melatonin protection.' },
-            { id: 'v3', name: 'Signature Burgundy', category: 'visual', icon: '🍷', value: 'red', desc: 'The baseline frequency of the DOMIINIQUE architect.' },
+            { id: 'v3', name: 'Signature Burgundy', category: 'visual', icon: '🍷', value: 'red', desc: 'The baseline frequency of the Domiinique architect.' },
             { id: 'a1', name: 'Theta Binaural', category: 'auditory', icon: '🎧', value: 'binaural', desc: 'Neural synchronization for deep flow and subconscious access.' },
             { id: 'a2', name: 'Brown Noise', category: 'auditory', icon: '🌊', value: 'brown', desc: 'Low-frequency masking for high-intensity focus.' },
             { id: 'a3', name: 'Forest Path', category: 'auditory', icon: '🌲', value: 'ambient', desc: 'Biophilic restoration for pattern decoupling.' },

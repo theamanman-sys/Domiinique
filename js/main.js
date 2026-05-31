@@ -364,7 +364,7 @@ function handleContact(e) {
     btn.textContent = '[ TRANSMITTING... ]';
     btn.disabled = true;
 
-    const text = `Transmission from DOMIINIQUE Blueprint%0A%0AIDENTIFIER: ${name}%0AFREQUENCY: ${email}%0ASECTOR: ${sector}%0AINTENT: ${intent}%0AALIGNMENT: ${valueAlign}`;
+    const text = `Transmission from Domiinique Blueprint%0A%0AIDENTIFIER: ${name}%0AFREQUENCY: ${email}%0ASECTOR: ${sector}%0AINTENT: ${intent}%0AALIGNMENT: ${valueAlign}`;
     
     setTimeout(() => {
         window.open(`https://wa.me/251992013589?text=${text}`, '_blank');

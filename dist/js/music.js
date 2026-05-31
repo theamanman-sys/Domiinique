@@ -251,7 +251,7 @@ console.log("[Music] Gravity Fix v5.3.0 active");
           <div style="text-align:center; margin-bottom:5rem; padding: 0 1rem;">
             <span class="t-eyebrow" style="color:var(--rd-gold); letter-spacing:0.4em; text-transform:uppercase; font-size:0.75rem;">Multidimensional Frequency Archive</span>
             <h2 class="t-h2" style="margin-top:1rem; letter-spacing:-0.03em; font-size:3.5rem;">Reality Design Music</h2>
-            <p class="t-body" style="max-width:650px; margin:2rem auto 0; opacity:0.6; font-size:1.1rem; line-height:1.8;">Attune your environment to the high-fidelity soundscapes of the DOMIINIQUE Living Signature.</p>
+            <p class="t-body" style="max-width:650px; margin:2rem auto 0; opacity:0.6; font-size:1.1rem; line-height:1.8;">Attune your environment to the high-fidelity soundscapes of the Domiinique Living Signature.</p>
           </div>
           
           <div id="mus-player-area" class="mus-player-area"></div>

@@ -79,7 +79,7 @@
             var lines = order.items.map(function(i) {
                 return (i.qty || 1) + '× ' + i.title + ' — ' + formatPrice((parseFloat(i.price) || 0) * (i.qty || 1));
             });
-            var msg = '🛒 *DOMIINIQUE ORDER*\n'
+            var msg = '🛒 *Domiinique ORDER*\n'
                     + '───────────────────\n'
                     + 'Order ID: ' + order.id + '\n'
                     + 'Date: ' + new Date(order.date).toLocaleDateString() + '\n'

@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8"><meta name="theme-color" content="#800020">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Control — DOMIINIQUE</title>
-<link rel="icon" type="image/png" href="assets/domiinique_logo.png">
-<link rel="apple-touch-icon" href="assets/domiinique_logo.png">
+<title>Admin Control — Domiinique</title>
+<link rel="icon" type="image/png" href="assets/Domiinique_logo.png">
+<link rel="apple-touch-icon" href="assets/Domiinique_logo.png">
 <meta name="robots" content="noindex,nofollow">
 <style>
 /* ── Admin-exclusive design system ── */
@@ -179,7 +179,7 @@ input:checked+.slider::before{transform:translateX(22px);}
 <!-- ══ LOGIN SCREEN ══ -->
 <div id="login-screen">
 <div class="adm-login-card">
-<div class="adm-login-logo">DOMIINIQUE</div>
+<div class="adm-login-logo">Domiinique</div>
 <span class="adm-login-sub">Admin Control Room</span>
 <form id="adm-login-form" onsubmit="event.preventDefault();adminLogin();">
 <div class="adm-field"><label for="adm-u">Admin Username</label><input type="text" id="adm-u" name="adm-u" placeholder="username" autocomplete="username"></div>
@@ -513,17 +513,17 @@ import {
 
 // ══ CREDENTIALS ══
 var ADMINS = [
-  {username:'domiinique_admin', password:'DOMIINIQUE@2026!', role:'Admin'},
+  {username:'Domiinique_admin', password:'Domiinique@2026!', role:'Admin'},
   {username:'superadmin',       password:'DomRoot#9821',     role:'Super Admin'}
 ];
-var ADMIN_SESSION = 'domiinique-admin-sess';
-var MEMBER_KEY    = 'domiinique-members'; // Still used minimally for legacy compatibility
-var SUBS_KEY      = 'domiinique-subscribers';
+var ADMIN_SESSION = 'Domiinique-admin-sess';
+var MEMBER_KEY    = 'Domiinique-members'; // Still used minimally for legacy compatibility
+var SUBS_KEY      = 'Domiinique-subscribers';
 var PRODUCTS_KEY  = 'adm-products';
 var BOOKS_KEY     = 'adm-books';
 var SETTINGS_KEY  = 'adm-settings';
 var PKGS_KEY      = 'adm-packages';
-var CART_KEY      = 'domiinique-cart';
+var CART_KEY      = 'Domiinique-cart';
 var ORDERS_KEY    = 'adm-orders';
 
 // ── Default static data ──
@@ -621,7 +621,7 @@ async function adminLogin(){
   if(found){
     // Admin credentials are hardcoded and have no Firebase Auth account.
     // We auto-bootstrap one using a derived email so Firestore rules (which require auth) work.
-    var derivedEmail = found.username.replace(/[^a-z0-9_]/gi,'') + '@domiinique.app';
+    var derivedEmail = found.username.replace(/[^a-z0-9_]/gi,'') + '@Domiinique.app';
     try {
       // Try signing in first
       await signInWithEmailAndPassword(auth, derivedEmail, p);
@@ -1327,24 +1327,24 @@ async function exportCSV(type){
     if(type==='members'){
       const snap = await getDocs(collection(db, 'users'));
       let rows = []; snap.forEach(d => rows.push(d.data()));
-      downloadCSV('domiinique-members',toCSV(rows));
+      downloadCSV('Domiinique-members',toCSV(rows));
     }
     else if(type==='products'){
       const snap = await getDocs(collection(db, 'products'));
       let rows = []; snap.forEach(d => rows.push(d.data()));
-      downloadCSV('domiinique-products',toCSV(rows));
+      downloadCSV('Domiinique-products',toCSV(rows));
     }
     else if(type==='books'){
       const snap = await getDocs(collection(db, 'books'));
       let rows = []; snap.forEach(d => rows.push(d.data()));
-      downloadCSV('domiinique-books',toCSV(rows));
+      downloadCSV('Domiinique-books',toCSV(rows));
     }
     else if(type==='orders'){
       const snap = await getDocs(collection(db, 'orders'));
       let rows = []; snap.forEach(d => rows.push(d.data()));
-      downloadCSV('domiinique-orders',toCSV(rows));
+      downloadCSV('Domiinique-orders',toCSV(rows));
     }
-    else if(type==='cart'){downloadCSV('domiinique-cart',toCSV(getStore(CART_KEY,[])));}
+    else if(type==='cart'){downloadCSV('Domiinique-cart',toCSV(getStore(CART_KEY,[])));}
   } catch(e) { alert("Export failed."); }
 }
 // ── Orders ──
@@ -1415,7 +1415,7 @@ function exportAllJSON(){
   var data={members:getStore(MEMBER_KEY,[]),subscribers:getStore(SUBS_KEY,[]),products:getStore(PRODUCTS_KEY,DEFAULT_PRODUCTS),books:getStore(BOOKS_KEY,DEFAULT_BOOKS),packages:getStore(PKGS_KEY,DEFAULT_PKGS),settings:getStore(SETTINGS_KEY,DEFAULT_SETTINGS),cart:getStore(CART_KEY,[]),orders:getStore(ORDERS_KEY,[]),exported:new Date().toISOString()};
   var a=document.createElement('a');
   a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(data,null,2));
-  a.download='domiinique-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+  a.download='Domiinique-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();
 }
 </script>
 <script type="module" src="js/auth.js"></script>

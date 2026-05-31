@@ -142,7 +142,7 @@
     window.processPayment = function(gateway) {
         if (gateway === 'whatsapp') {
             var items = window.NOW_CART.items;
-            var msg = 'New DOMIINIQUE Order:\n';
+            var msg = 'New Domiinique Order:\n';
             items.forEach(function(item) {
                 msg += '- ' + item.title + '\n';
             });
