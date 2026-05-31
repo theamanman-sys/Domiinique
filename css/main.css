@@ -156,6 +156,7 @@ html[data-theme="light"] canvas#hero-canvas {
 .t-h2     { font-family:var(--f-serif); font-size:clamp(1.7rem,4vw,3.5rem); font-weight:400; }
 .t-h3     { font-family:var(--f-serif); font-size:1.3rem; letter-spacing:.1em; color:var(--accent); text-transform:uppercase; }
 .t-serif  { font-family:var(--f-script); font-size:1.2em; color:var(--accent); font-style:italic; }
+.t-brand  { font-family:var(--f-script); }
 .t-eyebrow{ font-size:.62rem; letter-spacing:.42em; text-transform:uppercase; color:var(--accent); margin-bottom:1.4rem; display:block; }
 .t-body   { font-size:.93rem; color:var(--fg-sub); font-weight:300; }
 .t-center, .text-center { text-align:center; }

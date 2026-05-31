@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAudio();
     initCarousel();
     if (window.updateAllBadges) window.updateAllBadges();
+    initBrandFont();
 });
 
 /* ═══════════════════════════════════════════════════════════
@@ -376,3 +377,44 @@ function handleContact(e) {
     }, 600);
 }
 window.handleContact = handleContact;
+
+/* ═══════════════════════════════════════════════════════════
+   BRAND FONT  —  apply Bickham Script to every "Domiinique"
+   ═══════════════════════════════════════════════════════════ */
+function initBrandFont() {
+    const skipParents = new Set();
+    document.querySelectorAll('.nav__logo-text, .hero__logo-text, .t-serif, .t-brand, .login-logo, .sensory-hero__title-brand')
+        .forEach(el => skipParents.add(el));
+
+    const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    const nodes = [];
+    while (walk.nextNode()) nodes.push(walk.currentNode);
+
+    nodes.forEach(node => {
+        let parent = node.parentElement;
+        let skip = false;
+        while (parent) {
+            if (skipParents.has(parent)) { skip = true; break; }
+            parent = parent.parentElement;
+        }
+        if (skip) return;
+
+        const text = node.textContent;
+        const idx = text.indexOf('Domiinique');
+        if (idx === -1) return;
+
+        const frag = document.createDocumentFragment();
+        let remaining = text;
+        let pos;
+        while ((pos = remaining.indexOf('Domiinique')) !== -1) {
+            if (pos > 0) frag.appendChild(document.createTextNode(remaining.slice(0, pos)));
+            const span = document.createElement('span');
+            span.className = 't-brand';
+            span.textContent = 'Domiinique';
+            frag.appendChild(span);
+            remaining = remaining.slice(pos + 10);
+        }
+        if (remaining) frag.appendChild(document.createTextNode(remaining));
+        node.parentNode.replaceChild(frag, node);
+    });
+}

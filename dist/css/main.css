@@ -20,6 +20,11 @@
     font-weight: 700; font-display: swap;
 }
 @font-face {
+    font-family: 'Germanica';
+    src: url('../assets/fonts/Plain Germanica.ttf') format('truetype');
+    font-weight: 400; font-display: swap;
+}
+@font-face {
     font-family: 'Bickham Script Pro';
     src: url('../assets/bickham-script-pro/Bickham Script Pro Regular.ttf') format('truetype');
     font-weight: 400; font-display: swap;
@@ -70,7 +75,7 @@
 
     --f-serif  : 'Playfair Display', Georgia, serif;
     --f-sans   : 'Inter', system-ui, sans-serif;
-    --f-script : 'Bickham Script Pro', 'OldLondon', 'Luxurious Script', cursive;
+    --f-script : 'Bickham Script Pro', 'Germanica', 'OldLondon', 'Luxurious Script', cursive;
     --f-mono   : 'Courier New', monospace;
 
     /* Reality Design aliases */
@@ -151,6 +156,7 @@ html[data-theme="light"] canvas#hero-canvas {
 .t-h2     { font-family:var(--f-serif); font-size:clamp(1.7rem,4vw,3.5rem); font-weight:400; }
 .t-h3     { font-family:var(--f-serif); font-size:1.3rem; letter-spacing:.1em; color:var(--accent); text-transform:uppercase; }
 .t-serif  { font-family:var(--f-script); font-size:1.2em; color:var(--accent); font-style:italic; }
+.t-brand  { font-family:var(--f-script); }
 .t-eyebrow{ font-size:.62rem; letter-spacing:.42em; text-transform:uppercase; color:var(--accent); margin-bottom:1.4rem; display:block; }
 .t-body   { font-size:.93rem; color:var(--fg-sub); font-weight:300; }
 .t-center, .text-center { text-align:center; }
@@ -184,10 +190,10 @@ nav#nav.scrolled {
 .nav__logo-motto { font-size:.54rem; letter-spacing:.3em; text-transform:uppercase; color:var(--fg); opacity:.38; margin-top:5px; transition:color .4s; }
 
 /* Desktop nav links */
-.nav__links { display:flex; gap:1.4rem; list-style:none; }
+.nav__links { display:flex; gap:.8rem; list-style:none; }
 .nav__links a {
-    text-decoration:none; color:var(--fg); font-size:.56rem;
-    text-transform:uppercase; letter-spacing:.22em; opacity:.42;
+    text-decoration:none; color:var(--fg); font-size:.52rem;
+    text-transform:uppercase; letter-spacing:.15em; opacity:.42; white-space:nowrap;
     transition:opacity .25s, color .25s;
 }
 .nav__links a:hover, .nav__links a.active { opacity:1; color:var(--accent); }
@@ -386,7 +392,7 @@ nav#nav.mobile-open .nav__hamburger span:nth-child(3) { transform:translateY(-7.
         transform: scale(1.02);
     }
     nav#nav.mobile-open .nav__links { visibility:visible; opacity:1; pointer-events:all; }
-    .nav__links a { font-size:1.15rem; letter-spacing:.32em; opacity:.85; }
+    .nav__links a { font-size:.95rem; letter-spacing:.15em; opacity:.85; padding:.5rem 1.2rem; }
     .nav__links a:hover { opacity:1; color:var(--accent); }
     .nav__links { list-style:none; }
     /* Icons slightly smaller on small mobile */
@@ -397,6 +403,7 @@ nav#nav.mobile-open .nav__hamburger span:nth-child(3) { transform:translateY(-7.
     .nav__logo-text { font-size:clamp(1.5rem, 6vw, 2.2rem); }
     .nav__logo-motto { font-size: 0.45rem; letter-spacing: 0.2em; }
     .nav__utilities  { gap: clamp(0.15rem, 1.1vw, 0.4rem); }
+    .nav__links a { font-size:.8rem; letter-spacing:.1em; padding:.4rem .8rem; }
 }
 @media (max-width: 360px) {
     nav#nav { padding: 0 0.8rem; }
@@ -450,7 +457,7 @@ html[data-theme="light"] .hero__bg-image {
     font-family:var(--f-script);
     color:var(--fg);
     font-size:clamp(3rem,12vw,9rem);
-    line-height:1; font-weight:400;
+    line-height:1.15; font-weight:400; padding-top:.15em;
     transition:color .4s var(--ease);
 }
 .hero__actions {
@@ -465,7 +472,7 @@ html[data-theme="light"] .hero__bg-image {
 .hero--sub .hero__content { text-align:left; margin-top:0; }
 
 @media (max-width:768px) {
-    .hero__content { margin-top:2rem; padding:0 1.2rem; }
+    .hero__content { margin-top:2rem; padding:1.2rem 1.2rem 0; }
     .hero__actions { flex-direction:column; gap:1rem; }
 }
 @media (max-width:480px) {
