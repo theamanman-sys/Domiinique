@@ -8,7 +8,7 @@ const NEW_FOOTER = `<footer>
 <div class="footer__inner" style="flex-direction:column;gap:.6rem;text-align:center;max-width:800px;margin:0 auto;">
 <a class="nav__logo" href="index.html" style="justify-content:center;"><span class="nav__logo-text">Domiinique</span></a>
 <p class="footer__copy" style="letter-spacing:.3em;font-size:.52rem;">LIVING SIGNATURE</p>
-<p class="footer__copy">&copy; 2026 DOMIINIQUE. ALL RIGHTS RESERVED.</p>
+<p class="footer__copy">&copy; 2026 Domiinique. All Rights Reserved.</p>
 <p class="footer__copy" style="font-style:italic;opacity:.6;line-height:1.7;margin-top:1rem;">A living system of attention, presence, and intention, unfolding across ten sacred pillars. Each pillar is a space, rhythm, and signature of life, inviting you to inhabit, explore, and activate your own Blueprint.</p>
 </div>
 </footer>`;

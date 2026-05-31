@@ -87,7 +87,7 @@ const tail = `// 2. AUTH HANDLER
       <div class="chat-header">
         <div class="chat-header-icon">&#10022;</div>
         <div class="chat-header-text">
-          <h4>DOMIINIQUE AI</h4>
+          <h4>Domiinique AI</h4>
           <p>Powered by Gemini — Ask me anything</p>
         </div>
         <button class="chat-close" id="chat-close-btn" aria-label="Close chat">&#x2715;</button>

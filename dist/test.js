@@ -77,7 +77,7 @@ window.sendWhatsAppOrderOriginalItems = function(items, total) {
         var meta = i.author ? ' (' + i.author + ')' : '';
         return (i.qty||1) + '\u00d7 ' + i.title + meta + ' \u2014 ' + (((parseFloat(i.price)||0)*(i.qty||1)).toLocaleString()) + ' Birr'; 
     });
-    var msg = '\ud83d\uded2 *DOMIINIQUE ORDER*\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n' + lines.join('\n') + '\n\n*Total: ' + total.toLocaleString() + ' Birr*\n\n*Payment:* Telebirr to +251992013589\n(Screenshot attached or uploaded via website)';
+    var msg = '\ud83d\uded2 *Domiinique ORDER*\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n' + lines.join('\n') + '\n\n*Total: ' + total.toLocaleString() + ' Birr*\n\n*Payment:* Telebirr to +251992013589\n(Screenshot attached or uploaded via website)';
     window.open('https://wa.me/251992013589?text=' + encodeURIComponent(msg), '_blank');
 }
 
