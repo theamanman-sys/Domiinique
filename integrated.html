@@ -258,7 +258,11 @@
                     }
                 };
                 if (window.domAuth && window.domAuth.isReady()) { ready(); }
-                else { document.addEventListener('domAuthReady', ready, {once:true}); }
+                else {
+                    document.addEventListener('domAuthReady', ready, {once:true});
+                    // fallback: if Firebase never fires, redirect after 4s
+                    setTimeout(ready, 4000);
+                }
             }
         }
         if (document.readyState !== 'loading') { checkAuth(); }

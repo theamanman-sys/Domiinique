@@ -31,7 +31,10 @@
                     }
                 };
                 if (window.domAuth && window.domAuth.isReady()) { ready(); }
-                else { document.addEventListener('domAuthReady', ready, {once:true}); }
+                else {
+                    document.addEventListener('domAuthReady', ready, {once:true});
+                    setTimeout(ready, 4000);
+                }
             }
         }
         if (document.readyState !== 'loading') { checkAuth(); }
