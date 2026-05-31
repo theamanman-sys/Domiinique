@@ -338,6 +338,12 @@ import {
         if (floatingWrapper) {
             floatingWrapper.style.display = 'none'; // Fade out floating trigger as requested navbar-first
         }
+
+        // 4. Empire nav link — members only
+        document.querySelectorAll('.nav__links a[href="integrated.html"]').forEach(function(link) {
+            var li = link.closest('li');
+            if (li) li.style.display = user ? '' : 'none';
+        });
     }
 
     // ── Update cart badges on load ────────────────────────────

@@ -248,21 +248,8 @@
     </style>
 
     <script>
-        function checkAuth() {
-            var u = null;
-            try { u = JSON.parse(sessionStorage.getItem('domiinique-session') || 'null'); } catch(e) {}
-            if (!u) {
-                var ready = function() {
-                    if (!window.domAuth || !window.domAuth.getUser()) {
-                        window.location.replace('login.html');
-                    }
-                };
-                if (window.domAuth && window.domAuth.isReady()) { ready(); }
-                else { document.addEventListener('domAuthReady', ready, {once:true}); }
-            }
-        }
-        if (document.readyState !== 'loading') { checkAuth(); }
-        else { document.addEventListener('DOMContentLoaded', checkAuth); }
+        // No redirect — the page has a built-in guest dashboard with login.
+        // Member dashboard and Reality Design portal are gated by JS below.
     </script>
 </head>
 <body>
@@ -684,14 +671,41 @@
     <script type="module">
         import { SubstanceData } from './js/substance.js';
 
+        function showRealityPortal() {
+            var btn = document.getElementById('reality-design-portal-btn');
+            if (btn) btn.style.display = 'flex';
+        }
+
         function renderDashboard(user) {
-            document.getElementById('guest-dashboard').style.display = 'none';
-            document.getElementById('member-dashboard').style.display = 'block';
-            document.getElementById('member-welcome').textContent = `Welcome back, ${user.name || 'Sovereign Soul'}.`;
-            const rdBtn = document.getElementById('reality-design-portal-btn');
-            if(rdBtn) rdBtn.style.display = 'flex';
+            var g = document.getElementById('guest-dashboard');
+            var m = document.getElementById('member-dashboard');
+            var w = document.getElementById('member-welcome');
+            if (g) g.style.display = 'none';
+            if (m) m.style.display = 'block';
+            if (w) w.textContent = 'Welcome back, ' + (user.name || 'Sovereign Soul') + '.';
+            showRealityPortal();
             renderTimeline();
             renderLibrary('books');
+        }
+
+        // Fast path: check sessionStorage directly (works even if auth.js is delayed)
+        (function() {
+            var s = null;
+            try { s = JSON.parse(sessionStorage.getItem('domiinique-session') || 'null'); } catch(e) {}
+            if (s) { renderDashboard(s); return; }
+        })();
+
+        // Event path: wait for auth to be ready
+        function onAuthReady() {
+            if (window.domAuth && window.domAuth.isReady()) {
+                var user = window.domAuth.getUser();
+                if (user) { renderDashboard(user); }
+                return true;
+            }
+            return false;
+        }
+        if (!onAuthReady()) {
+            window.addEventListener('domAuthReady', function() { onAuthReady(); });
         }
 
         function renderTimeline() {
@@ -863,6 +877,17 @@
             <path d="M2 12h20"/>
         </svg>
     </a>
+    <script>
+        // Fallback: show Reality Design portal if session exists (runs during parse, before module)
+        (function() {
+            var s = null;
+            try { s = JSON.parse(sessionStorage.getItem('domiinique-session') || 'null'); } catch(e) {}
+            if (s) {
+                var btn = document.getElementById('reality-design-portal-btn');
+                if (btn) btn.style.display = 'flex';
+            }
+        })();
+    </script>
     <script>
         const rdBtnHover = document.getElementById('reality-design-portal-btn');
         if (rdBtnHover) {
