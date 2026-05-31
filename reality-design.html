@@ -22,18 +22,20 @@
 
     <script>
         function checkAuth() {
-            if (window.domAuth && window.domAuth.isReady()) {
-                const user = window.domAuth.getUser();
-                if (!user) {
-                    console.warn("Reality Design — Debug Mode: No active session (Redirect Disabled).");
-                    return;
-                }
-                console.log("Reality Design — Session verified for:", user.name);
-            } else { 
-                setTimeout(checkAuth, 100); 
+            var u = null;
+            try { u = JSON.parse(sessionStorage.getItem('domiinique-session') || 'null'); } catch(e) {}
+            if (!u) {
+                var ready = function() {
+                    if (!window.domAuth || !window.domAuth.getUser()) {
+                        window.location.replace('login.html');
+                    }
+                };
+                if (window.domAuth && window.domAuth.isReady()) { ready(); }
+                else { document.addEventListener('domAuthReady', ready, {once:true}); }
             }
         }
-        checkAuth();
+        if (document.readyState !== 'loading') { checkAuth(); }
+        else { document.addEventListener('DOMContentLoaded', checkAuth); }
     </script>
 </head>
 <body class="reality-design-page">

@@ -249,11 +249,20 @@
 
     <script>
         function checkAuth() {
-            if (window.domAuth && window.domAuth.isReady()) {
-                if (!window.domAuth.getUser()) window.location.replace('login.html');
-            } else { setTimeout(checkAuth, 100); }
+            var u = null;
+            try { u = JSON.parse(sessionStorage.getItem('domiinique-session') || 'null'); } catch(e) {}
+            if (!u) {
+                var ready = function() {
+                    if (!window.domAuth || !window.domAuth.getUser()) {
+                        window.location.replace('login.html');
+                    }
+                };
+                if (window.domAuth && window.domAuth.isReady()) { ready(); }
+                else { document.addEventListener('domAuthReady', ready, {once:true}); }
+            }
         }
-        checkAuth();
+        if (document.readyState !== 'loading') { checkAuth(); }
+        else { document.addEventListener('DOMContentLoaded', checkAuth); }
     </script>
 </head>
 <body>
@@ -601,7 +610,7 @@
                 <div style="text-align:center;margin-bottom:4rem;">
                     <div style="font-size:3rem;margin-bottom:1rem;color:var(--accent);">?</div>
                     <h2 class="t-h2">The Inner Circle</h2>
-                    <p class="t-body" id="member-welcome" style="margin-bottom:2rem;">Welcome back, sovereign soul.</p>
+                    <p class="t-body" id="member-welcome" style="margin-bottom:2rem;">Welcome back, Sovereign Soul.</p>
                     <a class="btn-primary" href="reality-design.html" style="background:linear-gradient(135deg, #4a0010, #800020); border:1px solid #c9a84c; display:inline-flex; align-items:center; gap:0.5rem; padding: 1.2rem 3rem;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2" style="width:18px;height:18px;"><path d="M12 2L2 12l10 10 10-10L12 2z"/></svg> 
                         ENTER REALITY DESIGN
@@ -678,7 +687,7 @@
         function renderDashboard(user) {
             document.getElementById('guest-dashboard').style.display = 'none';
             document.getElementById('member-dashboard').style.display = 'block';
-            document.getElementById('member-welcome').textContent = `Welcome back, ${user.displayName || 'Sovereign Soul'}.`;
+            document.getElementById('member-welcome').textContent = `Welcome back, ${user.name || 'Sovereign Soul'}.`;
             const rdBtn = document.getElementById('reality-design-portal-btn');
             if(rdBtn) rdBtn.style.display = 'flex';
             renderTimeline();
@@ -788,11 +797,16 @@
             `).join('');
         }
 
-        async function checkCurrentAuth() {
+        function onAuthReady() {
             if (window.domAuth && window.domAuth.isReady()) {
-                const user = window.domAuth.getUser();
-                if (user) renderDashboard(user);
-            } else { setTimeout(checkCurrentAuth, 200); }
+                var user = window.domAuth.getUser();
+                if (user) { renderDashboard(user); }
+                return true;
+            }
+            return false;
+        }
+        if (!onAuthReady()) {
+            window.addEventListener('domAuthReady', function() { onAuthReady(); });
         }
 
         const loginForm = document.getElementById('mod-login-form');
@@ -807,7 +821,12 @@
                 submitBtn.textContent = 'Authenticating...';
                 try {
                     const res = await window.domAuth.login(userIdent, pass);
-                    if (res.success) { location.reload(); } else {
+                    if (res.success) {
+                        msg.innerHTML = `<span style="color:var(--accent);">${res.message}</span>`;
+                        var u = window.domAuth.getUser();
+                        if (u) { setTimeout(function(){ renderDashboard(u); }, 600); }
+                        else { setTimeout(function(){ location.reload(); }, 800); }
+                    } else {
                         msg.innerHTML = `<span style="color:var(--accent);">${res.message}</span>`;
                         submitBtn.disabled = false;
                         submitBtn.textContent = 'Enter the Inner Circle';
@@ -826,7 +845,7 @@
                 renderLibrary(btn.dataset.filter);
             });
         });
-        checkCurrentAuth();
+        onAuthReady();
         document.querySelectorAll('.members-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.members-tab, .members-panel').forEach(el => el.classList.remove('active'));
