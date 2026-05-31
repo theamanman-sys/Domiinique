@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acquired — DOMIINIQUE</title>
+    <title>Acquired — Domiinique</title>
     <link rel="stylesheet" href="css/main.css?v=9">
     <link rel="stylesheet" href="css/home.css?v=1">
     <script type="module" src="js/auth.js"></script>
@@ -16,7 +16,7 @@
 
         /* Order Summary Card */
         .summary-card { background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: 12px; padding: 2.5rem; position: sticky; top: 120px; }
-        .summary-title { font-family: 'OldLondon', serif; font-size: 1.8rem; color: var(--accent); margin-bottom: 2rem; border-bottom: 1px solid var(--border-soft); padding-bottom: 1rem; }
+        .summary-title { font-family: var(--f-script); font-size: 1.8rem; color: var(--accent); margin-bottom: 2rem; border-bottom: 1px solid var(--border-soft); padding-bottom: 1rem; }
         
         .checkout-item { display: grid; grid-template-columns: 60px 1fr auto; gap: 1.2rem; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .item-img { width: 60px; height: 80px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-soft); }
@@ -123,23 +123,23 @@
 </head>
 <body>
 
-    <!-- ═══ NAV ═══ -->
+    <!-- --- NAV --- -->
     <nav id="nav">
         <a class="nav__logo" href="index.html">
-            <span class="nav__logo-text">DOMIINIQUE</span>
+            <span class="nav__logo-text">Domiinique</span>
             <span class="nav__logo-motto">Living Signature</span>
         </a>
         <ul class="nav__links">
             <li><a href="blueprint.html">Blueprint</a></li>
             <li><a href="integrated.html">The Empire</a></li>
-            <li><a href="time.html">Time</a></li>
-            <li><a href="inspiration.html">Inspiration</a></li>
-            <li><a href="creative.html">Creative</a></li>
-            <li><a href="canvas.html">Canvas</a></li>
-            <li><a href="portraits.html">Portraits</a></li>
-            <li><a href="journal.html">Journal</a></li>
-            <li><a href="you.html">YOU</a></li>
-            <li><a href="cocreation.html">Co-Creation</a></li>
+            <li><a href="time.html">The Temple</a></li>
+            <li><a href="inspiration.html">Global Foresight</a></li>
+            <li><a href="creative.html">AI Lab</a></li>
+            <li><a href="canvas.html">Environmental Design</a></li>
+            <li><a href="portraits.html">Human Study</a></li>
+            <li><a href="journal.html">Intellectual Archive</a></li>
+            <li><a href="you.html">Principal Identity</a></li>
+            <li><a href="cocreation.html">Diplomacy & Partnership</a></li>
             <li><a href="shop.html">Catalog</a></li>
             <li><a href="checkout.html" class="active">Acquired</a></li>
         </ul>
@@ -196,16 +196,16 @@
                     <!-- Payment Method Tabs -->
                     <div class="payment-tabs">
                         <button class="payment-tab active" onclick="switchPaymentTab('chapa')" id="tab-chapa">
-                            <span class="payment-tab-icon">💳</span>
+                            <span class="payment-tab-icon">??</span>
                             Chapa Pay
                         </button>
                         <button class="payment-tab" onclick="switchPaymentTab('manual')" id="tab-manual">
-                            <span class="payment-tab-icon">📱</span>
+                            <span class="payment-tab-icon">??</span>
                             Manual Transfer
                         </button>
                     </div>
 
-                    <!-- ═══ CHAPA PAYMENT PANEL ═══ -->
+                    <!-- --- CHAPA PAYMENT PANEL --- -->
                     <div class="payment-panel active" id="panel-chapa">
                         <div class="chapa-payment-card">
                             <div class="chapa-badge">
@@ -248,7 +248,7 @@
                         </div>
                     </div>
 
-                    <!-- ═══ MANUAL PAYMENT PANEL ═══ -->
+                    <!-- --- MANUAL PAYMENT PANEL --- -->
                     <div class="payment-panel" id="panel-manual">
                         <!-- Telebirr Instruction -->
                         <div class="payment-method-card">
@@ -274,7 +274,7 @@
                             <p class="progress-txt" id="progress-status">Transmitting to Archive...</p>
                         </div>
 
-                        <button class="submit-btn" id="submit-btn" onclick="submitOrder()">Finalize Transmission →</button>
+                        <button class="submit-btn" id="submit-btn" onclick="submitOrder()">Finalize Transmission ?</button>
                         <div id="order-msg" style="margin-top:1.5rem; text-align:center; font-size:0.8rem;"></div>
                     </div>
                 </div>
@@ -293,7 +293,7 @@
                 </div>
                 
                 <p style="font-size:0.6rem; color:var(--fg-dim); margin-top:1.5rem; line-height:1.8; text-align:center;">
-                    Each item is part of the DOMIINIQUE Living Signature — a conscious addition to your environment.
+                    Each item is part of the Domiinique Living Signature — a conscious addition to your environment.
                 </p>
             </div>
         </div>
@@ -446,7 +446,7 @@
                         amount: String(amount),
                         currency: 'ETB',
                         email: 'customer@domiinique.com',
-                        first_name: 'DOMIINIQUE',
+                        first_name: 'Domiinique',
                         last_name: 'User',
                         availablePaymentMethods: ['telebirr', 'cbebirr', 'ebirr', 'mpesa'],
                         showPaymentMethodsNames: true,
@@ -535,7 +535,7 @@
                 tx_ref: txRef,
                 return_url: window.location.href.split('/').slice(0, -1).join('/') + '/order-success.html?orderId=' + currentOrderId + '&total=' + window._finalTotal,
                 customization: {
-                    title: 'DOMIINIQUE Store',
+                    title: 'Domiinique Store',
                     description: 'Order ' + currentOrderId
                 }
             };
@@ -604,7 +604,7 @@
                         tx_ref: txRef,
                         customizations: {
                             buttonText: 'Pay ' + window._finalTotal.toLocaleString() + ' ETB',
-                            successMessage: 'Payment successful! Your DOMIINIQUE order has been confirmed.',
+                            successMessage: 'Payment successful! Your Domiinique order has been confirmed.',
                             styles: `
                                 .chapa-pay-button {
                                     background: linear-gradient(135deg, #4CAF50, #388E3C) !important;
@@ -650,7 +650,7 @@
 
         async function handleChapaSuccess(data) {
             const statusEl = document.getElementById('chapa-status');
-            statusEl.innerHTML = '<div class="payment-status success">✓ Payment successful! Synchronizing your order...</div>';
+            statusEl.innerHTML = '<div class="payment-status success">? Payment successful! Synchronizing your order...</div>';
 
             try {
                 const name = document.getElementById('cust-name').value;
@@ -679,7 +679,7 @@
                 
                 // Store items for the receipt page
                 localStorage.removeItem(CART_KEY);
-                statusEl.innerHTML = '<div class="payment-status success">✓ Payment confirmed! Order synced. Redirecting to receipt...</div>';
+                statusEl.innerHTML = '<div class="payment-status success">? Payment confirmed! Order synced. Redirecting to receipt...</div>';
                 
                 // Ensure items are in session before final catch-all redirect
                 if (!sessionStorage.getItem('lastOrderItems') && window.domCart) {
@@ -689,7 +689,7 @@
                 setTimeout(() => window.location.href = `order-success.html?orderId=${currentOrderId}&total=${window._finalTotal}`, 2000);
             } catch(err) {
                 console.error('Order save error:', err);
-                statusEl.innerHTML = '<div class="payment-status success">✓ Payment received! Your order #' + currentOrderId + ' is being processed.</div>';
+                statusEl.innerHTML = '<div class="payment-status success">? Payment received! Your order #' + currentOrderId + ' is being processed.</div>';
                 localStorage.removeItem(CART_KEY);
             }
         }
@@ -729,7 +729,7 @@
         if (urlParams.get('payment') === 'success') {
             const statusEl = document.getElementById('chapa-status');
             if (statusEl) {
-                statusEl.innerHTML = '<div class="payment-status success">✓ Payment verified successfully!</div>';
+                statusEl.innerHTML = '<div class="payment-status success">? Payment verified successfully!</div>';
             }
         }
 
@@ -749,16 +749,16 @@
 
         window.sendWhatsAppOrder = function() {
             const num = '251992013589';
-            let msg = `💎 *NEW TRANSMISSION REQUEST* 💎\n`;
-            msg += `🆔 *Order Code: ${currentOrderId}*\n\n`;
+            let msg = `?? *NEW TRANSMISSION REQUEST* ??\n`;
+            msg += `?? *Order Code: ${currentOrderId}*\n\n`;
             
             const cartItems = window.domCart ? window.domCart.getItems() : [];
             cartItems.forEach(item => {
-                msg += `🔹 ${item.title} x${item.qty || 1}\n`;
+                msg += `?? ${item.title} x${item.qty || 1}\n`;
             });
-            msg += `\n💰 *Total: ${window._finalTotal || 0} ETB*`;
-            msg += `\n\n👤 *Tracking for:* ${document.getElementById('cust-name').value || 'New Member'}`;
-            msg += `\n\n📌 *IMPORTANT:* Please attach your payment screenshot to this message before sending.`;
+            msg += `\n?? *Total: ${window._finalTotal || 0} ETB*`;
+            msg += `\n\n?? *Tracking for:* ${document.getElementById('cust-name').value || 'New Member'}`;
+            msg += `\n\n?? *IMPORTANT:* Please attach your payment screenshot to this message before sending.`;
             
             window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
         };
@@ -842,7 +842,7 @@
                 console.error(err);
                 msgEl.innerHTML = '<span style="color:var(--accent);">Interference detected. Please retry or contact via WhatsApp.</span>';
                 btn.disabled = false;
-                btn.innerText = 'Finalize Transmission →';
+                btn.innerText = 'Finalize Transmission ?';
             }
         };
 
