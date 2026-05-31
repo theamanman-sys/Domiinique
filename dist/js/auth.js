@@ -312,8 +312,7 @@ import {
                     e.preventDefault();
                     if(confirm("Sign out of the Archive?")) {
                         await window.domAuth.logout();
-                        // Brief delay so Firebase can persist the sign-out state
-                        setTimeout(function() { window.location.reload(); }, 500);
+                        setTimeout(function() { window.location.href = 'login.html'; }, 500);
                     }
                 };
             } else {
