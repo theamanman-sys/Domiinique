@@ -223,7 +223,7 @@
             background: linear-gradient(135deg, #4a0010, #800020);
             border: 1px solid rgba(201,168,76,0.5);
             box-shadow: 0 4px 20px rgba(128,0,32,0.6);
-            display: none; /* Controlled by JS renderDashboard */
+            display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
@@ -671,11 +671,6 @@
     <script type="module">
         import { SubstanceData } from './js/substance.js';
 
-        function showRealityPortal() {
-            var btn = document.getElementById('reality-design-portal-btn');
-            if (btn) btn.style.display = 'flex';
-        }
-
         function renderDashboard(user) {
             var g = document.getElementById('guest-dashboard');
             var m = document.getElementById('member-dashboard');
@@ -683,7 +678,6 @@
             if (g) g.style.display = 'none';
             if (m) m.style.display = 'block';
             if (w) w.textContent = 'Welcome back, ' + (user.name || 'Sovereign Soul') + '.';
-            showRealityPortal();
             renderTimeline();
             renderLibrary('books');
         }
@@ -877,17 +871,6 @@
             <path d="M2 12h20"/>
         </svg>
     </a>
-    <script>
-        // Fallback: show Reality Design portal if session exists (runs during parse, before module)
-        (function() {
-            var s = null;
-            try { s = JSON.parse(sessionStorage.getItem('domiinique-session') || 'null'); } catch(e) {}
-            if (s) {
-                var btn = document.getElementById('reality-design-portal-btn');
-                if (btn) btn.style.display = 'flex';
-            }
-        })();
-    </script>
     <script>
         const rdBtnHover = document.getElementById('reality-design-portal-btn');
         if (rdBtnHover) {
