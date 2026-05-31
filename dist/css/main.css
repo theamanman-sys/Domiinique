@@ -592,6 +592,7 @@ html[data-theme="light"] .room-card__bg { mix-blend-mode:multiply; opacity:.55; 
 .transmission-node:hover { border-color:var(--accent); background:var(--glass); }
 .transmission-id { font-size:.58rem; color:var(--accent); opacity:.5; margin-bottom:1rem; display:block; }
 .books-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:2rem; margin-top:4rem; }
+@media(max-width:480px) { .books-grid { grid-template-columns:repeat(2,1fr); gap:1rem; } }
 .book-card { cursor:pointer; transition:transform .55s var(--ease); }
 .book-card:hover { transform:translateY(-11px); }
 .book-card__img-container { aspect-ratio:2/3; overflow:hidden; border-radius:3px; border:1px solid var(--border-soft); margin-bottom:1.3rem; background:var(--bg-card); }
