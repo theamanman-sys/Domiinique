@@ -1,118 +1,129 @@
 ﻿<!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
-<meta charset="UTF-8"><meta name="theme-color" content="#800020">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Global Foresight | Domiinique</title>
-<meta name="description" content="Inspiration is the architecture of attention. It does not arrive; it unfolds where environments, rhythms, and choices converge.">
-<link rel="stylesheet" href="css/main.css?v=9">
-<style>
-.insp-hero{position:relative;min-height:80dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:160px var(--gap) 5rem;overflow:hidden;}
-.insp-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 35% 40%,rgba(128,0,32,.13) 0%,transparent 55%),radial-gradient(ellipse at 75% 60%,rgba(201,168,76,.07) 0%,transparent 50%);pointer-events:none;}
-.insp-tagline{font-family:var(--f-serif);font-size:clamp(1.2rem,3vw,1.8rem);font-style:italic;max-width:700px;margin:2rem auto 0;line-height:1.7;color:var(--fg);opacity:.9;}
-.insp-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:900px;margin:5rem auto;padding:0 var(--gap);}
-.insp-pillar{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:12px;padding:2rem;position:relative;overflow:hidden;transition:transform .3s,border-color .3s;}
-.insp-pillar::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(128,0,32,.08) 0%,transparent 70%);}
-.insp-pillar:hover{transform:translateY(-4px);border-color:var(--accent);}
-.insp-pillar__icon{font-size:1.8rem;margin-bottom:1rem;}
-.insp-pillar__title{font-family:var(--f-serif);font-size:1.1rem;color:var(--fg);margin-bottom:.6rem;}
-.insp-pillar__text{font-size:.8rem;line-height:1.7;color:var(--fg-sub);}
-.essay-wrap{max-width:720px;margin:0 auto;padding:0 var(--gap) 8rem;}
-.essay-wrap p{font-size:1.03rem;line-height:1.95;color:var(--fg);margin-bottom:1.8rem;opacity:.88;}
-.essay-wrap p.pull{font-size:1.06rem;font-style:italic;color:var(--accent2);border-left:2px solid var(--accent);padding-left:1.5rem;margin:2.5rem 0;}
-@media(max-width:600px){.insp-pillars{grid-template-columns:1fr;}}
-</style>
+    <meta charset="UTF-8" />
+    <meta name="theme-color" content="#800020">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Global Foresight | Domiinique</title>
+    <link rel="stylesheet" href="css/main.css?v=9" /><link rel="stylesheet" href="css/room.css?v=1">
+    <style>/* Room styles loaded from css/room.css */</style>
 
     <link rel="icon" href="assets/domiinique_logo.png" type="image/png">
 </head>
-<body>
-<nav id="nav" role="navigation" aria-label="Main Navigation">
-<a class="nav__logo" href="index.html"><span class="nav__logo-text">Domiinique</span><span class="nav__logo-motto">Living Signature</span></a>
-<ul class="nav__links">
-<li><a href="blueprint.html">Blueprint</a></li>
-<li><a href="integrated.html">The Empire</a></li>
-<li><a href="time.html">The Temple</a></li>
-<li><a href="inspiration.html" class="active">Global Foresight</a></li>
-<li><a href="creative.html">AI Lab</a></li>
-<li><a href="canvas.html">Environmental Design</a></li>
-<li><a href="portraits.html">Human Study</a></li>
-<li><a href="journal.html">Intellectual Archive</a></li>
-<li><a href="you.html">Principal Identity</a></li>
-<li><a href="cocreation.html">Diplomacy & Partnership</a></li>
-<li><a href="shop.html">Catalog</a></li>
-<li><a href="checkout.html">Acquired</a></li>
-</ul>
-<div class="nav__utilities">
 
-<a href="books.html" class="nav-icon-btn" title="Books"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h14a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg></a>
-<a href="login.html" id="nav-auth-btn" class="nav-icon-btn" title="Archive Access" aria-label="Login">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+<body>
+
+                                                <nav id="nav" role="navigation" aria-label="Main Navigation">
+        <a class="nav__logo" href="index.html">
+            <span class="nav__logo-text">Domiinique</span>
+            <span class="nav__logo-motto">Living Signature</span>
+        </a>
+        <ul class="nav__links">
+            <li><a href="blueprint.html">Blueprint</a></li>
+            <li><a href="integrated.html">The Empire</a></li>
+            <li><a href="time.html">The Temple</a></li>
+            <li><a href="inspiration.html" class="active">Global Foresight</a></li>
+            <li><a href="creative.html">AI Lab</a></li>
+            <li><a href="canvas.html">Environmental Design</a></li>
+            <li><a href="portraits.html">Human Study</a></li>
+            <li><a href="journal.html">Intellectual Archive</a></li>
+            <li><a href="you.html">Principal Identity</a></li>
+            <li><a href="cocreation.html">Diplomacy & Partnership</a></li>
+            <li><a href="shop.html">Catalog</a></li>
+            <li><a href="checkout.html">Acquired</a></li>
+        </ul>
+                                <div class="nav__utilities">
+            
+            <a href="books.html" class="nav-icon-btn" title="Book Archive" aria-label="Books">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2h14a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
             </a>
             <a href="search.html" class="nav-icon-btn dom-search-btn" title="Search" aria-label="Search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
-            <button id="music-btn" class="music-btn" aria-label="Play music"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72 264c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V456c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg></button>
-<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">&#x1F319;</button>
-<div class="nav__hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0" aria-expanded="false"><span></span><span></span><span></span></div>
-</div>
-</nav>
+            <button id="music-btn" class="music-btn" aria-label="Play music" title="Toggle Music">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72 264c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V456c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg>
+            </button>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle Light/Dark">&#x1F319;</button>
+            <div class="nav__hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
 
-<!-- Hero -->
-<section class="insp-hero">
-<span class="t-eyebrow reveal">The Fifth Pillar</span>
-<h1 class="t-h1 reveal">Inspiration<br><span class="t-serif">Hub</span></h1>
-<p class="insp-tagline reveal">"Inspiration is the architecture of attention. It does not arrive; it unfolds where environments, rhythms, and choices converge into coherence. It is the pulse of a life aligned, the resonance of a system inhabited with presence, not force."</p>
-</section>
+    <div class="pillar-page-wrapper">
+        <img src="assets/global_foresight.jpg" alt="Global Foresight" class="pillar-bg" onerror="this.style.display='none'">
+        <div class="pillar-overlay"></div>
+        <div class="ambient-glow"></div>
 
-<!-- Pillars -->
-<div class="insp-pillars">
-<div class="insp-pillar reveal">
-<div class="insp-pillar__icon">&#x2616;</div>
-<div class="insp-pillar__title">Environment</div>
-<p class="insp-pillar__text">The spaces you inhabit are not neutral. Every arrangement, every detail, every curated element participates in shaping the flow of thought and the quality of presence.</p>
-</div>
-<div class="insp-pillar reveal">
-<div class="insp-pillar__icon">&#x25C6;</div>
-<div class="insp-pillar__title">Rhythm</div>
-<p class="insp-pillar__text">Rituals and patterns are the invisible architecture of a life. The smallest gestures — pausing in silence, observing a moment — ripple outward, shaping thought, mood, and action.</p>
-</div>
-<div class="insp-pillar reveal">
-<div class="insp-pillar__icon">&#x2665;</div>
-<div class="insp-pillar__title">Alignment</div>
-<p class="insp-pillar__text">Inspiration is not separate from life; it arises from life itself. When intention and habit converge, insight emerges, and insight transforms into action.</p>
-</div>
-</div>
+        <main class="pillar-content reveal visible">
+            <a href="blueprint.html" class="back-home-btn">&larr; Back to Blueprint</a>
 
-<!-- Essay -->
-<section>
-<div class="essay-wrap">
-<p class="reveal">Inspiration is not a gift to be stumbled upon. It is the architecture of attention, the invisible structure that pulses beneath every experience, every space, every rhythm of life. It is neither fleeting nor accidental. It is activated when the elements of life—environment, ritual, thought, and choice—align into a coherent resonance that carries energy, focus, and clarity.</p>
-<p class="pull reveal">The Inspiration Hub is not a collection of ideas. It is a living ecosystem, a space where the subtle currents of curiosity, insight, and creativity converge.</p>
-<p class="reveal">Here, inspiration is cultivated like a medium, flowing through the architecture of time, attention, and presence. Each element of your life—spaces you inhabit, rituals you practice, patterns you observe—becomes a conduit, a channel through which energy transforms into insight, and insight into action.</p>
-<p class="reveal">Within this hub, inspiration is understood as emergent, relational, and systemic. It is not separate from life; it arises from life itself, from the interplay of perception and environment, intention and habit. The smallest gestures—pausing in silence, arranging a space, observing a moment—become forces that ripple outward, shaping thought, mood, and action. Inspiration here is living, flowing, and orchestrated, inseparable from the life it inhabits.</p>
-<p class="pull reveal">The Hub is designed to cultivate resonance. Each insight, each spark of clarity, is a reflection of the patterns we embody and the spaces we curate.</p>
-<p class="reveal">Inspiration is measured not in quantity, but in depth, subtlety, and alignment. It is a signature left on the world, visible not as objects or words alone, but in the presence, coherence, and expression of a life consciously inhabited.</p>
-<p class="reveal">Here, you are invited to observe, respond, and participate. To see inspiration not as a destination but as a dimension of living, where curiosity, awareness, and attention are the tools through which life unfolds in a meaningful, designed, and resonant way.</p>
-<p class="reveal">The Inspiration Hub is a space without walls, a rhythm without beginning or end, a pulse that flows through time, thought, and action. It reminds us that the life we live is never accidental. Every environment we create, every ritual we observe, every moment we inhabit contributes to the emergence of inspiration—an energy, a signature, a resonance that shapes the life we experience and the legacy we leave behind.</p>
-<p class="pull reveal">Here, inspiration is less a thing to be found and more a system to be inhabited. It is a practice, a presence, and a pulse—the subtle architecture of life consciously observed, aligned, and lived.</p>
-</div>
-</section>
+            <div class="pillar-badge">04 &mdash; GLOBAL FORESIGHT</div>
+            <h1 class="pillar-title">The Sovereign Protocol: Global Foresight (Telemetry & Resource Mapping)</h1>
 
-<footer>
+            <div class="pillar-body">
+    <p>In the Sovereign Frequency Grid, Global Foresight is not "market research" or "trend watching." It is High-Resolution Telemetry. It is the systemic process of monitoring the flow of raw materials, energy, and information across global nodes to identify shifts in reality before they crystallize into mainstream events. As the Architect of your Grid, you use this node as your Global Sensing Apparatus.</p>
+
+    <h4>I. The Philosophy of Global Foresight</h4>
+    <p>Most systems operate in a state of reaction&mdash;they wait for a market crash, a supply chain collapse, or a geopolitical shift, and then they scramble to adapt. Your Global Foresight node functions in a state of Proactive Synchronization. By mapping the global flow, you treat the entire planet as a singular resonance field, identifying "entropy pockets" (disruption) and "resonance hubs" (growth opportunity) in real-time.</p>
+
+    <ul>
+      <li><strong>Information as Currency:</strong> The raw data of global logistics&mdash;shipping manifests, currency fluctuations, raw material depletion rates&mdash;is more valuable than capital. This data is the "Signal" that allows you to recalibrate your AI LAB before the rest of the market even knows the parameters have changed.</li>
+      <li><strong>The Vantage Point:</strong> Your import/export business is the physical hardware that gathers this intelligence. Every shipment is a data packet; every border crossing is a ping; every resource transaction is a metric of global stability.</li>
+      <li><strong>Systemic Prediction:</strong> You do not guess the future; you calculate it. By observing the vectors of global movement, you can project where resources will be required, allowing your AI LAB to pivot its production to meet demand before the demand becomes visible to competitors.</li>
+    </ul>
+
+    <h4>II. Integrated Operational Mechanics: The Sensing Apparatus</h4>
+    <p>This node converts the chaotic noise of global trade into actionable, high-order telemetry.</p>
+
+    <ol>
+      <li><strong>Supply Chain Auditing (The Entropy Monitor):</strong> You monitor the speed at which materials move across the globe. When a specific node (a port, a manufacturing hub, a trade corridor) slows down, you identify this as Systemic Entropy. You immediately adjust your logistical routing to bypass these "choke points," maintaining the velocity of your own grid.</li>
+      <li><strong>Resource Vectoring:</strong> You track the consumption patterns of raw materials. If a specific material is becoming scarce, your AI LAB is notified to either increase stockpiles or engineer an alternative. You are never "surprised" by shortages because you have mapped the resource depletion in advance.</li>
+      <li><strong>Geopolitical Resonance Mapping:</strong> You analyze geopolitical stability as if it were a resonance frequency. Stable regimes = stable supply chains. Unstable regimes = high entropy. You calibrate your physical assets&mdash;your Real Estate and Manufacturing&mdash;to align with the most stable resonance nodes on the planet.</li>
+    </ol>
+
+    <h4>III. Systemic Diagnostic: The Foresight Metrics</h4>
+    <p>The efficacy of your Global Foresight is not measured by the volume of trade, but by the Accuracy of your Systemic Adjustments:</p>
+
+    <ul>
+      <li><strong>Latency to Calibration:</strong> When the global supply chain shifts, how long does it take for your Grid to respond? A sovereign system should detect and pivot within a single Alpha Phase.</li>
+      <li><strong>Error Rate of Prediction:</strong> How often does your forward-mapping of resource availability miss the mark? Your goal is a deviation of zero from the projected reality.</li>
+      <li><strong>Systemic Buffer Integrity:</strong> Does your Grid remain operational even when global nodes collapse? Foresight is not just about profit; it is about ensuring the Prime Signal remains uninterrupted by external chaos.</li>
+    </ul>
+
+    <h4>IV. The Implementation Protocol (The Global Loop)</h4>
+
+    <ul>
+      <li><strong>Data Extraction:</strong> Each logistical movement is tagged with metadata. Where is the friction? What is the velocity? What is the demand volume? This is ingested into the Ancestral Archive.</li>
+      <li><strong>Simulation (The Digital Twin):</strong> Your Global Foresight node runs simulations: If this trade route closes, what happens to my AI LAB production? You pre-solve these crises in the simulation so that you can execute the "patch" instantly in the physical world.</li>
+      <li><strong>Strategic Re-Alignment:</strong> Based on the forecast, the Command Nexus issues directives to your other infrastructure nodes. Your cafe and restaurant adjust procurement; your manufacturing node shifts product priority; your real estate node prepares for new market requirements.</li>
+    </ul>
+
+    <h4>V. Systemic Conclusion</h4>
+    <p>Dominique, your Global Foresight node transforms your business from a passive participant in the global economy into an Active Architect of the Resource Landscape. You are no longer navigating the world; you are mapping it, predicting its shifts, and positioning your assets to capitalize on the flow of reality itself. By integrating this node with your AI LAB, you have effectively closed the loop: you map the future, and then you manufacture the reality to meet it.</p>
+
+    <div class="modal__quote">The Signal. The Silence. The Vessel. iii. The Sovereign Frequency Grid. The Resonance Laboratory.</div>
+</div>
+            <div class="pillar-nav-bottom">
+                <a href="blueprint.html" class="pillar-nav-btn">&larr; Blueprint Index</a>
+                <a href="creative.html" class="pillar-nav-btn">Next: AI Lab &rarr;</a>
+            </div>
+        </main>
+    </div>
+
+        <footer>
 <div class="footer__inner" style="flex-direction:column;gap:.6rem;text-align:center;max-width:800px;margin:0 auto;">
 <a class="nav__logo" href="index.html" style="justify-content:center;"><span class="nav__logo-text">Domiinique</span></a>
-<p class="footer__copy" style="letter-spacing:.3em;font-size:.52rem;">LIVING SIGNATURE</p>
-<div class="social-links" style="display:flex;gap:1.5rem;justify-content:center;margin:0.5rem 0;">
-    <a href="https://www.instagram.com/domiinique_3589?igsh=MXRsd3JuM3BjZTdjMQ%3D%3D&utm_source=qr" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">Instagram</a>
-    <a href="https://www.tiktok.com/@dominique_3589" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">TikTok</a>
-    <a href="https://wa.me/251992013589" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">WhatsApp</a>
-</div>
 <p class="footer__copy" style="font-style:italic;opacity:.6;line-height:1.7;margin-top:1rem;">Domiinique: A Sovereign System of Discipline, Restraint, and Architectural Intent. UNFOLDING ACROSS EIGHT STRATEGIC DEPARTMENTS, THIS IS THE CALIBRATION OF THE LIVING SIGNATURE. EACH SECTOR IS A VORTEX OF ORDER, RHYTHM, AND SYSTEMIC EXCELLENCE.. AN OPERATIONAL BLUEPRINT FOR THE RESPONSIBILITY OF THE HORIZON.THINK. OBSERVE. ALIGN.</p>
 <p class="footer__copy">&copy; 2026 Domiinique. All Rights Reserved.</p>
 </div>
 </footer>
-<audio id="bg-audio" loop preload="none" src="assets/bg_music.mp3"></audio>
-<script src="js/cart.js"></script>
-<script src="js/main.js" defer></script>
+    <div class="footer-legal-bar">&copy; 2026 Domiinique &nbsp;&middot;&nbsp; <a href="terms.html">Terms</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacy</a></div>
+
+    <script src="js/main.js" defer></script>
+
+                                            
+    <audio id="bg-audio" loop preload="none" src="assets/bg_music.mp3"></audio>
 <script type="module" src="js/auth.js"></script>
 </body>
-</html>
 
+</html>

@@ -1,88 +1,129 @@
 ﻿<!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
-<meta charset="UTF-8"><meta name="theme-color" content="#800020">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Environmental Design | Domiinique</title>
-<link rel="stylesheet" href="css/main.css?v=9">
-<style>
-.page-hero { position:relative; min-height:80dvh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:160px var(--gap) 5rem; overflow:hidden; }
-.page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 30%,rgba(128,0,32,.13) 0%,transparent 60%); pointer-events:none; }
-.page-quote { font-family:var(--f-serif); font-size:clamp(1.1rem, 2.5vw, 1.5rem); font-style:italic; max-width:760px; margin:2rem auto 0; line-height:1.7; color:var(--fg-sub); opacity:.9; }
-.essay-wrap { max-width:720px; margin:0 auto; padding:4rem var(--gap) 8rem; }
-.essay-wrap p { font-size:1.03rem; line-height:1.95; color:var(--fg); margin-bottom:1.8rem; opacity:.88; }
-.essay-wrap p.pull { font-size:1.06rem; font-style:italic; color:var(--accent2); border-left:2px solid var(--accent); padding-left:1.5rem; margin:2.5rem 0; }
-</style>
+    <meta charset="UTF-8" />
+    <meta name="theme-color" content="#800020">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Environmental Design | Domiinique</title>
+    <link rel="stylesheet" href="css/main.css?v=9" /><link rel="stylesheet" href="css/room.css?v=1">
+    <style>/* Room styles loaded from css/room.css */</style>
 
     <link rel="icon" href="assets/domiinique_logo.png" type="image/png">
 </head>
+
 <body>
-<nav id="nav" role="navigation" aria-label="Main Navigation">
-<a class="nav__logo" href="index.html"><span class="nav__logo-text">Domiinique</span><span class="nav__logo-motto">Living Signature</span></a>
-<ul class="nav__links">
-<li><a href="blueprint.html">Blueprint</a></li>
-<li><a href="integrated.html">The Empire</a></li>
-<li><a href="time.html">The Temple</a></li>
-<li><a href="inspiration.html">Global Foresight</a></li>
-<li><a href="creative.html">AI Lab</a></li>
-<li><a href="canvas.html" class="active">Environmental Design</a></li>
-<li><a href="portraits.html">Human Study</a></li>
-<li><a href="journal.html">Intellectual Archive</a></li>
-<li><a href="you.html">Principal Identity</a></li>
-<li><a href="cocreation.html">Diplomacy & Partnership</a></li>
-<li><a href="shop.html">Catalog</a></li>
-<li><a href="checkout.html">Acquired</a></li>
-</ul>
-<div class="nav__utilities">
 
-<a href="books.html" class="nav-icon-btn" title="Books" aria-label="Books"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h14a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg></a>
-<a href="login.html" id="nav-auth-btn" class="nav-icon-btn" title="Archive Access" aria-label="Login">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-</a>
-<a href="search.html" class="nav-icon-btn dom-search-btn" title="Search" aria-label="Search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
-            <button id="music-btn" class="music-btn" aria-label="Play music"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72 264c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V456c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg></button>
-<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">&#x1F319;</button>
-<div class="nav__hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0" aria-expanded="false"><span></span><span></span><span></span></div>
+                                                <nav id="nav" role="navigation" aria-label="Main Navigation">
+        <a class="nav__logo" href="index.html">
+            <span class="nav__logo-text">Domiinique</span>
+            <span class="nav__logo-motto">Living Signature</span>
+        </a>
+        <ul class="nav__links">
+            <li><a href="blueprint.html">Blueprint</a></li>
+            <li><a href="integrated.html">The Empire</a></li>
+            <li><a href="time.html">The Temple</a></li>
+            <li><a href="inspiration.html">Global Foresight</a></li>
+            <li><a href="creative.html">AI Lab</a></li>
+            <li><a href="canvas.html" class="active">Environmental Design</a></li>
+            <li><a href="portraits.html">Human Study</a></li>
+            <li><a href="journal.html">Intellectual Archive</a></li>
+            <li><a href="you.html">Principal Identity</a></li>
+            <li><a href="cocreation.html">Diplomacy & Partnership</a></li>
+            <li><a href="shop.html">Catalog</a></li>
+            <li><a href="checkout.html">Acquired</a></li>
+        </ul>
+                                <div class="nav__utilities">
+            
+            <a href="books.html" class="nav-icon-btn" title="Book Archive" aria-label="Books">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2h14a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+            </a>
+            <a href="search.html" class="nav-icon-btn dom-search-btn" title="Search" aria-label="Search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+            <button id="music-btn" class="music-btn" aria-label="Play music" title="Toggle Music">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72 264c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V456c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg>
+            </button>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle Light/Dark">&#x1F319;</button>
+            <div class="nav__hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pillar-page-wrapper">
+        <img src="assets/environmental_design.jpg" alt="Environmental Design" class="pillar-bg" onerror="this.style.display='none'">
+        <div class="pillar-overlay"></div>
+        <div class="ambient-glow"></div>
+
+        <main class="pillar-content reveal visible">
+            <a href="blueprint.html" class="back-home-btn">&larr; Back to Blueprint</a>
+
+            <div class="pillar-badge">06 &mdash; ENVIRONMENTAL DESIGN</div>
+            <h1 class="pillar-title">The Sovereign Protocol: Spatial Systems Engineering</h1>
+
+            <div class="pillar-body">
+    <p>In the Sovereign Frequency Grid, Spatial Systems Engineering is the technical discipline of configuring physical nodes to function as seamless extensions of the vessel's operational hardware. It is not about property management; it is about the Optimization of Environmental Flow. Every location under your stewardship is a technical node where physical variables&mdash;spatial geometry, ambient frequency, and sensory load&mdash;are calibrated to sustain maximum systemic performance.</p>
+
+    <h4>I. The Philosophy of Spatial Systems Engineering</h4>
+    <p>Physical space is an asset of utility, not a static holding. In this protocol, you treat the built environment as a "circuitry" for human and operational activity. The goal is to eliminate Environmental Drag&mdash;the cognitive and physical friction caused by sub-optimal layouts, sensory noise, and structural inefficiency.</p>
+
+    <ul>
+      <li><strong>Flow Optimization:</strong> You treat floor plans as data-routing maps. Movement within your spaces is scripted to minimize time-to-task, ensuring that energy is directed toward high-value output rather than navigating physical obstacles.</li>
+      <li><strong>Sensory Gating:</strong> You configure each node to control its internal "sensory atmosphere." By managing acoustics, lighting temperature, and air quality, you dictate the operational state of those within the node, effectively creating a "controlled-frequency zone."</li>
+      <li><strong>Entropy Elimination:</strong> A system that is not constantly refined will revert to chaos. You audit your physical spaces to remove redundant objects, unclear pathways, and unnecessary visual complexity. If an element does not serve the Prime Signal, it is pruned.</li>
+    </ul>
+
+    <h4>II. Integrated Operational Mechanics</h4>
+    <p>Spatial Systems Engineering is the application of systemic logic to the material plane:</p>
+
+    <ol>
+      <li><strong>Acoustic & Photic Tuning:</strong> Each node is assigned a specific sensory profile based on its function. Your high-focus nodes utilize low-glare, constant-spectrum lighting and acoustic dampening to ensure a "zero-noise" cognitive environment.</li>
+      <li><strong>Structural Modularity:</strong> You prioritize spaces that can be reconfigured rapidly. If the operational requirements of the vessel shift, the physical layout of the node must be capable of adaptation within a single Alpha Phase, preventing structural stagnation.</li>
+      <li><strong>Efficiency Through Minimalism:</strong> You implement high-density utility. Every square meter of your holdings must provide a return in terms of either operational efficiency, data acquisition, or field stabilization.</li>
+    </ol>
+
+    <h4>III. Systemic Diagnostic: The Engineering Metrics</h4>
+    <p>Your portfolio is measured by its Operational Throughput, not by market valuation:</p>
+
+    <ul>
+      <li><strong>Systemic Friction Coefficient:</strong> A measurement of how long it takes for a task to be completed within the space. Lower friction equals higher sovereignty.</li>
+      <li><strong>Sensory Stability Index:</strong> The degree to which the node maintains its calibrated "frequency" against external environmental interference (e.g., city noise, weather flux, external chaos).</li>
+      <li><strong>Node Adaptability:</strong> The measured time-to-reconfiguration when shifting between operational modes (e.g., transitioning a workspace from high-focus production to relational collaboration).</li>
+    </ul>
+
+    <h4>IV. The Implementation Protocol (The Spatial Loop)</h4>
+
+    <ul>
+      <li><strong>Baseline Calibration:</strong> Every space undergoes a "Hardening" process upon acquisition, where sensory filters and flow-scripts are installed.</li>
+      <li><strong>The Continuous Update:</strong> Your spaces are subject to "Systemic Patches." As you identify new inefficiencies in how the space is used, you update the configuration to ensure the space remains an optimized, high-fidelity tool.</li>
+      <li><strong>The Maintenance Audit:</strong> You conduct periodic "Sweeps" of all properties to ensure no entropic creep&mdash;clutter, decay, or disorganized usage&mdash;has compromised the spatial integrity of the node.</li>
+    </ul>
+
+    <h4>V. Systemic Conclusion</h4>
+    <p>Spatial Systems Engineering transforms your holdings into a High-Precision Infrastructure Grid. By focusing strictly on the technical configuration of your spaces, you ensure that your environment acts as a force multiplier for your system. It is a quiet, invisible, and highly efficient layer of your operations that silently stabilizes every other node in your Grid.</p>
+
+    <div class="modal__quote">The Signal. The Silence. The Vessel. iii. The Sovereign Frequency Grid. The Resonance Laboratory.</div>
 </div>
-</nav>
+            <div class="pillar-nav-bottom">
+                <a href="creative.html" class="pillar-nav-btn">&larr; Previous: AI Lab</a>
+                <a href="portraits.html" class="pillar-nav-btn">Next: Human Study &rarr;</a>
+            </div>
+        </main>
+    </div>
 
-<!-- Hero -->
-<section class="page-hero">
-<h1 class="t-h1 reveal" style="color:var(--accent2);">Canvas</h1>
-<p class="page-quote reveal">"Expression flows where awareness, environment, and rhythm converge. The visible becomes the measure of the invisible."</p>
-</section>
-
-<!-- Essay -->
-<section>
-<div class="essay-wrap">
-<p class="reveal">Canvas is the space where the invisible becomes visible, where the architecture of attention, rhythm, and intention is translated into form, experience, and expression. It is a living environment of creation, where ideas are not merely conceived but activated, where the pulse of thought, environment, and alignment manifests in tangible and perceptible ways.</p>
-<p class="reveal">Each composition, arrangement, or curated detail is a reflection of the underlying system, a visible trace of patterns that operate beneath perception.</p>
-<p class="pull reveal">Within Canvas, possibilities unfold and resonance is observed.</p>
-<p class="reveal">Patterns emerge, relationships between form, rhythm, and environment become evident, and subtle connections ripple outward. It is a domain where presence meets creation, where the act of observing and the act of doing converge, and where every gesture participates in the ongoing architecture of life. The space itself responds, adapts, and evolves, reflecting the living nature of the system it embodies.</p>
-<p class="reveal">Canvas is the arena of deliberate expression. It is where the abstract principles of alignment, rhythm, and signature become tangible, perceptible, and immersive. Every creation, every detail, every layer carries intention, and through this process, the system becomes legible without explanation.</p>
-<p class="pull reveal">Here, creation is both an experience and a medium, a conduit through which attention, design, and presence leave subtle imprints on the world.</p>
-<p class="reveal">It reminds us that life, when approached with awareness, can be inhabited as a work of art, a continuously unfolding canvas of consciousness made visible.</p>
-</div>
-</section>
-
-<footer>
+        <footer>
 <div class="footer__inner" style="flex-direction:column;gap:.6rem;text-align:center;max-width:800px;margin:0 auto;">
 <a class="nav__logo" href="index.html" style="justify-content:center;"><span class="nav__logo-text">Domiinique</span></a>
-<p class="footer__copy" style="letter-spacing:.3em;font-size:.52rem;">LIVING SIGNATURE</p>
-<div class="social-links" style="display:flex;gap:1.5rem;justify-content:center;margin:0.5rem 0;">
-    <a href="https://www.instagram.com/domiinique_3589?igsh=MXRsd3JuM3BjZTdjMQ%3D%3D&utm_source=qr" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">Instagram</a>
-    <a href="https://www.tiktok.com/@dominique_3589" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">TikTok</a>
-    <a href="https://wa.me/251992013589" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">WhatsApp</a>
-</div>
 <p class="footer__copy" style="font-style:italic;opacity:.6;line-height:1.7;margin-top:1rem;">Domiinique: A Sovereign System of Discipline, Restraint, and Architectural Intent. UNFOLDING ACROSS EIGHT STRATEGIC DEPARTMENTS, THIS IS THE CALIBRATION OF THE LIVING SIGNATURE. EACH SECTOR IS A VORTEX OF ORDER, RHYTHM, AND SYSTEMIC EXCELLENCE.. AN OPERATIONAL BLUEPRINT FOR THE RESPONSIBILITY OF THE HORIZON.THINK. OBSERVE. ALIGN.</p>
 <p class="footer__copy">&copy; 2026 Domiinique. All Rights Reserved.</p>
 </div>
 </footer>
-<audio id="bg-audio" loop preload="none" src="assets/bg_music.mp3"></audio>
-<script type="module" src="js/auth.js"></script>
-<script src="js/cart.js"></script>
-<script src="js/main.js" defer></script>
-<script type="module" src="js/search.js" defer></script>
-</body>
-</html>
+    <div class="footer-legal-bar">&copy; 2026 Domiinique &nbsp;&middot;&nbsp; <a href="terms.html">Terms</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacy</a></div>
 
+    <script src="js/main.js" defer></script>
+
+                                            
+    <audio id="bg-audio" loop preload="none" src="assets/bg_music.mp3"></audio>
+<script type="module" src="js/auth.js"></script>
+</body>
+
+</html>

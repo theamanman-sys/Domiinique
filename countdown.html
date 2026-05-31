@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#800020">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOMIINIQUE — Transmission Incoming</title>
+    <link rel="icon" type="image/png" href="assets/domiinique_logo.png">
+    <link rel="apple-touch-icon" href="assets/domiinique_logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Inter:wght@300;400&family=Luxurious+Script&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Bickham Script Pro';
+            src: url('assets/bickham-script-pro/Bickham Script Pro Regular.ttf') format('truetype');
+            font-weight: 400; font-display: swap;
+        }
+        @font-face {
+            font-family: 'Bickham Script Pro';
+            src: url('assets/bickham-script-pro/Bickham Script Pro Bold.ttf') format('truetype');
+            font-weight: 700; font-display: swap;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0f0d0b;
+            --accent: #800020;
+            --accent2: #c9a84c;
+            --fg: #f0ebe3;
+            --fg-sub: rgba(240,235,227,0.55);
+            --border: rgba(255,255,255,0.06);
+            --f-script: 'Bickham Script Pro', 'Luxurious Script', cursive;
+            --f-serif: 'Playfair Display', Georgia, serif;
+            --f-sans: 'Inter', system-ui, sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+            background: var(--bg);
+            color: var(--fg);
+            font-family: var(--f-sans);
+            font-weight: 300;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 30%, rgba(128,0,32,0.08) 0%, transparent 70%),
+                        radial-gradient(ellipse at 80% 80%, rgba(201,168,76,0.04) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .logo {
+            font-family: var(--f-script);
+            font-size: clamp(3rem, 10vw, 5.5rem);
+            color: var(--fg);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+            font-weight: 400;
+        }
+
+        .motto {
+            font-size: 0.5rem;
+            letter-spacing: 0.45em;
+            text-transform: uppercase;
+            color: var(--fg-sub);
+            margin-bottom: 3.5rem;
+            font-weight: 400;
+        }
+
+        .transmission-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 2rem;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .countdown__item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+        }
+
+        .countdown__number {
+            font-family: var(--f-serif);
+            font-size: clamp(3rem, 8vw, 5rem);
+            line-height: 1;
+            color: var(--fg);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+
+        .countdown__label {
+            font-size: 0.55rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--fg-sub);
+            margin-top: 0.5rem;
+        }
+
+        .countdown__separator {
+            font-family: var(--f-serif);
+            font-size: clamp(3rem, 8vw, 5rem);
+            color: var(--accent);
+            line-height: 1;
+            opacity: 0.6;
+            align-self: flex-start;
+            padding-top: 0;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--border);
+            margin: 0 auto 2rem;
+        }
+
+        .verification {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .verification__line {
+            font-size: 0.6rem;
+            letter-spacing: 0.25em;
+            color: var(--fg-sub);
+            text-transform: uppercase;
+        }
+
+        .verification__line--highlight {
+            color: var(--accent);
+        }
+
+        .message {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            line-height: 1.8;
+            color: var(--fg-sub);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .message strong {
+            color: var(--fg);
+            font-weight: 400;
+        }
+
+        .transmission-status {
+            font-size: 0.5rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: rgba(201,168,76,0.5);
+            margin-top: 3rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        .glow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 400px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(128,0,32,0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @media (max-width: 480px) {
+            .countdown { gap: 0.75rem; }
+            .countdown__item { min-width: 60px; }
+            .countdown__separator { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow"></div>
+    <div class="container">
+        <div class="logo">Domiinique</div>
+        <div class="motto">Living Signature</div>
+
+        <div class="transmission-label">— Transmission Incoming —</div>
+
+        <div class="countdown" id="countdown">
+            <div class="countdown__item">
+                <span class="countdown__number" id="days">00</span>
+                <span class="countdown__label">Days</span>
+            </div>
+            <span class="countdown__separator">:</span>
+            <div class="countdown__item">
+                <span class="countdown__number" id="hours">00</span>
+                <span class="countdown__label">Hours</span>
+            </div>
+            <span class="countdown__separator">:</span>
+            <div class="countdown__item">
+                <span class="countdown__number" id="minutes">00</span>
+                <span class="countdown__label">Minutes</span>
+            </div>
+            <span class="countdown__separator">:</span>
+            <div class="countdown__item">
+                <span class="countdown__number" id="seconds">00</span>
+                <span class="countdown__label">Seconds</span>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="verification">
+            <span class="verification__line">Verification: <span style="color:var(--fg)">Active.</span></span>
+            <span class="verification__line">Value: <span style="color:var(--fg)">Resonance.</span></span>
+            <span class="verification__line">Currency: <span style="color:var(--fg)">None.</span></span>
+        </div>
+
+        <p class="message">
+            The structure is fixed.<br>
+            <strong>DOMIINIQUE</strong> is not an identity.<br>
+            <strong>DOMIINIQUE</strong> is the frequency of this architecture.<br>
+            If your signature aligns, access is granted.
+        </p>
+
+        <div class="transmission-status">&#x25CF; Signal Broadcasting</div>
+    </div>
+
+    <script>
+        (function() {
+            const target = new Date();
+            target.setDate(target.getDate() + 10);
+            target.setHours(0, 0, 0, 0);
+
+            function pad(n) {
+                return String(n).padStart(2, '0');
+            }
+
+            function update() {
+                const now = new Date();
+                const diff = target - now;
+
+                if (diff <= 0) {
+                    document.getElementById('days').textContent = '00';
+                    document.getElementById('hours').textContent = '00';
+                    document.getElementById('minutes').textContent = '00';
+                    document.getElementById('seconds').textContent = '00';
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = pad(days);
+                document.getElementById('hours').textContent = pad(hours);
+                document.getElementById('minutes').textContent = pad(minutes);
+                document.getElementById('seconds').textContent = pad(seconds);
+            }
+
+            update();
+            setInterval(update, 1000);
+        })();
+    </script>
+</body>
+</html>

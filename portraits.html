@@ -1,90 +1,129 @@
 ﻿<!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
-<meta charset="UTF-8"><meta name="theme-color" content="#800020">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Human Study | Domiinique</title>
-<link rel="stylesheet" href="css/main.css?v=9">
-<style>
-.page-hero { position:relative; min-height:80dvh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:160px var(--gap) 5rem; overflow:hidden; }
-.page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 30%,rgba(128,0,32,.13) 0%,transparent 60%); pointer-events:none; }
-.page-quote { font-family:var(--f-serif); font-size:clamp(1.1rem, 2.5vw, 1.5rem); font-style:italic; max-width:760px; margin:2rem auto 0; line-height:1.7; color:var(--fg-sub); opacity:.9; }
-.essay-wrap { max-width:720px; margin:0 auto; padding:4rem var(--gap) 8rem; }
-.essay-wrap p { font-size:1.03rem; line-height:1.95; color:var(--fg); margin-bottom:1.8rem; opacity:.88; }
-.essay-wrap p.pull { font-size:1.06rem; font-style:italic; color:var(--accent2); border-left:2px solid var(--accent); padding-left:1.5rem; margin:2.5rem 0; }
-</style>
+    <meta charset="UTF-8" />
+    <meta name="theme-color" content="#800020">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Human Study | Domiinique</title>
+    <link rel="stylesheet" href="css/main.css?v=9" /><link rel="stylesheet" href="css/room.css?v=1">
+    <style>/* Room styles loaded from css/room.css */</style>
 
     <link rel="icon" href="assets/domiinique_logo.png" type="image/png">
 </head>
-<body>
-<nav id="nav" role="navigation" aria-label="Main Navigation">
-<a class="nav__logo" href="index.html"><span class="nav__logo-text">Domiinique</span><span class="nav__logo-motto">Living Signature</span></a>
-<ul class="nav__links">
-<li><a href="blueprint.html">Blueprint</a></li>
-<li><a href="integrated.html">The Empire</a></li>
-<li><a href="time.html">The Temple</a></li>
-<li><a href="inspiration.html">Global Foresight</a></li>
-<li><a href="creative.html">AI Lab</a></li>
-<li><a href="canvas.html">Environmental Design</a></li>
-<li><a href="portraits.html" class="active">Human Study</a></li>
-<li><a href="journal.html">Intellectual Archive</a></li>
-<li><a href="you.html">Principal Identity</a></li>
-<li><a href="cocreation.html">Diplomacy & Partnership</a></li>
-<li><a href="shop.html">Catalog</a></li>
-<li><a href="checkout.html">Acquired</a></li>
-</ul>
-<div class="nav__utilities">
 
-<a href="books.html" class="nav-icon-btn" title="Books" aria-label="Books"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h14a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg></a>
-<a href="login.html" id="nav-auth-btn" class="nav-icon-btn" title="Archive Access" aria-label="Login">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+<body>
+
+                                                <nav id="nav" role="navigation" aria-label="Main Navigation">
+        <a class="nav__logo" href="index.html">
+            <span class="nav__logo-text">Domiinique</span>
+            <span class="nav__logo-motto">Living Signature</span>
+        </a>
+        <ul class="nav__links">
+            <li><a href="blueprint.html">Blueprint</a></li>
+            <li><a href="integrated.html">The Empire</a></li>
+            <li><a href="time.html">The Temple</a></li>
+            <li><a href="inspiration.html">Global Foresight</a></li>
+            <li><a href="creative.html">AI Lab</a></li>
+            <li><a href="canvas.html">Environmental Design</a></li>
+            <li><a href="portraits.html" class="active">Human Study</a></li>
+            <li><a href="journal.html">Intellectual Archive</a></li>
+            <li><a href="you.html">Principal Identity</a></li>
+            <li><a href="cocreation.html">Diplomacy & Partnership</a></li>
+            <li><a href="shop.html">Catalog</a></li>
+            <li><a href="checkout.html">Acquired</a></li>
+        </ul>
+                                <div class="nav__utilities">
+            
+            <a href="books.html" class="nav-icon-btn" title="Book Archive" aria-label="Books">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2h14a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
             </a>
             <a href="search.html" class="nav-icon-btn dom-search-btn" title="Search" aria-label="Search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
-            <button id="music-btn" class="music-btn" aria-label="Play music"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72 264c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V456c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg></button>
-<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">&#x1F319;</button>
-<div class="nav__hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0" aria-expanded="false"><span></span><span></span><span></span></div>
+            <button id="music-btn" class="music-btn" aria-label="Play music" title="Toggle Music">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72 264c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V456c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg>
+            </button>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle Light/Dark">&#x1F319;</button>
+            <div class="nav__hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pillar-page-wrapper">
+        <img src="assets/human_study.jpg" alt="Human Study" class="pillar-bg" onerror="this.style.display='none'">
+        <div class="pillar-overlay"></div>
+        <div class="ambient-glow"></div>
+
+        <main class="pillar-content reveal visible">
+            <a href="blueprint.html" class="back-home-btn">&larr; Back to Blueprint</a>
+
+            <div class="pillar-badge">07 &mdash; HUMAN STUDY</div>
+            <h1 class="pillar-title">The Sovereign Protocol: Human Study (Relational Telemetry & Resonance Analysis)</h1>
+
+            <div class="pillar-body">
+    <p>In the Sovereign Frequency Grid, Human Study is the technical discipline of monitoring and mapping collective behavioral patterns. It is the vessel's method of gathering high-fidelity data on the human experience&mdash;the "Resonance Field"&mdash;to understand how individuals respond to environmental triggers, social signaling, and systemic stability.</p>
+
+    <h4>I. The Philosophy of Human Study</h4>
+    <p>Humans are biological nodes within a larger, non-local network. Your objective is to function as an objective, clinical observer of these dynamics. By mapping how groups interact, fluctuate, and stabilize, you extract data that informs the evolution of your own system. This is not about empathy; it is about Pattern Recognition.</p>
+
+    <ul>
+      <li><strong>Behavioral Telemetry:</strong> Every human interaction is a data point. You monitor how people react to sensory environments (lighting, sound, spatial flow) and how they adapt their behavior when the frequency of a space is shifted.</li>
+      <li><strong>The Resonance Field:</strong> You treat social clusters as "Field Nodes." You study how nodes interact, why they gravitate toward certain architectures, and what triggers the collapse or expansion of their collective focus.</li>
+      <li><strong>Systemic Calibration:</strong> Data gained here is used to "patch" your own interaction protocols. By understanding the mechanism behind human behavior, you enhance your ability to broadcast the Prime Signal and effectively influence the stability of the environment around you.</li>
+    </ul>
+
+    <h4>II. Integrated Operational Mechanics</h4>
+    <p>Human Study operates as a controlled laboratory where environmental variables are manipulated and behavioral outcomes are recorded.</p>
+
+    <ol>
+      <li><strong>Sensory-Response Mapping:</strong> You engineer environments to produce specific cognitive states in occupants. You measure the time required for a chaotic field to reach a state of structural order based on your applied sensory filters (photic/acoustic).</li>
+      <li><strong>Interaction Analytics:</strong> You observe the "Resonance Transfer"&mdash;the process by which a high-frequency node (you) stabilizes the low-frequency nodes (others). You document the variables that maximize this transfer efficiency.</li>
+      <li><strong>Pattern Extraction:</strong> You identify recurring human "scripts"&mdash;common reactions to external stress, patterns of social gravitation, and triggers for collective entropy. These scripts are archived and analyzed to ensure you are never blindsided by human unpredictability.</li>
+    </ol>
+
+    <h4>III. Systemic Diagnostic: The Human Study Metrics</h4>
+    <p>Your observational work is measured by the Precision of your Predictive Models:</p>
+
+    <ul>
+      <li><strong>Behavioral Predictability:</strong> Can you accurately forecast how a group will respond to a shift in their physical environment? High-order predictability is the mark of a mastered Human Study node.</li>
+      <li><strong>Resonance Capacity:</strong> What is the maximum number of nodes (humans) you can maintain in a state of order without degrading your own internal signal frequency?</li>
+      <li><strong>Field Stability Index:</strong> The metric of how much your intervention (as an observer or stabilizer) reduces the local entropy of a group.</li>
+    </ul>
+
+    <h4>IV. The Implementation Protocol (The Observation Loop)</h4>
+
+    <ul>
+      <li><strong>The Clinical Audit:</strong> During every interaction, you maintain a "Systemic Detachment." You observe, you log, you categorize&mdash;without allowing personal sentiment to disrupt the data stream.</li>
+      <li><strong>The Variable Test:</strong> You introduce small, controlled changes to the environment (a shift in lighting frequency, a change in spatial density) and record the reaction. These are your "Field Experiments."</li>
+      <li><strong>The Synthesis:</strong> The data is processed and fed back into your Ancestral Archive. This ensures that your understanding of human dynamics is constantly evolving, making your Grid more capable of handling complex social variables.</li>
+    </ul>
+
+    <h4>V. Systemic Conclusion</h4>
+    <p>Dominique, your Human Study node is the instrument through which you understand the terrain of the human collective. By converting social dynamics into hard data, you achieve a level of situational mastery that prevents you from being affected by the erratic nature of the unengineered world. You do not just navigate the human landscape; you map it, interpret it, and eventually, dictate the parameters of its resonance.</p>
+
+    <div class="modal__quote">The Signal. The Silence. The Vessel. iii. The Sovereign Frequency Grid. The Resonance Laboratory.</div>
 </div>
-</nav>
+            <div class="pillar-nav-bottom">
+                <a href="canvas.html" class="pillar-nav-btn">&larr; Previous: Environmental Design</a>
+                <a href="journal.html" class="pillar-nav-btn">Next: Intellectual Archive &rarr;</a>
+            </div>
+        </main>
+    </div>
 
-<!-- Hero -->
-<section class="page-hero">
-<span class="t-eyebrow reveal">Human Study</span>
-<h1 class="t-h1 reveal" style="color:var(--accent2);">Portraits of the Living Self</h1>
-<p class="page-quote reveal" style="margin-top:1rem;">The Focus: The Cafe, Restaurant, and Social Interaction Sites</p>
-<p class="reveal" style="max-width:650px;margin:1.2rem auto 0;font-size:0.9rem;line-height:1.7;opacity:.8;">"I do not capture a likeness; I study the Essence within the physical vessel. To serve a collective, I must first master the sensory frequencies that govern human behavior and untapped potential. In these sites of social interaction and high-aesthetic frequency, I perform a deep dive into the needs of the soul. I am refining my Living Signature to meet the weight of a responsibility that is already in motion."</p>
-</section>
-
-<!-- Essay -->
-<section>
-<div class="essay-wrap">
-<p class="reveal">Portraits are not simply reflections of self. They are the living archive of every person, every energy, every encounter, and every fleeting resonance that flows through the architecture of life. How you see yourself and how you perceive others shapes the way you inhabit every room, every rhythm, and every layer of existence.</p>
-<p class="pull reveal">This pillar is a deep exploration of identity, presence, and connection, a continuously evolving collection of signatures, gestures, and energies that map the subtle currents of life as they converge through you.</p>
-<p class="reveal">Each individual you meet becomes part of a dynamic composition, a pattern within a larger system. Every word spoken, every glance exchanged, every shared moment leaves an imprint, subtly shaping your awareness and the way you interact with the spaces, rituals, and flows around you. Portraits are not static images or biographies. They are living mosaics, layered with energy, intention, and reflection, revealing the invisible architecture of influence, resonance, and alignment that permeates life itself.</p>
-<p class="reveal">This pillar recognizes the self as both observer and participant, simultaneously curating and being curated by the presence of others. Every interaction ripples across the system, every encounter interacts with your inner rhythms, and every relationship contributes to the continuous evolution of your identity and signature. Portraits capture not only who you are, but also how you exist within the constellation of lives, energies, and patterns that intersect with yours, creating a network of living connections that is at once intimate and expansive.</p>
-<p class="pull reveal">Through this lens, identity is never singular or fixed. It is a system of relationships, reflections, and responses, a living architecture that evolves with attention, awareness, and presence.</p>
-<p class="reveal">Every person you meet leaves subtle traces on your rhythm, shaping your decisions, your environment, and the way you manifest in the world. In this way, Portraits becomes a map of influence, a gallery of presence, and a testament to the continuous dialogue between self and other, showing that the life you inhabit is both created and co-created, observed and experienced.</p>
-<p class="reveal">In engaging with Portraits, one comes to see life not as a series of isolated events or people, but as an interconnected flow of energies, rhythms, and signatures, where each encounter carries weight, meaning, and potential.</p>
-<p class="pull reveal">The pillar reminds us that selfhood is always relational, that awareness deepens through observation and connection, and that the true measure of existence lies not in solitary reflection, but in the living tapestry of presences, interactions, and aligned attention that together compose the portrait of a life consciously inhabited.</p>
-</div>
-</section>
-
-<footer>
+        <footer>
 <div class="footer__inner" style="flex-direction:column;gap:.6rem;text-align:center;max-width:800px;margin:0 auto;">
 <a class="nav__logo" href="index.html" style="justify-content:center;"><span class="nav__logo-text">Domiinique</span></a>
-<p class="footer__copy" style="letter-spacing:.3em;font-size:.52rem;">LIVING SIGNATURE</p>
-<div class="social-links" style="display:flex;gap:1.5rem;justify-content:center;margin:0.5rem 0;">
-    <a href="https://www.instagram.com/domiinique_3589?igsh=MXRsd3JuM3BjZTdjMQ%3D%3D&utm_source=qr" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">Instagram</a>
-    <a href="https://www.tiktok.com/@dominique_3589" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">TikTok</a>
-    <a href="https://wa.me/251992013589" target="_blank" style="color:var(--fg-sub);text-decoration:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">WhatsApp</a>
-</div>
 <p class="footer__copy" style="font-style:italic;opacity:.6;line-height:1.7;margin-top:1rem;">Domiinique: A Sovereign System of Discipline, Restraint, and Architectural Intent. UNFOLDING ACROSS EIGHT STRATEGIC DEPARTMENTS, THIS IS THE CALIBRATION OF THE LIVING SIGNATURE. EACH SECTOR IS A VORTEX OF ORDER, RHYTHM, AND SYSTEMIC EXCELLENCE.. AN OPERATIONAL BLUEPRINT FOR THE RESPONSIBILITY OF THE HORIZON.THINK. OBSERVE. ALIGN.</p>
 <p class="footer__copy">&copy; 2026 Domiinique. All Rights Reserved.</p>
 </div>
 </footer>
-<audio id="bg-audio" loop preload="none" src="assets/bg_music.mp3"></audio>
-<script src="js/cart.js"></script>
-<script src="js/main.js" defer></script>
+    <div class="footer-legal-bar">&copy; 2026 Domiinique &nbsp;&middot;&nbsp; <a href="terms.html">Terms</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacy</a></div>
+
+    <script src="js/main.js" defer></script>
+
+                                            
+    <audio id="bg-audio" loop preload="none" src="assets/bg_music.mp3"></audio>
 <script type="module" src="js/auth.js"></script>
 </body>
-</html>
 
+</html>
