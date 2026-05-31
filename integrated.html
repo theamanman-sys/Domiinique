@@ -643,7 +643,7 @@
                         <!-- --- YOUTUBE MUSIC SECTION --- -->
                         <div id="music-yt-section" style="display:none;" data-loaded="false"></div>
 
-                        <div class="library-grid" id="library-display"></div>
+                        <div class="shop-grid" id="library-display"></div>
                     </div>
 
                     <div class="substance-section reveal" style="text-align:center; padding-top:4rem; border-top:1px solid var(--border-soft);">
@@ -793,17 +793,27 @@
                 snapshot.forEach(doc => books.push({ id: doc.id, ...doc.data() }));
                 if (books.length > 0) {
                     container.innerHTML = books.map(book => `
-                        <div class="library-item reveal" onclick="window.openBookModal(this)"
-                             data-id="${book.id}" data-title="${book.title}" data-author="${book.author}"
-                             data-price="${book.price || 1500}" data-img="${(book.image || 'assets/Blueprint/about_me.jpg').replace('http:', 'https:')}"
-                             data-desc="${book.description || ''}" style="cursor:pointer;">
-                            <div class="li-icon">??</div>
-                            <div class="li-meta">
-                                <div class="li-title">${book.title}</div>
-                                <div class="li-subtitle">${book.author}</div>
-                                <div class="li-tag">${book.category || 'Archive'}</div>
+                        <article class="shop-card reveal"
+                                 data-id="${book.id}" data-title="${book.title}" data-author="${book.author}"
+                                 data-price="${book.price || 1500}" data-img="${(book.image || 'assets/books/book-placeholder.png').replace('http:', 'https:')}"
+                                 data-desc="${book.description || ''}" data-category="${book.category || 'Archive'}"
+                                 onclick="if(window.openBookModal)window.openBookModal(this)" style="cursor:pointer;">
+                            <div class="shop-card__img-wrap">
+                                <img src="${(book.image || 'assets/books/book-placeholder.png').replace('http:', 'https:')}"
+                                     alt="${book.title}" loading="lazy"
+                                     onerror="this.src='assets/books/book-placeholder.png'">
+                                <div class="shop-card__overlay">
+                                    <button class="shop-card__quick">Details</button>
+                                </div>
                             </div>
-                        </div>
+                            <div class="shop-card__body">
+                                <h4 class="shop-card__title">${book.title}</h4>
+                                <p class="shop-card__author">${book.author}</p>
+                                <div class="shop-card__footer">
+                                    <span class="shop-card__price">${book.category || 'Archive'}</span>
+                                </div>
+                            </div>
+                        </article>
                     `).join('');
                     if (window.initReveal) window.initReveal();
                     return;
@@ -811,14 +821,22 @@
             } catch (err) { console.warn("Firestore fetch failed", err); }
             const items = SubstanceData.holographicLibrary[filter];
             container.innerHTML = items.map(item => `
-                <div class="library-item reveal">
-                    <div class="li-icon">??</div>
-                    <div class="li-meta">
-                        <div class="li-title">${item.title}</div>
-                        <div class="li-subtitle">${item.author || item.director}</div>
-                        <div class="li-tag">${item.category || item.theme}</div>
+                <article class="shop-card reveal" style="cursor:pointer;">
+                    <div class="shop-card__img-wrap">
+                        <img src="assets/books/book-placeholder.png" alt="${item.title}" loading="lazy"
+                             onerror="this.src='assets/books/book-placeholder.png'">
+                        <div class="shop-card__overlay">
+                            <button class="shop-card__quick">Details</button>
+                        </div>
                     </div>
-                </div>
+                    <div class="shop-card__body">
+                        <h4 class="shop-card__title">${item.title}</h4>
+                        <p class="shop-card__author">${item.author || item.director}</p>
+                        <div class="shop-card__footer">
+                            <span class="shop-card__price">${item.category || item.theme}</span>
+                        </div>
+                    </div>
+                </article>
             `).join('');
         }
 
