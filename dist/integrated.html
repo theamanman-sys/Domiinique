@@ -248,8 +248,21 @@
     </style>
 
     <script>
-        // No redirect — the page has a built-in guest dashboard with login.
-        // Member dashboard and Reality Design portal are gated by JS below.
+        function checkAuth() {
+            var u = null;
+            try { u = JSON.parse(sessionStorage.getItem('domiinique-session') || 'null'); } catch(e) {}
+            if (!u) {
+                var ready = function() {
+                    if (!window.domAuth || !window.domAuth.getUser()) {
+                        window.location.replace('login.html');
+                    }
+                };
+                if (window.domAuth && window.domAuth.isReady()) { ready(); }
+                else { document.addEventListener('domAuthReady', ready, {once:true}); }
+            }
+        }
+        if (document.readyState !== 'loading') { checkAuth(); }
+        else { document.addEventListener('DOMContentLoaded', checkAuth); }
     </script>
 </head>
 <body>
