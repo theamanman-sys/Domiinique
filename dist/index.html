@@ -757,7 +757,7 @@
             body: [
                 `<div style="text-align:center;font-size:6rem;color:var(--accent);opacity:0.5;padding:2rem 0 1rem;">?</div>`,
                 `<div style="text-align:center;font-size:0.9rem;color:var(--fg-sub);line-height:1.8;margin-bottom:2rem;">The final stage awaits your signature.<br>Send your transmission to unlock the destination.</div>`,
-                `<div style="text-align:center;"><a href="login.html" class="btn-primary" style="display:inline-block;">Send Your Transmission</a></div>`
+                `<div style="text-align:center;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;"><a href="javascript:void(0)" class="btn-primary" style="display:inline-block;" onclick="window.closeStageModal();setTimeout(function(){var el=document.getElementById('contact');if(el)el.scrollIntoView({behavior:'smooth'})},300)">Send Your Transmission</a><a href="login.html" class="btn-secondary" style="display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border:1.5px solid var(--border);border-radius:6px;color:var(--fg);text-decoration:none;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;transition:all .3s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--fg)'">Login</a></div>`
             ]
         }
     };
