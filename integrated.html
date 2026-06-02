@@ -1,9 +1,9 @@
-ï»¿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>The Empire â€” Domiinique Living Signature</title>
+    <title>The Empire — Domiinique Living Signature</title>
     <link rel="apple-touch-icon" href="assets/domiinique_logo.png">
     <link rel="stylesheet" href="css/main.css?v=9">
     <link rel="stylesheet" href="css/home.css?v=1">
@@ -24,7 +24,7 @@
 
     <style>
         /* ------------------------------------------
-           INTEGRATED HERO â€” mirrors home page hero layout
+           INTEGRATED HERO — mirrors home page hero layout
            but uses the 3D model as background
         ------------------------------------------ */
         body { background: #05020c; margin: 0; }
@@ -77,8 +77,8 @@
             display: none;
         }
 
-        /* Content â€” centred, highest z-index in hero */
-        /* Content â€” centred, fully opaque as requested */
+        /* Content — centred, highest z-index in hero */
+        /* Content — centred, fully opaque as requested */
         .integrated-hero__content {
             position: relative;
             z-index: 20;
@@ -126,7 +126,7 @@
             transition: color 0.3s ease;
         }
 
-        /* CTA row â€” identical to home page */
+        /* CTA row — identical to home page */
         .integrated-hero__actions {
             display: flex;
             align-items: center;
@@ -136,7 +136,7 @@
             pointer-events: all;
         }
 
-        /* Scroll hint â€” identical to home page .hero__scroll-hint */
+        /* Scroll hint — identical to home page .hero__scroll-hint */
         #model-hint {
             position: absolute;
             bottom: 2.5rem;
@@ -191,7 +191,7 @@
         .spinner-label { font-size: .6rem; letter-spacing: .2em; color: rgba(200,160,80,.7); }
 
         /* Content sections below sit above the hero */
-        /* Rest of page sections â€” highly transparent glass effect to see 3D model */
+        /* Rest of page sections — highly transparent glass effect to see 3D model */
         .section, .members-section, .marquee-strip, footer, .footer-legal-bar,
         section[style*="border-top"], .category-selector, .continue-journey-section {
             background: var(--glass-bg) !important;
@@ -290,6 +290,9 @@
             <li><a href="checkout.html">Acquired</a></li>
         </ul>
         <div class="nav__utilities">
+            <a href="shop.html" class="nav-icon-btn" title="Catalog" aria-label="Catalog">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </a>
             <a href="books.html" class="nav-icon-btn" title="Book Archive" aria-label="Books">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2h14a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
             </a>
@@ -307,7 +310,7 @@
         </div>
     </nav>
 
-    <!-- --- 3D HERO â€” same full-page layout as home hero --- -->
+    <!-- --- 3D HERO — same full-page layout as home hero --- -->
     <header class="integrated-hero" id="integrated-hero">
         <!-- 3D canvas acts as background (replaces hero__bg-image) -->
         <canvas id="hero-canvas"></canvas>
@@ -319,18 +322,18 @@
             <div class="spinner-label">Initializing 3D System...</div>
         </div>
 
-        <!-- Centred content â€” mirrors home page hero__content -->
+        <!-- Centred content — mirrors home page hero__content -->
         <div class="integrated-hero__content">
-            <div class="integrated-hero__eyebrow">02 â€” The Empire</div>
+            <div class="integrated-hero__eyebrow">02 — The Empire</div>
             <h1 class="integrated-hero__title">The Empire</h1>
-            <p class="integrated-hero__subtitle">Territory of the Principal â€” Infinite Expansion â€” Active Governance</p>
+            <p class="integrated-hero__subtitle">Territory of the Principal — Infinite Expansion — Active Governance</p>
             <div class="integrated-hero__actions">
                 <a href="#members" class="btn-primary">Become a Member</a>
                 <a href="packages.html" class="btn-secondary" style="display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border:1.5px solid var(--border);border-radius:6px;color:var(--fg);text-decoration:none;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;transition:all .3s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--fg)'">View Packages &rarr;</a>
             </div>
         </div>
 
-        <!-- Scroll hint â€” mirrors home page .hero__scroll-hint -->
+        <!-- Scroll hint — mirrors home page .hero__scroll-hint -->
         <div id="model-hint">
             <span>Scroll</span>
             <div id="model-hint-line"></div>
@@ -397,20 +400,20 @@
         controls.enableZoom = window.innerWidth > 768; 
         controls.enablePan = false;
 
-        // Ambient soft warm light â€” brightened
+        // Ambient soft warm light — brightened
         scene.add(new THREE.AmbientLight(0xfff0e0, 1.8));
 
-        // Key light â€” gold from top-right
+        // Key light — gold from top-right
         const keyLight = new THREE.DirectionalLight(0xc9a84c, 5.5);
         keyLight.position.set(5, 8, 5);
         scene.add(keyLight);
 
-        // Fill light â€” cool from left
+        // Fill light — cool from left
         const fillLight = new THREE.DirectionalLight(0x8060a0, 1.5);
         fillLight.position.set(-5, 2, 3);
         scene.add(fillLight);
 
-        // Rim light â€” burgundy from behind
+        // Rim light — burgundy from behind
         const rimLight = new THREE.DirectionalLight(0xff2244, 2.0);
         rimLight.position.set(0, -3, -6);
         scene.add(rimLight);
@@ -568,7 +571,7 @@
                     <div class="benefit-card">
                         <div class="benefit-icon">??</div>
                         <h4>Full Integration PDF</h4>
-                        <p>The complete Domiinique Integration framework â€” all 10 pillars mapped across daily, weekly, and seasonal rhythms.</p>
+                        <p>The complete Domiinique Integration framework — all 10 pillars mapped across daily, weekly, and seasonal rhythms.</p>
                     </div>
                     <div class="benefit-card">
                         <div class="benefit-icon">??</div>
@@ -578,7 +581,7 @@
                     <div class="benefit-card">
                         <div class="benefit-icon">??</div>
                         <h4>Exclusive Content</h4>
-                        <p>Monthly transmissions, private journal entries, guided rituals, and deep-dive sessions with Domiinique â€” only for members.</p>
+                        <p>Monthly transmissions, private journal entries, guided rituals, and deep-dive sessions with Domiinique — only for members.</p>
                     </div>
                 </div>
 
@@ -596,7 +599,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="password" id="mod-login-pw" placeholder="â€”â€”â€”â€”â€”â€”â€”â€”" required>
+                                <input type="password" id="mod-login-pw" placeholder="————————" required>
                             </div>
                             <button type="submit" class="btn-primary">Enter the Inner Circle</button>
                             <div id="mod-login-msg" style="margin-top:1rem; font-size:0.75rem; text-align:center;"></div>
