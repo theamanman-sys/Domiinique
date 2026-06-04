@@ -344,16 +344,10 @@ function handleContact(e) {
     const btn = form.querySelector('[type=submit]');
     if (!btn) return;
 
-    const name = document.getElementById('contact-name').value.trim();
-    const email = document.getElementById('contact-email').value.trim();
-    const sector = document.getElementById('contact-sector').value;
-    const intent = document.getElementById('contact-intent').value.trim();
-    const valueAlign = document.getElementById('contact-value').value.trim();
-
+    const answer = document.getElementById('contact-stage6').value.trim();
     const errorEl = document.getElementById('form-error');
 
-    // Custom validation
-    if (!name || !email || !sector || !intent || !valueAlign) {
+    if (!answer) {
         errorEl.textContent = 'Incomplete Signal. Please calibrate.';
         errorEl.classList.add('visible');
         return;
@@ -364,7 +358,7 @@ function handleContact(e) {
     btn.textContent = '[ TRANSMITTING... ]';
     btn.disabled = true;
 
-    const text = `Transmission from Domiinique Blueprint%0A%0AIDENTIFIER: ${name}%0AFREQUENCY: ${email}%0ASECTOR: ${sector}%0AINTENT: ${intent}%0AALIGNMENT: ${valueAlign}`;
+    const text = `Stage 6 — Destination Transmission from Domiinique Blueprint%0A%0A"${answer}"`;
     
     setTimeout(() => {
         window.open(`https://wa.me/251992013589?text=${text}`, '_blank');
