@@ -1301,7 +1301,7 @@ class SleepEngine {
             let type = 'theta';
             
             if (id.startsWith('f')) { // Frequencies
-                const freqMap = { 'f1': 'delta', 'f2': 'theta', 'f3': 'alpha', 'f4': 'alpha', 'f5': 'theta', 'f6': 'alpha', 'f7': 'delta', 'f8': 'theta', 'f9': 'theta', 'f10': 'delta' };
+                const freqMap = { 'f1': 'delta', 'f2': 'theta', 'f3': 'solfeggio-528', 'f4': 'solfeggio-417', 'f5': 'solfeggio-852', 'f6': 'solfeggio-963', 'f7': 'delta', 'f8': 'theta', 'f9': 'theta', 'f10': 'delta' };
                 type = freqMap[id] || 'theta';
             } else if (id.startsWith('b')) { // Bowls (Vibrations)
                 type = 'vibration';
@@ -2620,6 +2620,19 @@ class RealityApp {
         this.audio.nodes = { oscL: f1, oscR: f2, lfo, gain: g1 };
     }
 
+    playSolfeggio(freq) {
+        this.stopDynamicAudio();
+        const osc = this.audio.ctx.createOscillator();
+        const gain = this.audio.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.value = 0.12;
+        osc.connect(gain);
+        gain.connect(this.audio.gain);
+        osc.start();
+        this.audio.nodes = { source: osc, gain };
+    }
+
     playGuidedDrone() {
         this.stopDynamicAudio();
         const osc = this.audio.ctx.createOscillator();
@@ -2703,6 +2716,30 @@ class RealityApp {
         if (type === 'vibration' || type === 'bowls') {
             this.playVibration();
             gsap.to(this.audio.gain.gain, { value: 0.5, duration: 2 });
+            return;
+        }
+
+        if (type === 'solfeggio-528') {
+            this.playSolfeggio(528);
+            gsap.to(this.audio.gain.gain, { value: 0.15, duration: 1.5 });
+            return;
+        }
+
+        if (type === 'solfeggio-417') {
+            this.playSolfeggio(417);
+            gsap.to(this.audio.gain.gain, { value: 0.15, duration: 1.5 });
+            return;
+        }
+
+        if (type === 'solfeggio-852') {
+            this.playSolfeggio(852);
+            gsap.to(this.audio.gain.gain, { value: 0.15, duration: 1.5 });
+            return;
+        }
+
+        if (type === 'solfeggio-963') {
+            this.playSolfeggio(963);
+            gsap.to(this.audio.gain.gain, { value: 0.15, duration: 1.5 });
             return;
         }
 
