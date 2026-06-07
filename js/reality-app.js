@@ -233,7 +233,7 @@ class NutritionalEngine {
                         <span>🔥 ${recipe.nutrition?.nutrients?.find(n => n.name === 'Calories')?.amount || '--'} kcal</span>
                     </div>
                 </div>
-                <div class="recipe-health-badge">${recipe.healthScore || '??'}</div>
+                <div class="recipe-health-badge">${recipe.healthScore || '--'}</div>
             </div>
         `).join('');
     }

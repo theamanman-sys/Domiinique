@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acquired ó Domiinique</title>
+    <title>Acquired ÔøΩ Domiinique</title>
     <link rel="stylesheet" href="css/main.css?v=9">
     <link rel="stylesheet" href="css/home.css?v=1">
     <script type="module" src="js/auth.js"></script>
@@ -199,11 +199,11 @@
                     <!-- Payment Method Tabs -->
                     <div class="payment-tabs">
                         <button class="payment-tab active" onclick="switchPaymentTab('chapa')" id="tab-chapa">
-                            <span class="payment-tab-icon">??</span>
+                            <span class="payment-tab-icon">üí≥</span>
                             Chapa Pay
                         </button>
                         <button class="payment-tab" onclick="switchPaymentTab('manual')" id="tab-manual">
-                            <span class="payment-tab-icon">??</span>
+                            <span class="payment-tab-icon">üí∏</span>
                             Manual Transfer
                         </button>
                     </div>
@@ -230,7 +230,7 @@
 
                         <button class="chapa-pay-btn" id="chapa-pay-btn" onclick="initiateChapaPayment()">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                            Pay with Chapa ó <span id="chapa-total-display">0 ETB</span>
+                            Pay with Chapa ÔøΩ <span id="chapa-total-display">0 ETB</span>
                         </button>
 
                         <div id="chapa-status"></div>
@@ -296,7 +296,7 @@
                 </div>
                 
                 <p style="font-size:0.6rem; color:var(--fg-dim); margin-top:1.5rem; line-height:1.8; text-align:center;">
-                    Each item is part of the Domiinique Living Signature ó a conscious addition to your environment.
+                    Each item is part of the Domiinique Living Signature ÔøΩ a conscious addition to your environment.
                 </p>
             </div>
         </div>
@@ -470,7 +470,7 @@
             }
         };
 
-        // Chapa payment ó uses PHP proxy to avoid CORS, fallback to inline SDK
+        // Chapa payment ÔøΩ uses PHP proxy to avoid CORS, fallback to inline SDK
         window.initiateChapaPayment = function() {
             const name = document.getElementById('cust-name').value.trim();
             const email = document.getElementById('cust-email').value.trim();
@@ -639,7 +639,7 @@
                 }
             }
 
-            // Both methods failed ó show helpful message
+            // Both methods failed ÔøΩ show helpful message
             statusEl.innerHTML = '<div class="payment-status error">Payment gateway temporarily unavailable. Please use the <strong>Manual Transfer</strong> tab to complete your order via Telebirr or WhatsApp.</div>';
             btn.disabled = false;
             resetBtnText(btn);
@@ -648,7 +648,7 @@
         }
 
         function resetBtnText(btn) {
-            btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Pay with Chapa ó <span id="chapa-total-display">' + (window._finalTotal || 0).toLocaleString() + ' ETB</span>';
+            btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Pay with Chapa ÔøΩ <span id="chapa-total-display">' + (window._finalTotal || 0).toLocaleString() + ' ETB</span>';
         }
 
         async function handleChapaSuccess(data) {
@@ -705,7 +705,7 @@
             btn.disabled = false;
             btn.innerHTML = `
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                Retry Payment ó <span id="chapa-total-display">${(window._finalTotal || 0).toLocaleString()} ETB</span>
+                Retry Payment ÔøΩ <span id="chapa-total-display">${(window._finalTotal || 0).toLocaleString()} ETB</span>
             `;
         }
 
@@ -752,16 +752,16 @@
 
         window.sendWhatsAppOrder = function() {
             const num = '251992013589';
-            let msg = `?? *NEW TRANSMISSION REQUEST* ??\n`;
-            msg += `?? *Order Code: ${currentOrderId}*\n\n`;
+            let msg = `üì® *NEW TRANSMISSION REQUEST* üì®\n`;
+            msg += `üìã *Order Code: ${currentOrderId}*\n\n`;
             
             const cartItems = window.domCart ? window.domCart.getItems() : [];
             cartItems.forEach(item => {
-                msg += `?? ${item.title} x${item.qty || 1}\n`;
+                msg += `üõçÔ∏è ${item.title} x${item.qty || 1}\n`;
             });
-            msg += `\n?? *Total: ${window._finalTotal || 0} ETB*`;
-            msg += `\n\n?? *Tracking for:* ${document.getElementById('cust-name').value || 'New Member'}`;
-            msg += `\n\n?? *IMPORTANT:* Please attach your payment screenshot to this message before sending.`;
+            msg += `\nüí∞ *Total: ${window._finalTotal || 0} ETB*`;
+            msg += `\n\nüë§ *Tracking for:* ${document.getElementById('cust-name').value || 'New Member'}`;
+            msg += `\n\n‚ö†Ô∏è *IMPORTANT:* Please attach your payment screenshot to this message before sending.`;
             
             window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
         };
@@ -854,7 +854,7 @@
             window.__mainMenuInitialized = true;
         }
 
-        // Theme handled by main.js ó no duplicate handler needed here
+        // Theme handled by main.js ÔøΩ no duplicate handler needed here
     </script>
 
     <!-- Spin animation for loading state -->
