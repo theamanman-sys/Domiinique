@@ -1310,7 +1310,7 @@ class SleepEngine {
                 const guideMap = { 'g1': 'guided-alpha', 'g2': 'guided-theta', 'g3': 'guided-theta', 'g4': 'guided-delta', 'g5': 'guided-alpha' };
                 type = guideMap[id] || 'guided';
             } else if (id.startsWith('a')) { // Ambient
-                const ambMap = { 'a1': 'pink', 'a2': 'brown', 'a3': 'waves', 'a4': 'waves', 'a5': 'pink' };
+                const ambMap = { 'a1': 'forest', 'a2': 'rain', 'a3': 'waves', 'a4': 'river', 'a5': 'wind' };
                 type = ambMap[id] || 'waves';
             }
             
@@ -2584,6 +2584,139 @@ class RealityApp {
         this.audio.nodes = { source, lfo, gain: waveGain, lfoGain };
     }
 
+    playForestNight() {
+        this.stopDynamicAudio();
+        const buffer = this.createNoiseBuffer('pink');
+        const source = this.audio.ctx.createBufferSource();
+        source.buffer = buffer;
+        source.loop = true;
+        const noiseGain = this.audio.ctx.createGain();
+        noiseGain.gain.value = 0.04;
+        source.connect(noiseGain);
+        noiseGain.connect(this.audio.gain);
+        source.start();
+
+        const cricketGain = this.audio.ctx.createGain();
+        cricketGain.gain.value = 1;
+        cricketGain.connect(this.audio.gain);
+
+        const interval = setInterval(() => {
+            if (!this.audio.ctx) return;
+            const now = this.audio.ctx.currentTime;
+            const osc = this.audio.ctx.createOscillator();
+            const g = this.audio.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = 3500 + Math.random() * 3000;
+            g.gain.setValueAtTime(0.03, now);
+            g.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+            osc.connect(g);
+            g.connect(cricketGain);
+            osc.start(now);
+            osc.stop(now + 0.12);
+        }, 400 + Math.random() * 600);
+
+        this.audio.nodes = { source, gain: noiseGain, interval };
+    }
+
+    playRainfall() {
+        this.stopDynamicAudio();
+        const buffer = this.createNoiseBuffer('brown');
+        const source = this.audio.ctx.createBufferSource();
+        source.buffer = buffer;
+        source.loop = true;
+        const lowGain = this.audio.ctx.createGain();
+        const lowFilter = this.audio.ctx.createBiquadFilter();
+        lowFilter.type = 'lowpass';
+        lowFilter.frequency.value = 400;
+        lowGain.gain.value = 0.12;
+        source.connect(lowFilter);
+        lowFilter.connect(lowGain);
+        lowGain.connect(this.audio.gain);
+
+        const hissBuffer = this.createNoiseBuffer('white');
+        const hiss = this.audio.ctx.createBufferSource();
+        hiss.buffer = hissBuffer;
+        hiss.loop = true;
+        const hissGain = this.audio.ctx.createGain();
+        const hissFilter = this.audio.ctx.createBiquadFilter();
+        hissFilter.type = 'highpass';
+        hissFilter.frequency.value = 6000;
+        hissGain.gain.value = 0.015;
+        hiss.connect(hissFilter);
+        hissFilter.connect(hissGain);
+        hissGain.connect(this.audio.gain);
+        hiss.start();
+
+        source.start();
+
+        this.audio.nodes = { source, gain: lowGain };
+    }
+
+    playGentleRiver() {
+        this.stopDynamicAudio();
+        const buffer = this.createNoiseBuffer('brown');
+        const source = this.audio.ctx.createBufferSource();
+        source.buffer = buffer;
+        source.loop = true;
+        const lowGain = this.audio.ctx.createGain();
+        const lowFilter = this.audio.ctx.createBiquadFilter();
+        lowFilter.type = 'lowpass';
+        lowFilter.frequency.value = 800;
+        lowGain.gain.value = 0.08;
+        source.connect(lowFilter);
+        lowFilter.connect(lowGain);
+        lowGain.connect(this.audio.gain);
+        source.start();
+
+        const bubbleBuffer = this.createNoiseBuffer('white');
+        const bubble = this.audio.ctx.createBufferSource();
+        bubble.buffer = bubbleBuffer;
+        bubble.loop = true;
+        const bubbleGain = this.audio.ctx.createGain();
+        const bubbleFilter = this.audio.ctx.createBiquadFilter();
+        bubbleFilter.type = 'bandpass';
+        bubbleFilter.frequency.value = 1200;
+        bubbleFilter.Q.value = 0.5;
+        bubbleGain.gain.value = 0.015;
+        const bubbleLfo = this.audio.ctx.createOscillator();
+        const bubbleLfoGain = this.audio.ctx.createGain();
+        bubbleLfo.type = 'sine';
+        bubbleLfo.frequency.value = 0.3;
+        bubbleLfoGain.gain.value = 0.01;
+        bubble.connect(bubbleFilter);
+        bubbleFilter.connect(bubbleGain);
+        bubbleGain.connect(this.audio.gain);
+        bubbleLfo.connect(bubbleLfoGain);
+        bubbleLfoGain.connect(bubbleGain.gain);
+        bubbleLfo.start();
+        bubble.start();
+
+        this.audio.nodes = { source, gain: lowGain };
+    }
+
+    playSoftWind() {
+        this.stopDynamicAudio();
+        const buffer = this.createNoiseBuffer('pink');
+        const source = this.audio.ctx.createBufferSource();
+        source.buffer = buffer;
+        source.loop = true;
+        const windGain = this.audio.ctx.createGain();
+        windGain.gain.value = 0.04;
+        const lfo = this.audio.ctx.createOscillator();
+        const lfoGain = this.audio.ctx.createGain();
+        lfo.type = 'sine';
+        lfo.frequency.value = 0.08;
+        lfoGain.gain.value = 0.035;
+        source.connect(windGain);
+        windGain.connect(this.audio.gain);
+        lfo.connect(lfoGain);
+        lfoGain.connect(windGain.gain);
+        lfo.start();
+        source.start();
+
+        this.audio.nodes = { source, lfo, gain: windGain, lfoGain };
+    }
+
     playVibration() {
         this.stopDynamicAudio();
         // Layered low-frequency oscillators for somatic resonance
@@ -2662,6 +2795,7 @@ class RealityApp {
             try { if (this.audio.nodes.oscL) { this.audio.nodes.oscL.stop(); this.audio.nodes.oscR.stop(); } } catch(e) {}
             try { if (this.audio.nodes.source) this.audio.nodes.source.stop(); } catch(e) {}
             try { if (this.audio.nodes.lfo) this.audio.nodes.lfo.stop(); } catch(e) {}
+            try { if (this.audio.nodes.interval) { clearInterval(this.audio.nodes.interval); } } catch(e) {}
             this.audio.nodes = null;
         }
         if (this.audio.gain) {
@@ -2697,6 +2831,30 @@ class RealityApp {
         }
 
         // ── ROUTE TO GENERATORS ──
+        if (type === 'forest') {
+            this.playForestNight();
+            gsap.to(this.audio.gain.gain, { value: 0.35, duration: 1.5 });
+            return;
+        }
+
+        if (type === 'rain') {
+            this.playRainfall();
+            gsap.to(this.audio.gain.gain, { value: 0.35, duration: 1.5 });
+            return;
+        }
+
+        if (type === 'river') {
+            this.playGentleRiver();
+            gsap.to(this.audio.gain.gain, { value: 0.35, duration: 1.5 });
+            return;
+        }
+
+        if (type === 'wind') {
+            this.playSoftWind();
+            gsap.to(this.audio.gain.gain, { value: 0.35, duration: 1.5 });
+            return;
+        }
+
         if (type === 'brown' || type === 'white' || type === 'pink') {
             this.playNoise(type);
             gsap.to(this.audio.gain.gain, { value: 0.4, duration: 1.5 });
