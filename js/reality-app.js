@@ -1304,11 +1304,13 @@ class SleepEngine {
                 const freqMap = { 'f1': 'delta', 'f2': 'theta', 'f3': 'solfeggio-528', 'f4': 'solfeggio-417', 'f5': 'solfeggio-852', 'f6': 'solfeggio-963', 'f7': 'delta', 'f8': 'theta', 'f9': 'theta', 'f10': 'delta' };
                 type = freqMap[id] || 'theta';
             } else if (id.startsWith('b')) { // Bowls (Vibrations)
-                type = 'vibration';
+                const bowlMap = { 'b1': 'bowl-432', 'b2': 'bowl-528', 'b3': 'vibration', 'b4': 'bowl-396', 'b5': 'bowl-174' };
+                type = bowlMap[id] || 'vibration';
             } else if (id.startsWith('g')) { // Guided
-                type = 'guided';
+                const guideMap = { 'g1': 'guided-alpha', 'g2': 'guided-theta', 'g3': 'guided-theta', 'g4': 'guided-delta', 'g5': 'guided-alpha' };
+                type = guideMap[id] || 'guided';
             } else if (id.startsWith('a')) { // Ambient
-                const ambMap = { 'a1': 'pink', 'a2': 'brown', 'a3': 'waves', 'a4': 'pink', 'a5': 'white' };
+                const ambMap = { 'a1': 'pink', 'a2': 'brown', 'a3': 'waves', 'a4': 'waves', 'a5': 'pink' };
                 type = ambMap[id] || 'waves';
             }
             
@@ -2740,6 +2742,48 @@ class RealityApp {
         if (type === 'solfeggio-963') {
             this.playSolfeggio(963);
             gsap.to(this.audio.gain.gain, { value: 0.15, duration: 1.5 });
+            return;
+        }
+
+        if (type === 'bowl-432') {
+            this.playSolfeggio(432);
+            gsap.to(this.audio.gain.gain, { value: 0.18, duration: 2 });
+            return;
+        }
+
+        if (type === 'bowl-528') {
+            this.playSolfeggio(528);
+            gsap.to(this.audio.gain.gain, { value: 0.18, duration: 2 });
+            return;
+        }
+
+        if (type === 'bowl-396') {
+            this.playSolfeggio(396);
+            gsap.to(this.audio.gain.gain, { value: 0.18, duration: 2 });
+            return;
+        }
+
+        if (type === 'bowl-174') {
+            this.playSolfeggio(174);
+            gsap.to(this.audio.gain.gain, { value: 0.18, duration: 2 });
+            return;
+        }
+
+        if (type === 'guided-alpha') {
+            this.playBinaural('alpha');
+            gsap.to(this.audio.gain.gain, { value: 0.2, duration: 2 });
+            return;
+        }
+
+        if (type === 'guided-theta') {
+            this.playBinaural('theta');
+            gsap.to(this.audio.gain.gain, { value: 0.2, duration: 2 });
+            return;
+        }
+
+        if (type === 'guided-delta') {
+            this.playBinaural('delta');
+            gsap.to(this.audio.gain.gain, { value: 0.2, duration: 2 });
             return;
         }
 
